@@ -1,21 +1,24 @@
-# Jump-1 · Nilo / Codex visual refresh 0.2.0
+# Jump-1 · Nilo / Codex 0.3.0
 
 A single-player, turn-based space-trading roguelite. Command a five-person crew
 aboard a 200-ton ship bought on credit, trade through the Lantern Reach, and try
 to repay the bank over 52 weeks. English is the default; French is available.
 Cooperative play is not available in this edition.
 
-This is an **independent Nilo / Codex variant**, derived from the original
-[Jump-1 0.1.2 release](https://lob7.com/player/br_s_837e292e-e255-4373-8387-06020925c0f4). It retains the
-original setting, game systems, inherited contributions and licences. The
-original game's main branch and original LOB7 edition are not replaced by this
-variant. This branch is prepared source; publication and hosted acceptance are
-recorded by LOB7 and must be checked separately.
+This is the prepared **0.3.0 edition of the existing Nilo / Codex variant**,
+built on its exact [0.2.0 release](https://lob7.com/player/br_s_95eca657-d8e9-40d2-926a-2c6263c33e04).
+It retains the original setting, game systems, inherited contributions,
+licences, and the portraits and scene artwork refined in 0.2.0. Publication and
+hosted acceptance are recorded separately by LOB7; this source export alone
+does not establish either result.
 
-The visual refresh improves readable typography, compact crew and port panels,
-character dossiers and portraits, commerce quotes and mobile layouts, and scene
-artwork. See the artwork provenance for the actual production process and the
-QA document for recorded checks and their limits.
+This edition adds destination information and departure confirmation with
+nominal travel time, fuel consumption and port fees. Scene orders explain their
+purpose, skills and consequences. Action feedback and round/week reports show
+actual journal events and resource changes, with a link to the journal. The port
+suggests a next step from the ship's condition and accepted deliveries. See the
+QA document for recorded checks and their limits, and the media provenance for
+the actual production process.
 
 ## Run locally
 
@@ -30,14 +33,17 @@ runtime service. Audio starts after a player gesture. Serve the directory over
 HTTP; a `file:` URL does not provide the origin required by modules and assets.
 
 Use mouse or touch for actions, worlds and cargo. Drag the zoomed star chart to
-pan. Arrow keys select worlds; Enter or Space confirms; Escape returns to port.
+pan. Arrow keys select worlds; Enter or Space opens departure confirmation
+when the star chart has focus; Escape returns to port.
 Keys 1–5 open crew dossiers, L the log, M the map, S the ship, R a standard week
-and Q a quick stop. Saves stay in the browser, with JSON export/import for backup.
+and Q opens quick-departure confirmation. Saves stay in the browser, with JSON
+export/import for backup and transfer between edition origins.
 
 ## Source and branch identity
 
-- Development snapshot: `a7acf33c9ca772703e11cd1b4a676ea1005504b9`.
-- Parent LOB7 release: `br_s_837e292e-e255-4373-8387-06020925c0f4`.
+- Development snapshot: `5c40f1a4f8a865f422b658f003ae9aa13fb6fccb`.
+- Existing LOB7 variant: `bv_s_3b846f49-e849-4413-8999-3bccbf2a7d5c`.
+- Exact parent LOB7 release: `br_s_95eca657-d8e9-40d2-926a-2c6263c33e04`.
 - Playable branch: [`codex/visual-refresh`](https://github.com/codex-lm/jump-1-web/tree/codex/visual-refresh).
 - Source and tests: [`codex/visual-refresh-source`](https://github.com/codex-lm/jump-1-web/tree/codex/visual-refresh-source).
 
@@ -55,7 +61,7 @@ gameplay acceptance.
 ## Credits and rights
 
 - **Cédric Bernadac**: Created the game design and original Lantern Reach setting; directed the production of Jump-1.
-- **Nilo / Codex**: Implemented the deterministic game engine, interface, local audio player and integrations under Cédric Bernadac’s direction. Created the 0.2.0 visual refresh: compact crew and port layouts, readable commerce, responsive journal, distinct portrait families and save compatibility; refined native Blender face geometry and integrated the canonical ship into the scenes.
+- **Nilo / Codex**: Implemented the deterministic game engine, interface, local audio player and integrations under Cédric Bernadac’s direction. Created the 0.2.0 visual refresh: compact crew and port layouts, readable commerce, responsive journal, distinct portrait families and save compatibility; refined native Blender face geometry and integrated the canonical ship into the scenes. Added destination briefings, departure confirmation, scene guidance and action reports in 0.3.0, preserving the deterministic rules and saves.
 - **Kimi K3.1**: Created original Blender models, materials and image renders, including the native HD ship cutaway, under Cédric Bernadac's direction. Refined the 16 crew portraits and four inhabited port/bar scenes for the 0.2.0 visual refresh.
 - **Claude Opus 5.5**: Added the first-voyage guide, the crew and port explanations, and the draggable star chart in 0.1.2, under Cédric Bernadac's direction.
 - **Suno**: source service for the inherited music and sound effects; see the audio provenance.

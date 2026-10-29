@@ -1,10 +1,40 @@
 # Jump-1 — vérifications et limites de livraison
 
 Ce document distingue les preuves du jeu solo, les tests de transport, la
-production artistique et le lot sonore livré. Il ne constitue pas
-une publication sur LOB7. Les preuves de travail sous `.local/` sont locales et
+production artistique et le lot sonore livré. La publication LOB7 0.2.0 et sa
+recette hébergée sont consignées ci-dessous. Les preuves de travail sous `.local/` sont locales et
 exclues du paquet publié ; leurs chemins sont des références de livraison au
 propriétaire, pas des ressources chargées par le jeu.
+
+## Version 0.3.0 — point de contrôle local du 29 octobre 2026
+
+**Version validée localement ; préparation de la publication LOB7 en cours.** La 0.2.0 reste l’édition publiée ; ses références et sa recette hébergée sont conservées dans la section suivante. Les contrôles 0.3.0 ci-dessous concernent le jeu local et ne valent pas une recette hébergée de cette nouvelle version.
+
+La fiche de destination explique trajet, coordonnées, services, coûts, frais mensuels, risques et livraisons. Le départ passe par une confirmation, y compris au clavier ; les liens du commerce ouvrent la destination correspondante. Le bilan d’action rapproche résultat, dépenses et journal. Les prochaines étapes au port et les options de carburant disponibles rendent la suite du voyage explicite. Les scènes décrivent leurs enjeux et leurs choix à partir du résolveur réel, affichent les compétences utilisées et distinguent préparation et résolution, sans calcul de probabilité approximatif ni lecture des résultats aléatoires.
+
+**Tests automatisés : 86 réussis sur 86 au point de contrôle local.** Les vérifications des scènes confrontent notamment les compétences et difficultés affichées aux jets réellement consignés par le moteur, conservent les actions légales, signalent les équipiers inconscients et vérifient que la présentation ne modifie ni l’état ni les secrets cachés. Les finitions mobiles sont terminées et les mesures finales figurent ci-dessous.
+
+### Partie jouée dans le navigateur local
+
+La graine `audit-visuel-2026` a été jouée en français par les contrôles de l’interface de la **semaine 1 à la semaine 7, avec trois sauts**.
+
+| Étape | Résultat observé |
+| --- | --- |
+| Haldveld → Oster | 30 t de fret livrées ; recette de 30 000 Cr |
+| Inspections | Rencontres de patrouille et de douane traversées |
+| Oster → Avelello | 20 t de fret livrées ; recette de 20 000 Cr |
+| Échéance mensuelle | Mensualité de 154 500 Cr et charges de 24 090 Cr |
+| Rencontres suivantes | Traversée résolue ; pirates négociés pour 5 000 Cr |
+| Arrivée à Avelello | Trésorerie de 81 510 Cr |
+| Collecte sur une géante | Semaine 6 ; 27,5 t de carburant brut après l’opération |
+| Troisième saut : Avelello → Oster | Joué à 320 px ; confirmation avec coordonnées, traversée, marchand en difficulté aidé et douane |
+| Rencontre du marchand | Recette de 20 000 Cr |
+| Retour à Oster | Semaine 7 ; trésorerie finale de 101 410 Cr après 100 Cr de frais |
+| Console du parcours | 0 erreur, 0 avertissement |
+
+Les vues de destination, la fenêtre de confirmation et son annulation ont été contrôlées à **390 et 320 px CSS**. L’annulation à 390 px conserve la semaine 6 et la destination sélectionnée. Après correction de la largeur minimale du `body`, le parcours à 320 px revient au port sans débordement horizontal : `clientWidth = scrollWidth = 305 px`, les 15 px restants correspondant à la barre de défilement verticale. Les finitions mobiles de ce parcours sont terminées.
+
+Cette recette française ne refait pas une campagne entière de 52 semaines. La fiche de destination a également été vérifiée en anglais ; la partie complète a été jouée en français. Aucun contrôle sur appareil tactile physique, aucune écoute perceptive de l’audio et aucune recette multijoueur réelle ne sont ajoutés par ce parcours. Aucune publication 0.3.0 n’est attestée ici.
 
 ## Révision visuelle 0.2.0 — contrôle du 29 octobre 2026
 
@@ -16,7 +46,28 @@ propriétaire, pas des ressources chargées par le jeu.
 - Les 16 portraits 512 × 512 et les 4 décors 1600 × 600 ont été inspectés en planche ; les nouveaux portraits et le décor du port A ont aussi été contrôlés dans le jeu. Les portraits ont aussi été vérifiés à 48 px ; leurs transparences et conversions WebP sans perte conservent les pixels RGBA. Les 20 fichiers remplacés restent dans les dimensions du manifeste.
 - Le plan HD et ses huit zones restent inchangés. Les preuves techniques de l’ancienne campagne de 52 semaines ci-dessous sont historiques ; cette révision n’a pas été rejouée pendant 52 semaines dans un navigateur.
 
-Ces contrôles locaux ne constituent pas une validation sur appareil tactile physique ni une publication LOB7. Les références de l’édition et sa recette hébergée seront consignées dans `LOB7-PUBLICATION.json` après publication.
+Ces contrôles locaux ne constituent pas une validation sur appareil tactile physique. La vérification publique et la recette hébergée ci-dessous complètent ces preuves locales.
+
+### Publication LOB7 et recette hébergée — 29 octobre 2026
+
+La fiche publique confirme la publication de [0.2.0](https://lob7.com/games/bg_s_b6142086-81fb-4e0e-b3d1-3d7a99468771?release=br_s_95eca657-d8e9-40d2-926a-2c6263c33e04) à **17:04:47 UTC**, statut `published`, sous « Nilo / Codex ». Le parent exact est `br_s_837e292e-e255-4373-8387-06020925c0f4` (0.1.2) ; la variante indépendante conserve les quatre contributeurs Cédric Bernadac, Nilo / Codex, Kimi K3.1 et Claude Opus 5.5, ainsi que tous les crédits du parent. Le commit servi est `5a853f5119af8613ad2ff1369a1a61a8d1770170` ; les quatre contrôles `malware`, `policy`, `runtime` et `staticAnalysis` sont `passed`. Ces données ont été relues indépendamment via les commandes publiques `browser release/get`, sans authentification ; le reçu expurgé est `.local/lob7-public-release-verified.json`.
+
+La quatrième préparation a été acceptée à 17:01:57 UTC, après trois refus `BROWSER_PREPARATION_LIMIT` dont le dernier à 16:51:33 UTC. Le même brouillon a été conservé ; cet historique reste dans [LOB7-PUBLICATION.json](LOB7-PUBLICATION.json).
+
+La recette de jeu a été effectuée dans Chromium sur [l’URL hébergée exacte de cette publication](https://r-34fb07667358e4cc.play.lob7.com/releases/br_s_95eca657-d8e9-40d2-926a-2c6263c33e04/web/a20b669194dcdf7a5ae46852a66a3540aff11beabef2723e7f7b67b9771309ad/index.html), avec une nouvelle partie en français et la graine `audit-visuel-2026`.
+
+| Contrôle hébergé | Résultat |
+| --- | --- |
+| Création d’équipage | Cinq portraits 512 × 512 chargés |
+| Achat au marché | 2 t de cristaux à 40 000 Cr/t ; total affiché 80 000 Cr |
+| Effet de l’achat | Trésorerie 229 000 → 149 000 Cr ; cale 2 t ; trace correcte dans le journal |
+| Navigation | Retour journal → port fonctionnel |
+| Rechargement et reprise | Trésorerie conservée à 149 000 Cr |
+| Coupe HD | Fichier natif 4000 × 1800 chargé |
+| Mobile | Port à 390 px et marché à 320 px CSS, sans débordement horizontal |
+| Console | 0 erreur, 0 avertissement |
+
+Le [lecteur intégré LOB7](https://lob7.com/player/br_s_95eca657-d8e9-40d2-926a-2c6263c33e04) rend bien le jeu. Rechargé après cette recette, il affiche le titre en français et « Reprendre le voyage ». L’automatisation n’a pas pu cliquer dans son iframe ; les interactions ci-dessus ont donc été vérifiées sur la même URL hébergée exacte, pas dans l’iframe. Les captures locales sont conservées dans `C:\dev\jump-1\.local\visual-refresh-0.2.0\lob7-hosted-port.png` et `C:\dev\jump-1\.local\visual-refresh-0.2.0\lob7-player-published.png`. Cette recette ne constitue pas une campagne complète de 52 semaines sur 0.2.0, un test sur appareil tactile physique, une validation multijoueur ni une écoute perceptive de l’audio.
 
 ## Tests automatisés
 
