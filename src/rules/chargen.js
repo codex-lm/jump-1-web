@@ -128,9 +128,15 @@ export function generateCharacter(seed,index=0,options={}) {
   crew.upp=upp(characteristics);
   // Defensive assertion guarantees the closed skill list at data boundaries.
   for(const key of Object.keys(crew.skills)) if(!(key in SKILLS)) delete crew.skills[key];
+  // A separate cosmetic stream leaves all gameplay rolls and legacy saves intact.
+  if(options.portraitEdition===2){
+    const faces=Array.from({length:8},(_,i)=>i+1),visual=derive(options.portraitSeed??seed,'portrait-families-v2');
+    for(let i=faces.length-1;i>0;i--){const j=visual.int(0,i);[faces[i],faces[j]]=[faces[j],faces[i]];}
+    crew.portrait=faces[index]+(crew.age>=34?8:0);
+  }
   return crew;
 }
 
 export function generateCrew(seed,config={}) {
-  return Array.from({length:5},(_,index)=>generateCharacter(seed,index,{...config.crewOptions?.[index],career:config.careers?.[index]??config.crewOptions?.[index]?.career}));
+  return Array.from({length:5},(_,index)=>generateCharacter(seed,index,{...config.crewOptions?.[index],career:config.careers?.[index]??config.crewOptions?.[index]?.career,portraitEdition:config.portraitEdition}));
 }

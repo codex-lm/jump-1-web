@@ -40,10 +40,10 @@
       "kind": "loop"
     }
   ],
-  "verifiedAtUtc": "2026-10-28T22:40:56.078695+00:00",
+  "verifiedAtUtc": "2026-10-29T16:42:50.556755+00:00",
   "images": 60,
   "canonicalBlenderScenes": 55,
-  "assetBytes": 14679382,
+  "assetBytes": 14420550,
   "checks": {
     "exactDimensions": true,
     "manifestPaths": true,
@@ -361,39 +361,39 @@
     },
     {
       "key": "scenes/port-a",
-      "bytes": 29300,
+      "bytes": 50230,
       "size": [
         1600,
         600
       ],
-      "sha256": "827ca4eb8d39600e00b7abf6062488d6ea4ec6c678c53de9f361a82852a602c1"
+      "sha256": "c9d78923b7f7bd342b4e19632a99325a937a0f0cdda8330cd092983669d89286"
     },
     {
       "key": "scenes/port-c",
-      "bytes": 31818,
+      "bytes": 51172,
       "size": [
         1600,
         600
       ],
-      "sha256": "a0bb2180516b0821bdbf302c0b6c2db661d87369971eb527c25e525565e8ea26"
+      "sha256": "184dac9a3753c8db3b46885b402b2e4d27c3778278da3b14b797fa032920ad6c"
     },
     {
       "key": "scenes/port-e",
-      "bytes": 26270,
+      "bytes": 43718,
       "size": [
         1600,
         600
       ],
-      "sha256": "9ca507e00a07adfafcbb1eddaad6d792d06d8423b273881d476f610980470d57"
+      "sha256": "c38f75aa201be173d45e4b166d4830aeab1a9b8753d7cc6e419fe1d19912aa41"
     },
     {
       "key": "scenes/bar",
-      "bytes": 33662,
+      "bytes": 49838,
       "size": [
         1600,
         600
       ],
-      "sha256": "7de38877b6c9e345e890c56c57bedad00d7ef1f903f56fce2346e675610fe4ac"
+      "sha256": "c37b6f4822fd632b7fddc368bb2212590596c2b107b833ad84f763d3baebc2f3"
     },
     {
       "key": "scenes/sickbay",
@@ -442,147 +442,147 @@
     },
     {
       "key": "crew/medallion-01",
-      "bytes": 194376,
+      "bytes": 174028,
       "size": [
         512,
         512
       ],
-      "sha256": "6e4da0d6515eca2a19194f554ffd663bdb5d8de04065b1d15d3d81ea59d50008"
+      "sha256": "c54623cacf8ebae9d8ab1cf9305699206048f0b3201335969da0ef0301754736"
     },
     {
       "key": "crew/medallion-02",
-      "bytes": 193660,
+      "bytes": 171380,
       "size": [
         512,
         512
       ],
-      "sha256": "b51717496ec9e91bbdab3f087003e5735ebef3d6be307913aa493c1e9876018d"
+      "sha256": "841826d36c1797c1f2b44098954be0486cf46da9e9f32cb7208e01cc9a5fca78"
     },
     {
       "key": "crew/medallion-03",
-      "bytes": 193658,
+      "bytes": 174280,
       "size": [
         512,
         512
       ],
-      "sha256": "cd130642030e4bf82478a0db552fbe64751760ed153e4cf202595f8b9966a81b"
+      "sha256": "50fca9e28f7abb0d5f21aacfb55b1e52c683d40fede556aba56ba61933b3e876"
     },
     {
       "key": "crew/medallion-04",
-      "bytes": 194670,
+      "bytes": 175614,
       "size": [
         512,
         512
       ],
-      "sha256": "0ec76bb80595acf4a4bcf288855caa1fecacde7f278f3dbab239f1ac76b86709"
+      "sha256": "b03ad6b8055d7d6b4aed80a8d784adb2fcb13d0f129e8d19fb53c0fdc4b4b28c"
     },
     {
       "key": "crew/medallion-05",
-      "bytes": 193924,
+      "bytes": 175594,
       "size": [
         512,
         512
       ],
-      "sha256": "5af1eb82a9bc1d48580f2f57a41e7be612cdcac1388a2091ac83c3c94708610c"
+      "sha256": "bb3121118542c27a49b5b814fa93938c13fc09568fc412121681d77aa2bb9f11"
     },
     {
       "key": "crew/medallion-06",
-      "bytes": 193650,
+      "bytes": 169156,
       "size": [
         512,
         512
       ],
-      "sha256": "6f1515bc00af017a0f8a5b3f03e3926ec83a4eadb0ee047193220af00fe07b43"
+      "sha256": "632bcd4a975d7b81599a4bf2f4dc103c799cc0e43f60d64290013517b7d2c7df"
     },
     {
       "key": "crew/medallion-07",
-      "bytes": 191932,
+      "bytes": 169956,
       "size": [
         512,
         512
       ],
-      "sha256": "6e2bb58cc7744ee26605ff196bfb29cabd041230b6d6e5d009a40476313322a3"
+      "sha256": "0ae219961ce1018b5b3f721993a2389f922c6b5847afb63a8c3b71ecdff58aa1"
     },
     {
       "key": "crew/medallion-08",
-      "bytes": 194472,
+      "bytes": 172650,
       "size": [
         512,
         512
       ],
-      "sha256": "e433f4ffb78b3c6c5f110793c620d5c76a3bb4cf1bbf3b1b17d43750541d48ea"
+      "sha256": "91c4f7f1afb3f5b8bae2dbb8db9cf76b29be608c5ecbf674deafe272fd728942"
     },
     {
       "key": "crew/medallion-09",
-      "bytes": 194888,
+      "bytes": 174968,
       "size": [
         512,
         512
       ],
-      "sha256": "5411b8dd19cfaf7dc43f7057fc0fe537e6015f75277b7770d2795f6bd2234539"
+      "sha256": "559425300b282ef61c3a2d53707a12f19b678af3ca76535e1cf1d730487e6aaa"
     },
     {
       "key": "crew/medallion-10",
-      "bytes": 194158,
+      "bytes": 172840,
       "size": [
         512,
         512
       ],
-      "sha256": "609b2e54d72c5c916da56960233136c9207ef530ac6223488ab00b01fbc039fb"
+      "sha256": "0eac0b27658c8a54d29ec53b8647101ac9d496bc2af9a030b27eebb6462d5d68"
     },
     {
       "key": "crew/medallion-11",
-      "bytes": 194262,
+      "bytes": 175228,
       "size": [
         512,
         512
       ],
-      "sha256": "61d2d705952a9d8326bc5b3c6c18d4d1f57852efc48d01ddca240c795016700d"
+      "sha256": "c1c34b21952a192929f52dfe6d4ca361e78fa5805ee6735f76074e9de7f5d471"
     },
     {
       "key": "crew/medallion-12",
-      "bytes": 195664,
+      "bytes": 176366,
       "size": [
         512,
         512
       ],
-      "sha256": "73d479d0bb5beae810c9f9ecfcc4ee261f056f511754bdda3f0d6087717e3160"
+      "sha256": "cada053d001dd473283db43201681c11994a946a82b6a2c554d3fb67fa59a4fd"
     },
     {
       "key": "crew/medallion-13",
-      "bytes": 194358,
+      "bytes": 176306,
       "size": [
         512,
         512
       ],
-      "sha256": "3d480cb31e9868dbe9b53a2541905d5ccf626822eaa5dbf30986d7df98c7eec6"
+      "sha256": "32122342fcb071c5cac40123cb2f699528070853a65c99fa88a67a121179cf1b"
     },
     {
       "key": "crew/medallion-14",
-      "bytes": 194438,
+      "bytes": 170660,
       "size": [
         512,
         512
       ],
-      "sha256": "7bd35f72797b66a2af14e48096ce97a4ccb967292d6f77335cda543f75182c61"
+      "sha256": "7693b4fc829af59383547a0178c7b10b75478c7773d68eb6bf858fd534a67914"
     },
     {
       "key": "crew/medallion-15",
-      "bytes": 192616,
+      "bytes": 170620,
       "size": [
         512,
         512
       ],
-      "sha256": "c1bf1d94f5ad86fd82d0092b22329013deff183d72555bc8e956c286f8373d69"
+      "sha256": "b412f59b3260f0c92da4260430721719a5d3d03e3d2eeee853a61f9782e85747"
     },
     {
       "key": "crew/medallion-16",
-      "bytes": 195238,
+      "bytes": 173578,
       "size": [
         512,
         512
       ],
-      "sha256": "cd40b0f1ab031861e88356fbe03f43ed0c51081a030b3cd00fc00396ce3bb491"
+      "sha256": "aed0ab31b817c7fb17dd14e06ec8ef4a439c970861de684db48b4bdde3a23a43"
     },
     {
       "key": "map/backdrop",
@@ -697,5 +697,293 @@
       "mode": "RGBA"
     },
     "independentQa": "Native PNG visually inspected; decoded WebP exactly equals PNG RGBA; protected base hashes and scene invariants verified."
+  },
+  "visualRefresh": {
+    "version": "0.2.0",
+    "checkedOn": "2026-10-29",
+    "artDirection": "Cedric Bernadac",
+    "nativeGeneratorRefinement": {
+      "tool": "Kimi Code CLI",
+      "cliVersion": "2.3.1",
+      "modelAlias": "kimi-code/k3.1-pro",
+      "workers": [
+        {
+          "agentId": "agent-0",
+          "model": "k3.1-pro",
+          "modelAlias": "kimi-code/k3.1-pro",
+          "evidence": "Observed llm.request event"
+        },
+        {
+          "agentId": "agent-1",
+          "model": "k3.1-pro",
+          "modelAlias": "kimi-code/k3.1-pro",
+          "evidence": "Observed llm.request event"
+        }
+      ],
+      "handoff": "Generators and initial previews delivered; invocation stopped before its final reporting cycle."
+    },
+    "finalNativeRefinement": "Nilo/Codex: continuous cubic profile interpolation, removal of detached jowl spheres, age-appropriate partial-grey hair and restrained mature facial lines, canonical freighter geometry integration, bar face-fill light, final rendering and independent QA.",
+    "renderer": {
+      "tool": "Blender",
+      "version": "4.5.13 LTS",
+      "engine": "Eevee",
+      "samples": 96,
+      "nativeResolution": true
+    },
+    "conversionTools": {
+      "python": "3.12.10",
+      "pillow": "12.2.0"
+    },
+    "publishedAssetChanges": [
+      "assets/img/crew/medallion-01.webp",
+      "assets/img/crew/medallion-02.webp",
+      "assets/img/crew/medallion-03.webp",
+      "assets/img/crew/medallion-04.webp",
+      "assets/img/crew/medallion-05.webp",
+      "assets/img/crew/medallion-06.webp",
+      "assets/img/crew/medallion-07.webp",
+      "assets/img/crew/medallion-08.webp",
+      "assets/img/crew/medallion-09.webp",
+      "assets/img/crew/medallion-10.webp",
+      "assets/img/crew/medallion-11.webp",
+      "assets/img/crew/medallion-12.webp",
+      "assets/img/crew/medallion-13.webp",
+      "assets/img/crew/medallion-14.webp",
+      "assets/img/crew/medallion-15.webp",
+      "assets/img/crew/medallion-16.webp",
+      "assets/img/scenes/bar.webp",
+      "assets/img/scenes/port-a.webp",
+      "assets/img/scenes/port-c.webp",
+      "assets/img/scenes/port-e.webp"
+    ],
+    "allImageBytes": 14420550,
+    "checks": {
+      "dimensionsMatchManifest": true,
+      "portraitCount": 16,
+      "portraitSize": [
+        512,
+        512
+      ],
+      "portraitMode": "RGBA",
+      "portraitLosslessExactDecodedPixels": true,
+      "portraitBoundaryAlpha": 0,
+      "sceneCount": 4,
+      "sceneSize": [
+        1600,
+        600
+      ],
+      "sceneMode": "RGB",
+      "sceneWebpQuality": 90,
+      "onlyRequestedTwentyImagesChanged": true,
+      "contactSheetsInspected": true,
+      "portrait48pxContactSheetInspected": true,
+      "allEightGeneratorFilesParse": true
+    },
+    "protectedUnchangedSha256": {
+      "assets/img/ship/hero-pristine.webp": "d3db28e94357f33295eff56adc390d32193a488261cc1c3b41ab240b0864f8d7",
+      "assets/img/ship/cutaway.webp": "1a258fc287e2d149c7d47c1301daab3ae3d80726ad5e9ff44bec12bf20285a5c",
+      "assets/img/ship/cutaway-hd.webp": "dffde17c76023883e2903e662e6cccd5f05c37fe71b7f2bfb16c75013a79ea2f"
+    },
+    "cutawayGeometryJsonContentUnchanged": true,
+    "nativeDependencies": {
+      "auditedBlendFiles": 20,
+      "allSelfContained": true,
+      "linkedLibraries": 0,
+      "unpackedImages": 0,
+      "unpackedFonts": 0,
+      "unpackedSounds": 0,
+      "movieClips": 0,
+      "cacheFiles": 0,
+      "volumes": 0
+    },
+    "matureRetouchPreservedYoungPortraitsAndPlaces": true,
+    "sources": [
+      {
+        "source": ".local/art-generators/build-portraits.py",
+        "archive": "art/build-portraits.py",
+        "bytes": 40102,
+        "sha256": "b94925ea7f597abaf8d546e39fc0f4906ab365f5485e13e56747fcaf10b07bac"
+      },
+      {
+        "source": ".local/art-generators/portrait-verify.py",
+        "archive": "art/portrait-verify.py",
+        "bytes": 7453,
+        "sha256": "7e63a0d512a55dbb420b7b571d260f59e71f7271c3724fc9e28d81e600c9dd83"
+      },
+      {
+        "source": ".local/art-generators/build-places.py",
+        "archive": "art/build-places.py",
+        "bytes": 3032,
+        "sha256": "227f1bcf0110eca7ca0ca86c021f77dae7aaa989a481a1f990a50ff989913721"
+      },
+      {
+        "source": ".local/art-generators/canonical-freighter.py",
+        "archive": "art/canonical-freighter.py",
+        "bytes": 1522,
+        "sha256": "7b14f7e80989d0686e541fee5b623233ad4311d74fca4ba30f8732a938019414"
+      },
+      {
+        "source": ".local/art-generators/scene-places.py",
+        "archive": "art/scene-places.py",
+        "bytes": 29043,
+        "sha256": "4ed0344f05a4b7af358d497c7a0b1ed6b9c483c1e24cc816f9707fe32c3f1e06"
+      },
+      {
+        "source": ".local/art-generators/scene-common.py",
+        "archive": "art/scene-common.py",
+        "bytes": 14719,
+        "sha256": "5e0b3ff166a8089d72609d584af825cf1b87a90b870a3030a7e5c21ff38e1e31"
+      },
+      {
+        "source": ".local/art-generators/scene-ships.py",
+        "archive": "art/scene-ships.py",
+        "bytes": 8876,
+        "sha256": "a740085633a49dc1aaab59ed2628676160724fe4c85f351117f57c872c1a3fa5"
+      },
+      {
+        "source": ".local/art-generators/export-places.py",
+        "archive": "art/export-places.py",
+        "bytes": 1411,
+        "sha256": "e32c96e6656524df021b5c2bf6f559e62949f14cced6a8c922a046508a287613"
+      },
+      {
+        "source": ".local/art-source/portraits/blends/medallion-01.blend",
+        "archive": "art/models/crew/medallion-01.blend",
+        "bytes": 2975879,
+        "sha256": "e0f114f7ca56307c1b1d656201d3d8e6bd8b6eae133494238cc65874bcbb58c7"
+      },
+      {
+        "source": ".local/art-source/portraits/blends/medallion-02.blend",
+        "archive": "art/models/crew/medallion-02.blend",
+        "bytes": 3064003,
+        "sha256": "960f889442135de4023090a6b034eadd89c041e0c689d2c7a6a699eae8043071"
+      },
+      {
+        "source": ".local/art-source/portraits/blends/medallion-03.blend",
+        "archive": "art/models/crew/medallion-03.blend",
+        "bytes": 2978302,
+        "sha256": "992182f6eda06f989f5b720ffc00cf3674fdbc5589982e8c52036af99d1cfc84"
+      },
+      {
+        "source": ".local/art-source/portraits/blends/medallion-04.blend",
+        "archive": "art/models/crew/medallion-04.blend",
+        "bytes": 3994602,
+        "sha256": "2d2b030bc48f5bd2ed37d8e5e97c65b574c022d46332e577eb85a635a7bc61aa"
+      },
+      {
+        "source": ".local/art-source/portraits/blends/medallion-05.blend",
+        "archive": "art/models/crew/medallion-05.blend",
+        "bytes": 3050495,
+        "sha256": "23838647f0de88b24785d8cd381f46ca2067e382f418adfee4c0413c9b9f0394"
+      },
+      {
+        "source": ".local/art-source/portraits/blends/medallion-06.blend",
+        "archive": "art/models/crew/medallion-06.blend",
+        "bytes": 3091386,
+        "sha256": "61dbb51c62a3e9bfdf6ae6f728c927f758e03fdd312836a1361f47a78776ba5d"
+      },
+      {
+        "source": ".local/art-source/portraits/blends/medallion-07.blend",
+        "archive": "art/models/crew/medallion-07.blend",
+        "bytes": 3068102,
+        "sha256": "172a90fd7c01e2f6aefba7723de8137540ac1164c2ea28f6403481431348da66"
+      },
+      {
+        "source": ".local/art-source/portraits/blends/medallion-08.blend",
+        "archive": "art/models/crew/medallion-08.blend",
+        "bytes": 3675575,
+        "sha256": "6c1b7155d085cafe15ec184fbe2c39663aae298321e925212b8d967a53b71de8"
+      },
+      {
+        "source": ".local/art-source/portraits/blends/medallion-09.blend",
+        "archive": "art/models/crew/medallion-09.blend",
+        "bytes": 3081451,
+        "sha256": "d01de791a78a5541491dba5259e9470f195be7f31c623f797f8e2ff6b91419af"
+      },
+      {
+        "source": ".local/art-source/portraits/blends/medallion-10.blend",
+        "archive": "art/models/crew/medallion-10.blend",
+        "bytes": 3169575,
+        "sha256": "f2c36d92f15c6576e21c867b01ad620a9d4daa3223c996a1db8d3a202969c3e6"
+      },
+      {
+        "source": ".local/art-source/portraits/blends/medallion-11.blend",
+        "archive": "art/models/crew/medallion-11.blend",
+        "bytes": 3083874,
+        "sha256": "d0a94167de856f95022c2b00ce5290a789c63c4ffc07dd7a78fe1a0ee4dc6453"
+      },
+      {
+        "source": ".local/art-source/portraits/blends/medallion-12.blend",
+        "archive": "art/models/crew/medallion-12.blend",
+        "bytes": 4095324,
+        "sha256": "b23eaece75d187581e5e7450d105186e241e03515ab5a3fc906df450dba829f3"
+      },
+      {
+        "source": ".local/art-source/portraits/blends/medallion-13.blend",
+        "archive": "art/models/crew/medallion-13.blend",
+        "bytes": 3156067,
+        "sha256": "c2e577a0a78b0e826e94226bdbc1001179a830c101b4621c5884bd497c1e0737"
+      },
+      {
+        "source": ".local/art-source/portraits/blends/medallion-14.blend",
+        "archive": "art/models/crew/medallion-14.blend",
+        "bytes": 3196958,
+        "sha256": "0a35e99bece249cf5b7dd202a2ee9e5258568513025f490edb3224db6fb99c82"
+      },
+      {
+        "source": ".local/art-source/portraits/blends/medallion-15.blend",
+        "archive": "art/models/crew/medallion-15.blend",
+        "bytes": 3173674,
+        "sha256": "bd5fe02b45037f3f53a026d6c61668088abc387068322b30dbfcf559f0c19715"
+      },
+      {
+        "source": ".local/art-source/portraits/blends/medallion-16.blend",
+        "archive": "art/models/crew/medallion-16.blend",
+        "bytes": 3776297,
+        "sha256": "a5a7688f80b3f9778f626953e0cc8db5c891ac730f4b6a3d205616a39797a126"
+      },
+      {
+        "source": ".local/art-source/scenes/bar.blend",
+        "archive": "art/models/scenes/bar.blend",
+        "bytes": 5677430,
+        "sha256": "7562c2fd76bd4c728f5563684d89271dbf7bfabe6ce977b8c34147699ff54899"
+      },
+      {
+        "source": ".local/art-source/scenes/port-a.blend",
+        "archive": "art/models/scenes/port-a.blend",
+        "bytes": 4687813,
+        "sha256": "cc8511509cc0b248a17e6b3d6def5265ca6ef63619174fbc3974e6c45255471f"
+      },
+      {
+        "source": ".local/art-source/scenes/port-c.blend",
+        "archive": "art/models/scenes/port-c.blend",
+        "bytes": 2275650,
+        "sha256": "798a2f55ff6defc6160add6bbbcf92ee2b531afdbe95d16198218ede3a9c5b1c"
+      },
+      {
+        "source": ".local/art-source/scenes/port-e.blend",
+        "archive": "art/models/scenes/port-e.blend",
+        "bytes": 4393695,
+        "sha256": "7b0644c084c811b259f6adcb849f147420bd976df2a9bf0aa802a303413e932d"
+      }
+    ],
+    "sourceBytes": 69772310,
+    "existingCanonicalDependency": {
+      "source": ".local/art-source/ships/hero-pristine.blend",
+      "archive": "art/models/ships/hero-pristine.blend",
+      "bytes": 3014479,
+      "sha256": "3e57589455daf256de513d5d9f325ffcc66d171e163b63cbbdf525bbcefdab71",
+      "unchanged": true
+    },
+    "regenerationCommands": [
+      "blender --background --factory-startup --python-exit-code 1 --python art/build-portraits.py -- --samples 96 --engine EEVEE",
+      "python art/portrait-verify.py --contact-sheet",
+      "blender --background --factory-startup --python-exit-code 1 --python art/build-places.py -- --samples 96",
+      "python art/export-places.py"
+    ],
+    "licenses": {
+      "mediaAndNativeScenes": "CC0-1.0",
+      "generators": "MIT"
+    }
   }
 }

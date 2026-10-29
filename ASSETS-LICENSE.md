@@ -32,6 +32,9 @@ rights under [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1
 
 - Original Blender renders and editable model assets created by Kimi K3.1 under
   the direction of Cédric Bernadac for Jump-1.
+- The v0.2.0 visual refresh includes native geometry refinements, canonical
+  spacecraft integration and final render integration by Nilo/Codex. These
+  original media retain the same CC0-1.0 scope; their generators retain MIT.
 - Original Suno-generated music and sound effects delivered for Jump-1 through
   permitted official downloads, and their runtime format conversions.
 

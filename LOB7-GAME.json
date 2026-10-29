@@ -1,6 +1,6 @@
 {
   "title": "Jump-1",
-  "description": "A single-player 2d6 space-trading roguelite. Command a five-person crew aboard a 200-ton ship bought on credit, trade across the Lantern Reach, and try to repay the bank in 52 weeks. English by default, with French available.",
+  "description": "A 2d6 space-trading roguelite. Crew a 200-ton ship bought on credit, trade across the Lantern Reach, and stay ahead of the bank's repossession cruiser. English by default, with French available.",
   "entrypoint": "index.html",
   "license": "MIT",
   "genre": [
@@ -17,11 +17,12 @@
     "Mouse or touch: choose actions, worlds and cargo.",
     "Arrow keys: move map cursor. Enter or Space: confirm. Escape: back.",
     "1-5: crew stations. L: log. M: map. S: ship. R: standard week. Q: quick stop.",
-    "Single-player campaign: control all five crew stations."
+    "Solo campaign. The cooperative edition is not available."
   ],
   "credits": [
     "Cédric Bernadac - design, original setting, publication.",
     "Developed with Codex and Kimi K3.1. Original Blender art by Kimi under the direction of Cédric Bernadac.",
+    "First-voyage guide and draggable map by Claude Opus 5.5. Visual refresh 0.2.0 by Nilo / Codex with Kimi K3.1.",
     "Original music and sound effects generated with Suno; permitted source exports preserved. See ASSETS-LICENSE.md and assets/audio/AUDIO-PROVENANCE.json.",
     "Rules derived from the Cepheus Engine System Reference Document, Open Game License 1.0a; see OGL.md. Jump-1 is compatible with the rules of Cepheus Engine.",
     "LOB7 Rooms SDK bundled unchanged as lob7-rooms.js."

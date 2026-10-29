@@ -1,67 +1,75 @@
-# Jump-1 · The Lantern Reach
+# Jump-1 · Nilo / Codex visual refresh 0.2.0
 
-A single-player, turn-based space-trading roguelite. Take command of a 200-ton
-ship bought on credit, manage five crew members, trade between worlds, and try
-to pay the bank before the end of a 52-week campaign.
+A single-player, turn-based space-trading roguelite. Command a five-person crew
+aboard a 200-ton ship bought on credit, trade through the Lantern Reach, and try
+to repay the bank over 52 weeks. English is the default; French is available.
+Cooperative play is not available in this edition.
 
-English is the default language. Use the EN/FR control to switch to French.
-The five crew stations belong to the solo player. Cooperative play is not
-available in this edition; its menu entry is marked as coming soon.
+This is an **independent Nilo / Codex variant**, derived from the original
+[Jump-1 0.1.2 release](https://lob7.com/player/br_s_837e292e-e255-4373-8387-06020925c0f4). It retains the
+original setting, game systems, inherited contributions and licences. The
+original game's main branch and original LOB7 edition are not replaced by this
+variant. This branch is prepared source; publication and hosted acceptance are
+recorded by LOB7 and must be checked separately.
+
+The visual refresh improves readable typography, compact crew and port panels,
+character dossiers and portraits, commerce quotes and mobile layouts, and scene
+artwork. See the artwork provenance for the actual production process and the
+QA document for recorded checks and their limits.
 
 ## Run locally
 
-Serve this directory over HTTP, for example with Python 3:
-
 ```sh
-python -m http.server 8080
+python -m http.server 8080 --bind 127.0.0.1
 ```
 
-Open http://localhost:8080/ in a modern browser. The entrypoint is `index.html`.
-The game uses plain relative ES modules and bundled images, fonts and audio.
-There is no build step, npm dependency, external runtime service or backend.
-Audio starts after a player gesture. Opening `index.html` with a `file:` URL
-does not provide the HTTP origin required for local module and asset loading.
+Open http://127.0.0.1:8080/ in a modern browser. The entrypoint is `index.html`.
+The game uses editable local HTML, CSS and JavaScript modules with bundled
+images, fonts and audio. There is no build step, npm dependency or external
+runtime service. Audio starts after a player gesture. Serve the directory over
+HTTP; a `file:` URL does not provide the origin required by modules and assets.
 
-Use mouse or touch to select actions, worlds and cargo. Arrow keys move the
-map cursor; Enter or Space confirms; Escape goes back. Keys 1–5 select crew
-stations, L opens the log, M the map, S the ship, R a standard week and Q a
-quick stop. Saves stay in the browser; JSON export/import allows manual backup.
+Use mouse or touch for actions, worlds and cargo. Drag the zoomed star chart to
+pan. Arrow keys select worlds; Enter or Space confirms; Escape returns to port.
+Keys 1–5 open crew dossiers, L the log, M the map, S the ship, R a standard week
+and Q a quick stop. Saves stay in the browser, with JSON export/import for backup.
 
-## Source and edition
+## Source and branch identity
 
-This is a publication copy of Jump-1 v0.1.2. It starts from the v0.1.1 source commit
-`d563546d5b2af05f8bc59e87335383d2a4ef1baa` and adds a first-voyage guide, short
-explanations on the crew and port screens, and a star chart that can be dragged
-once zoomed. Rules and media are unchanged; the publication manifest describes
-the currently playable solo edition.
+- Development snapshot: `a7acf33c9ca772703e11cd1b4a676ea1005504b9`.
+- Parent LOB7 release: `br_s_837e292e-e255-4373-8387-06020925c0f4`.
+- Playable branch: [`codex/visual-refresh`](https://github.com/codex-lm/jump-1-web/tree/codex/visual-refresh).
+- Source and tests: [`8571a6792135827651de4952c2e5cd03df0aa817`](https://github.com/codex-lm/jump-1-web/tree/8571a6792135827651de4952c2e5cd03df0aa817).
 
-The [source branch](https://github.com/codex-lm/jump-1-web/tree/12e042e45489b40a282ea6c7c0bc6423588dc121) preserves
-the complete 191-file v0.1.1 snapshot, including its tests and development notes.
-The public copy starts from that snapshot; it does not contain the earlier
-development history. The main branch keeps the playable source and assets,
-required notices, provenance and the QA document referenced by those notices.
-There are no editable Blender projects or native audio exports in this runtime
-copy. Their production and preservation are described by the provenance files.
+This runtime branch includes editable game code and ready-to-serve media.
+The public copy retains inherited public history; earlier private development
+history is not mirrored. Source filtering excludes credentials, local work
+directories, publication receipts and native authoring files. Editable Blender
+projects and native audio exports are not part of this runtime package. Their
+provenance and preservation are described in the accompanying records.
+
+The source branch contains `tests/run.mjs`; the runtime branch omits test and development tooling.
+An export receipt is a local packaging check, not a claim of browser or hosted
+gameplay acceptance.
 
 ## Credits and rights
 
-- Cédric Bernadac: game design, original setting and production direction.
-- Nilo / Codex: implementation, integration and validation.
-- Kimi K3.1: original Blender models, materials and image renders under Cédric's direction.
-- Suno: production service used for the 3 music tracks, 2 ending cues and 11 sound effects.
+- **Cédric Bernadac**: Created the game design and original Lantern Reach setting; directed the production of Jump-1.
+- **Nilo / Codex**: Implemented the deterministic game engine, interface, local audio player and integrations under Cédric Bernadac’s direction. Created the 0.2.0 visual refresh: compact crew and port layouts, readable commerce, responsive journal, distinct portrait families and save compatibility; refined native Blender face geometry and integrated the canonical ship into the scenes.
+- **Kimi K3.1**: Created original Blender models, materials and image renders, including the native HD ship cutaway, under Cédric Bernadac's direction. Refined the 16 crew portraits and four inhabited port/bar scenes for the 0.2.0 visual refresh.
+- **Claude Opus 5.5**: Added the first-voyage guide, the crew and port explanations, and the draggable star chart in 0.1.2, under Cédric Bernadac's direction.
+- **Suno**: source service for the inherited music and sound effects; see the audio provenance.
 
-The game code is MIT licensed; see [LICENSE](LICENSE). Media, rules, fonts and
-the supplied LOB7 Rooms SDK have separate scopes and notices:
+Code is MIT licensed. Other content has the scopes specified in its own notices:
 
-- [ASSETS-LICENSE.md](ASSETS-LICENSE.md): generated-media dedication and rights scope.
-- [OGL.md](OGL.md): full OGL 1.0a, content designations, SRD notices and compatibility licence.
-- [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md): SDK, rules and font notices.
-- [art/PROVENANCE.json](art/PROVENANCE.json) and [art/FONTS.md](art/FONTS.md): artwork and font provenance.
-- [assets/audio/AUDIO-PROVENANCE.json](assets/audio/AUDIO-PROVENANCE.json): Suno source identities and conversion records.
-- [QA.md](QA.md): technical checks and their limits, including the absence of a perceptual listening assessment.
+- [LICENSE](LICENSE), [ASSETS-LICENSE.md](ASSETS-LICENSE.md).
+- [OGL.md](OGL.md) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+- [Artwork provenance](art/PROVENANCE.json) and [font provenance](art/FONTS.md).
+- [Audio provenance](assets/audio/AUDIO-PROVENANCE.json).
+- [QA record](QA.md).
 
 Keep these notices and the original font licences when redistributing. The MIT
-manifest field identifies the code licence; it does not relicense other content.
+manifest field describes the code licence; it does not relicense other content.
 Jump-1 is compatible with the rules of Cepheus Engine. Cepheus Engine and
 Samardan Press are trademarks of Jason "Flynn" Kemp. Jump-1 is not affiliated
 with Jason "Flynn" Kemp or Samardan Press.

@@ -89,3 +89,358 @@ dialog.ship-zoom-modal{width:min(1400px,calc(100vw - 32px));max-width:none;max-h
 .map-hint{font-size:.61rem;color:var(--muted);margin:-8px 0 14px}
 .upp-legend{font:.68rem PlexMono,monospace;color:var(--muted);line-height:1.7;margin:0 0 14px}
 .first-steps{font-size:.8rem;line-height:1.6;border-left:2px solid var(--brass);padding:8px 12px;margin:0 0 16px;background:#d9a44110}
+/* Visual edition 0.2: readable instruments, compact orders and an optional logbook. */
+:root{--font-size:16px;--muted:#b6c2cb;--line:#d9a44132}
+body{min-width:320px}
+button{font-size:max(.875rem,13px);min-height:44px}
+button.small{font-size:max(.8125rem,12px);min-height:40px}
+button.icon-button{min-width:42px;min-height:42px}
+label,.section-intro{font-size:max(.875rem,13px)}
+small{font-size:max(.75rem,12px)}
+.eyebrow,.section-label{font-size:max(.6875rem,11px);letter-spacing:.12em}
+.badge{font-size:max(.6875rem,11px)}
+.empty{padding:14px 4px;text-align:left;font-size:max(.875rem,13px)}
+.game{max-width:1600px}
+.topbar{padding:16px 24px;gap:18px}
+.topbar .ship-name{font-size:1.25rem}
+.topbar .world-label{font-size:max(.6875rem,11px)}
+.top-stats{gap:22px}
+.top-stat span{font-size:max(.6875rem,11px);letter-spacing:.04em}
+.top-stat strong{font-size:max(.875rem,14px)}
+.game-body{grid-template-columns:280px minmax(0,1fr)}
+.ship-panel{padding:22px 18px;min-width:0}
+.central-panel{padding:24px;container-type:inline-size}
+.central-nav{gap:4px;align-items:center;margin-bottom:22px;flex-wrap:wrap}
+.central-nav button{font-size:max(.875rem,13px);padding:8px 11px}
+.central-nav .journal-toggle{margin-left:auto;display:flex;align-items:center;gap:7px}
+.central-nav .help-button{width:40px;padding:8px}
+.journal-panel{display:none;padding:20px 16px}
+.journal-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px}
+.journal-heading h3{margin:0}
+.journal-panel .tabs{gap:4px}
+.journal-panel .tabs button{font-size:max(.75rem,12px);padding:7px 8px}
+.journal-panel .log-entry{font-size:max(.8125rem,13px);padding:14px 0}
+.log-entry .log-date,.log-entry details{font-size:max(.75rem,12px)}
+.journal-panel .log-list{max-height:calc(100svh - 250px)}
+@media(min-width:901px){
+ .game[data-journal=open] .game-body{grid-template-columns:260px minmax(0,1fr) 280px}
+ .game[data-journal=open] .journal-panel{display:block}
+}
+.meter-label,.meter-label strong{font-size:max(.75rem,12px)}
+.meter-track{height:5px}
+.crew-list{gap:3px;margin-top:10px}
+.crew-mini{padding:7px 2px;gap:10px}
+.crew-mini .portrait{width:50px;height:50px;background:none;border:0}
+.crew-mini .crew-name{font-size:max(.875rem,13px)}
+.crew-mini .crew-role,.crew-status{font-size:max(.75rem,12px);line-height:1.35}
+.crew-mini .key{font-size:12px}
+.ship-panel .rule{margin:18px 0}
+.ship-panel .ship-enlarge-button{font-size:max(.8125rem,12px);margin-bottom:18px}
+.ship-panel .ship-system-level{display:none}
+.ship-panel .panel-heading{margin-bottom:9px}
+.port-arrival{display:grid;grid-template-columns:minmax(0,1fr) minmax(150px,30%);gap:18px;align-items:stretch;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.world-header{gap:16px;min-height:0;margin:0;padding:0;border:0;align-items:center}
+.asset.world-sphere{width:84px;height:84px}
+.world-copy{min-width:0}
+.world-header h2{font-size:2rem;margin:5px 0 8px}
+.world-profile{font-size:max(.8125rem,12px);margin:0 0 8px;color:var(--muted)}
+.world-codes{display:flex;flex-wrap:wrap;gap:5px}
+.world-codes .badge{font-size:max(.6875rem,11px)}
+.world-details{margin-top:9px;font-size:max(.75rem,12px);color:var(--muted)}
+.world-details summary{cursor:pointer;width:fit-content;min-height:24px}
+.world-details[open] summary{margin-bottom:8px}
+.world-header .uwp,.world-header .world-note{font-size:max(.75rem,12px);line-height:1.5;overflow-wrap:anywhere;margin:6px 0 0}
+.port-vignette{position:relative;min-height:130px;overflow:hidden;border-radius:5px;background:#122434}
+.port-vignette .asset{position:absolute;inset:0;width:100%;height:100%}
+.port-vignette .asset>img{object-fit:cover;object-position:74% 50%}
+.first-steps{font-size:max(.8125rem,13px);line-height:1.55;padding:12px 15px;margin:0 0 20px;border-left:2px solid var(--brass);background:#d9a44108}
+.port-orders-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.port-orders-heading h3{font-size:1.15rem;margin:0 0 5px}
+.port-orders-heading p{font-size:max(.75rem,12px);color:var(--muted);margin:0}
+.port-cards{display:grid;grid-template-columns:1fr;gap:8px;margin:15px 0}
+.port-card:last-child{grid-column:auto}
+.port-card{grid-column:auto;display:grid;grid-template-columns:minmax(180px,.85fr) minmax(0,1fr);align-items:center;gap:16px;padding:10px 14px;background:#142535;border-color:#8fa7b326}
+.port-card.order-assigned{border-color:#78beb74d;background:#16303966}
+.port-card .port-identity{display:flex;gap:12px;align-items:center;min-width:0;padding:0;text-align:left;border:0;background:none}
+.port-identity>span{min-width:0}
+.port-identity strong{display:block;font:500 1rem Fraunces,Georgia,serif;overflow-wrap:anywhere;line-height:1.35}
+.port-card .portrait,.port-card .portrait-fallback{width:56px;height:56px;border:0;background:none}
+.port-card .role{display:block;font-size:max(.75rem,12px);line-height:1.4;margin-top:4px;color:var(--muted)}
+.port-card .action-row{display:flex;gap:8px;align-items:center;min-width:0}
+.port-card select{font-size:max(.875rem,13px);padding:9px 10px;min-height:44px;width:0;flex:1}
+.port-card .action-row>button{font-size:max(.8125rem,12px);min-height:44px;min-width:82px;display:flex;align-items:center;justify-content:center;gap:5px}
+.port-card .action-row>button .icon{width:16px;height:16px}
+.port-card.order-assigned button:disabled{opacity:.85;color:#9ddbd1}
+.port-card.order-assigned select:disabled{opacity:.75}
+.port-commerce{margin-top:16px}
+.port-footer{margin-top:18px;padding-top:18px;gap:10px;justify-content:flex-start}
+.port-footer .primary{margin-left:auto}
+.map-legend,.map-hint{font-size:max(.75rem,12px)}
+.map-detail p{font-size:max(.875rem,13px)}
+.scene-banner:after{background:linear-gradient(90deg,#07131bd9,transparent 80%)}
+.scene-banner .scene-label{bottom:18px;left:20px;max-width:80%}
+.scene-banner h2{font-size:1.8rem;text-shadow:0 2px 14px #000}
+.scene-copy{font-size:1.1rem;line-height:1.6}
+.help-step p,.help-step h3{font-size:max(.875rem,13px)}
+.help-step{padding:16px}
+.help-step .number{margin-bottom:8px}
+dialog .modal-body{font-size:max(.875rem,13px)}
+.title-footer,.title-hint{font-size:max(.75rem,12px)}
+.title-variant{font-size:max(.6875rem,11px)}
+.title-copy .description{font-size:1rem}
+.ship-caption .mono{font-size:max(.6875rem,11px)}
+@container (max-width:650px){
+ .port-card{grid-template-columns:minmax(0,1fr);gap:9px;padding:12px}
+ .port-identity .portrait{width:52px;height:52px}
+ .port-arrival{grid-template-columns:minmax(0,1fr) 25%;gap:12px}
+ .world-header .world-sphere{width:64px;height:64px}
+ .world-header{gap:10px}
+ .port-footer .primary{margin-left:0;flex:1}
+}
+@media(min-width:901px) and (max-width:1199px){
+ .game-body,.game[data-journal=open] .game-body{grid-template-columns:240px minmax(0,1fr)}
+ .game[data-journal=open] .central-panel{display:none}
+ .game[data-journal=open] .journal-panel{grid-column:2;display:block;border-left:0}
+ .central-panel{padding:20px}
+ .ship-panel{padding:20px 14px}
+}
+@media(max-width:1279px){
+ .topbar{flex-wrap:wrap;gap:12px}
+ .topbar .brand-block{flex:1}
+ .topbar .top-stats{order:3;width:100%;justify-content:space-between;gap:10px;padding-top:10px;border-top:1px solid var(--line)}
+}
+@media(max-width:900px){
+ .game-body,.game[data-journal=open] .game-body{display:block}
+ .game .ship-panel,.game .central-panel,.game .journal-panel{display:none}
+ .game[data-mobile=central] .central-panel,.game[data-mobile=ship] .ship-panel,.game[data-mobile=journal] .journal-panel{display:block}
+ .game .journal-panel .log-list{max-height:none}
+ .central-panel{padding:20px}
+ .central-nav .journal-toggle{display:none}
+ .central-nav .help-button{margin-left:auto}
+ .mobile-tabs button{font-size:max(.8125rem,12px)}
+ .topbar .pressure-stat{display:none}
+ .topbar .ship-name{font-size:1.2rem}
+ .port-card:last-child{grid-column:auto}
+}
+@media(max-width:600px){
+ .topbar{padding:12px 14px}
+ .topbar .top-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px 18px}
+ .topbar .top-stat span{font-size:max(.6875rem,11px);line-height:1.35}
+ .topbar .top-stat strong{font-size:max(.875rem,14px)}
+ .topbar .brand-block{max-width:none;min-width:0}
+ .topbar .ship-name{overflow-wrap:anywhere;font-size:1.05rem}
+ .topbar>.actions{gap:5px}
+ .topbar .small,.topbar .icon-button{min-width:38px;min-height:40px;padding:7px}
+ .central-panel{padding:16px 14px}
+ .central-nav{gap:1px;flex-wrap:nowrap;margin-bottom:18px}
+ .central-nav button{padding:7px 6px;font-size:max(.75rem,12px);min-width:0}
+ .central-nav .help-button{width:30px}
+ .port-arrival{display:block;position:relative;isolation:isolate;margin-bottom:18px;padding-bottom:18px}
+ .world-header .world-sphere{display:none}
+ .world-header h2{font-size:1.8rem}
+ .world-header .eyebrow{font-size:11px;letter-spacing:.06em}
+ .port-vignette{position:absolute;inset:0 0 18px auto;width:48%;min-height:0;opacity:.32;z-index:-1;mask-image:linear-gradient(to left,#000,transparent)}
+ .port-orders-heading .actions{width:100%}
+ .port-orders-heading .actions button{flex:1}
+ .port-card{grid-template-columns:1fr;gap:9px;padding:12px}
+ .port-card .action-row>button{min-width:82px}
+ .port-commerce button{flex:1;font-size:max(.8125rem,12px);padding:9px}
+ .port-footer button{flex:1;min-width:125px;font-size:max(.8125rem,12px)}
+ .port-footer .primary{width:100%;flex-basis:100%}
+ .scene-banner h2{font-size:1.55rem}
+ .scene-banner .scene-label{left:14px;bottom:14px}
+ .title-copy .description{font-size:.9375rem}
+ .title-footer{gap:12px}
+}
+
+/* Crew dossiers and station decisions: readable values, portraits with room to breathe. */
+.chargen-screen{max-width:1160px;padding:28px 28px 44px}
+.chargen-header{max-width:850px;margin:0 0 24px}
+.chargen-header h1{font-size:clamp(2rem,3.6vw,3.1rem);line-height:1.15;margin:12px 0}
+.chargen-header .section-intro{font-size:max(.875rem,14px);max-width:780px;margin:0 0 16px}
+.chargen-cards{display:grid;grid-template-columns:1fr;gap:12px}
+.character-card{background:linear-gradient(105deg,#1b3041,#142535 75%);border-color:#d9a44130;border-radius:6px;overflow:visible}
+.character-summary{display:grid;grid-template-columns:88px minmax(210px,1fr) minmax(280px,1.1fr);gap:20px;align-items:center;padding:16px 18px 10px}
+.character-card .character-art{padding:0;background:none}
+.character-art .asset.portrait,.character-art .portrait-fallback{display:block;width:88px;height:88px;border:0;border-radius:0;background:none}
+.character-art .asset.portrait .asset-fallback{inset:0;border-radius:50%}
+.character-identity{min-width:0}
+.character-card h3{font-size:1.2rem;line-height:1.25;margin:5px 0;overflow-wrap:anywhere}
+.character-card .eyebrow{font-size:max(.72rem,11px);letter-spacing:.08em;line-height:1.5}
+.character-card .character-meta{font-size:max(.8rem,12px);line-height:1.5}
+.character-strengths>.section-label{font-size:max(.72rem,11px);margin:0 0 7px;display:block;letter-spacing:.07em}
+.crew-skills{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:18px;row-gap:6px;list-style:none;padding:0;margin:0}
+.crew-skills li{display:flex;align-items:baseline;justify-content:space-between;gap:10px;min-width:0;font-size:max(.8125rem,13px);line-height:1.45}
+.crew-skills li>span{min-width:0;overflow-wrap:anywhere}
+.crew-skills strong{font-family:PlexMono,monospace;font-size:max(.875rem,14px);font-weight:500;color:var(--brass)}
+.character-tools{display:flex;align-items:start;justify-content:space-between;gap:12px;padding:0 18px 8px 126px;flex-wrap:wrap}
+.character-record{flex:1;min-width:180px}
+.character-record summary,.crew-dossier summary,.bonds-preview summary{cursor:pointer;color:var(--muted);font-size:max(.8125rem,13px);line-height:1.5;padding:8px 0;width:fit-content}
+.character-record[open]{flex-basis:100%;order:1}
+.character-record[open] summary,.crew-dossier[open] summary{color:var(--brass)}
+.character-record-body{border-top:1px solid var(--line);padding-top:14px}
+.character-record-columns{display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:0 0 10px}
+.character-record-columns h4{font-size:1rem;margin:0 0 10px}
+.character-tools .character-reroll{font-size:max(.8125rem,13px);min-height:36px;padding:7px 0}
+.career-editor{display:grid;grid-template-columns:1.2fr 1fr .8fr 1fr;align-items:end;gap:12px;padding-bottom:18px}
+.career-editor label{font-size:max(.8125rem,13px);margin:0}
+.career-editor input,.career-editor select{font-size:max(.875rem,14px);padding:9px;min-height:42px}
+.career-editor .career-rebuild{grid-column:1/-1;width:fit-content;font-size:max(.875rem,14px);min-height:40px}
+.career-history{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.career-history li{display:flex;gap:12px;align-items:baseline;font-size:max(.8125rem,13px);line-height:1.45}
+.career-history .career-age{font: max(.8125rem,13px) PlexMono,monospace;color:var(--brass);min-width:2ch}
+.career-history li>div{display:grid;gap:2px}
+.career-history strong{font-weight:500}
+.career-history li>div>span{color:var(--muted);font-size:max(.75rem,12px)}
+.character-upp{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:12px 0 0;font: max(.75rem,12px) PlexMono,monospace;color:var(--muted)}
+.character-upp strong{color:var(--brass);font-weight:500;letter-spacing:.12em}
+.bonds-preview{margin-top:16px;padding:4px 14px;background:none;font-family:Plex,system-ui,sans-serif}
+.bonds-preview ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:8px 24px;padding:4px 0 12px;margin:0;font-size:max(.8125rem,13px);line-height:1.5}
+.chargen-bottom{margin-top:18px;padding-top:18px}
+.chargen-cash{font-size:1.4rem}
+.crew-sheet{display:grid;gap:20px}
+dialog .crew-sheet .character-modal{grid-template-columns:112px minmax(0,1fr);gap:22px;align-items:center}
+dialog .crew-sheet .character-modal .asset.portrait{width:112px;height:112px;background:none;border:0}
+.crew-identity p{margin:6px 0 10px;font-size:max(.875rem,14px);line-height:1.55}
+.crew-identity .eyebrow{font-size:max(.75rem,12px)}
+.crew-mood{font-size:max(.8125rem,13px)}
+.crew-strengths h3{margin:0 0 10px;font-size:1.2rem}
+.crew-skills--key{gap:8px 28px}
+.crew-skills--key li{font-size:max(.9375rem,15px);padding:5px 0;border-bottom:1px solid #d9a44120}
+.crew-skills--key strong{font-size:1.1rem}
+.crew-personal{display:grid;gap:12px;margin:0}
+.crew-personal>div{display:grid;grid-template-columns:135px minmax(0,1fr);gap:16px}
+.crew-personal dt{font-size:max(.8125rem,13px);color:var(--muted)}
+.crew-personal dd{margin:0;font-size:max(.875rem,14px);line-height:1.5}
+.crew-dossier{border-top:1px solid var(--line);padding-top:3px}
+.crew-dossier-body{padding-top:8px}
+.crew-dossier-body h3{margin:18px 0 10px;font-size:1.1rem}
+.crew-profile-line{display:flex;justify-content:space-between;gap:12px;font-size:max(.8125rem,13px);margin:0}
+.crew-profile-line .mono{color:var(--brass);letter-spacing:.12em}
+.crew-sheet .attribute-grid{margin:12px 0;gap:8px}
+.crew-sheet .attribute{padding:8px 4px}
+.crew-sheet .attribute dt{font-size:max(.75rem,12px);color:var(--muted)}
+.crew-sheet .attribute dd{font:1.2rem PlexMono,monospace;color:var(--brass);margin:5px 0 0}
+.scene-station{grid-template-columns:minmax(190px,.8fr) minmax(0,1.7fr);gap:18px;padding:14px;align-items:center;background:#13243680}
+.scene-person{display:flex;align-items:center;gap:12px;min-width:0;padding:0;border:0;text-align:left;justify-content:flex-start}
+.scene-person .asset.portrait{width:56px;height:56px;flex:0 0 56px;background:none;border:0}
+.scene-person>span{min-width:0}
+.scene-person strong{font:500 1rem Fraunces,Georgia,serif;display:block;overflow-wrap:anywhere}
+.scene-person small{font-size:max(.75rem,12px);line-height:1.4;display:block;margin-top:4px}
+.scene-station .choices{gap:8px}
+.scene-station .choices button{font-size:max(.875rem,14px);line-height:1.4;padding:9px 12px;min-height:44px;white-space:normal;text-align:left}
+.scene-station .choices small{font-size:max(.75rem,12px);line-height:1.4;margin-top:4px}
+.scene-person--inactive .portrait{opacity:.55}
+@media(max-width:1000px){
+ .character-summary{grid-template-columns:80px minmax(180px,1fr) minmax(240px,1fr);gap:16px}
+ .character-art .asset.portrait{width:80px;height:80px}
+ .character-tools{padding-left:114px}
+ .scene-station{grid-template-columns:1fr;gap:12px}
+}
+@media(max-width:760px){
+ .chargen-screen{padding:24px 18px 36px}
+ .character-summary{grid-template-columns:72px minmax(0,1fr);gap:10px 16px;padding:14px 14px 8px}
+ .character-art .asset.portrait{width:72px;height:72px}
+ .character-strengths{grid-column:1/-1;padding-top:4px}
+ .character-strengths>.section-label{display:none}
+ .character-tools{padding:0 14px 8px;gap:4px}
+ .character-record{min-width:150px}
+ .character-record-columns,.bonds-preview ul{grid-template-columns:1fr}
+ .career-editor{grid-template-columns:1fr 1fr}
+ .character-tools .character-reroll{min-height:44px}
+ .character-record summary,.crew-dossier summary,.bonds-preview summary{min-height:44px;display:list-item;padding-top:12px}
+ .scene-station{padding:12px;gap:12px}
+ .scene-station .choices button{flex:1 1 130px;min-height:48px}
+}
+@media(max-width:480px){
+ .chargen-screen{padding:22px 14px 32px}
+ .chargen-header h1{font-size:2.1rem}
+ .character-summary{gap:10px 12px}
+ .character-card h3{font-size:1.15rem}
+ .crew-skills{column-gap:14px}
+ dialog .crew-sheet .character-modal{grid-template-columns:88px minmax(0,1fr);gap:14px}
+ dialog .crew-sheet .character-modal .asset.portrait{width:88px;height:88px}
+ .crew-skills--key{grid-template-columns:1fr}
+ .crew-personal>div{grid-template-columns:1fr;gap:3px}
+ .crew-sheet .attribute-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .character-record-columns{gap:18px}
+}
+.chargen-guide{margin:0 0 14px}
+.chargen-guide summary{cursor:pointer;color:var(--brass);font-size:max(.875rem,14px);padding:4px 0 10px;width:fit-content}
+.chargen-guide .upp-legend{font-size:max(.8125rem,13px);line-height:1.6;margin:0 0 14px}
+
+/* Readable exchange: compare prices on wide panels, group each offer on narrow panels. */
+.market-view{container:market / inline-size;min-width:0}
+.market-header h2{margin:8px 0 10px}
+.market-header .section-intro{font-size:max(.875rem,13px);line-height:1.65;max-width:66ch;margin-bottom:18px}
+.market-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
+.market-tabs button{font-size:max(.875rem,13px);min-height:42px;padding:8px 12px;white-space:normal}
+.market-table{width:100%;table-layout:fixed;border-collapse:collapse;font-size:max(.875rem,13px)}
+.market-table th{font:500 max(.75rem,12px) Plex,sans-serif;letter-spacing:.035em;text-transform:none;color:var(--muted);padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:bottom}
+.market-table th:first-child{width:35%;padding-left:0}
+.market-table th:nth-child(2){width:12%}
+.market-table th:nth-child(3){width:20%}
+.market-table th:last-child{width:33%;padding-right:0}
+.market-table td{padding:18px 8px;vertical-align:top;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
+.market-table td:first-child{padding-left:0}
+.market-table td:last-child{padding-right:0}
+.market-identity>strong{display:block;font-size:max(.9375rem,14px);font-weight:600;line-height:1.4;color:var(--ivory)}
+.market-identity .badge{display:inline-flex;margin:7px 0 0;font-size:12px;letter-spacing:0}
+.market-table .good-detail,.market-destinations,.market-deadline{font-size:max(.75rem,12px);line-height:1.5;margin-top:5px;color:var(--muted)}
+.market-destinations{color:#8ac6c0;margin-top:8px}
+.market-table .market-number{text-align:right;font-variant-numeric:tabular-nums}
+.market-table td.market-number{font:500 max(.875rem,13px) PlexMono,monospace;line-height:1.5}
+.market-table .price{color:var(--ivory)}
+.price-context{display:block;margin-top:5px;font-size:max(.75rem,12px);line-height:1.45;font-weight:500}
+.price-below{color:#8ac6c0}.price-above{color:#e4b789}.price-same{color:var(--muted)}
+.market-table .market-action{text-align:right}
+.market-table .market-action>button{min-height:42px;font-size:max(.875rem,13px);padding:8px 12px;white-space:normal}
+.market-order{display:grid;gap:8px;min-width:0}
+.market-order-controls{display:flex;align-items:flex-end;justify-content:flex-end;gap:8px;min-width:0}
+.market-quantity{display:grid;gap:5px;margin:0;flex:0 0 64px;min-width:0;text-align:left}
+.market-quantity>span{color:var(--muted);font-size:12px;line-height:1.3}
+.market-table .market-quantity input{width:100%;min-width:0;min-height:42px;padding:8px;font-size:16px;font-variant-numeric:tabular-nums;text-align:center}
+.market-table .market-order-controls button{min-height:42px;padding:8px 10px;font-size:max(.875rem,13px);white-space:normal}
+.market-order-total{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:3px 8px;align-items:baseline;font-size:12px;line-height:1.4;color:var(--muted)}
+.market-order-total output{font:500 max(.875rem,13px) PlexMono,monospace;color:var(--brass);overflow-wrap:anywhere}
+.market-empty{font-size:max(.875rem,13px);line-height:1.6;color:var(--muted);padding:16px 0;margin:0}
+.cargo-manifest{min-width:0}
+.cargo-heading,.cargo-item-title{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px 12px}
+.cargo-heading h3,.cargo-passengers h3{margin:0;font-size:1.2rem}
+.cargo-heading>.mono{font-size:max(.8125rem,12px)}
+.cargo-manifest .cargo-grid{height:9px;margin:14px 0 8px;border:0}
+.cargo-manifest .cargo-item{font-size:max(.875rem,13px);padding:14px 0}
+.cargo-item-title strong{overflow-wrap:anywhere;line-height:1.45}
+.cargo-item-title>.mono{white-space:nowrap}
+.cargo-item-detail,.cargo-sale-note{font-size:max(.75rem,12px);line-height:1.6;color:var(--muted);margin:6px 0 0}
+.cargo-sale{display:flex;flex-wrap:wrap;gap:4px 12px;justify-content:space-between;align-items:baseline;font-size:max(.75rem,12px);color:var(--muted);margin-top:6px}
+.cargo-sale strong{font:500 max(.875rem,13px) PlexMono,monospace;color:var(--brass)}
+.cargo-manifest .actions{margin-top:10px}
+.cargo-manifest .actions button,.cargo-empty button{font-size:max(.875rem,13px);min-height:40px;white-space:normal}
+.cargo-empty{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;padding:12px 0}
+.cargo-empty p{font-size:max(.875rem,13px);line-height:1.5;color:var(--muted);margin:0}
+.cargo-passengers{margin-top:20px;padding-top:18px;border-top:1px solid var(--line)}
+.cargo-berths{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:10px;font-size:max(.75rem,12px);color:var(--muted)}
+.cargo-berths strong{font-variant-numeric:tabular-nums;color:var(--ivory);font-weight:500;margin-left:5px;white-space:nowrap}
+.cargo-manifest-compact .cargo-heading{gap:5px}.cargo-manifest-compact .cargo-heading h3,.cargo-manifest-compact .cargo-passengers h3{font-size:1.1rem}
+.cargo-manifest-compact .cargo-passengers{margin-top:10px;padding-top:14px}
+.cargo-manifest-compact .cargo-empty{padding:8px 0}
+.cargo-manifest-full{max-width:850px}
+@container market (max-width:660px){
+  .market-table{display:block;table-layout:auto}
+  .market-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+  .market-table tbody{display:grid;gap:0}
+  .market-table tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px 16px;padding:18px 0;border-bottom:1px solid var(--line)}
+  .market-table td{display:block;padding:0!important;border:0;min-width:0}
+  .market-table .market-identity{grid-column:1/-1}
+  .market-table td.market-number{text-align:left}
+  .market-table td.market-number:before{content:attr(data-label);display:block;font:400 12px Plex,sans-serif;color:var(--muted);margin-bottom:4px}
+  .market-table .market-action{grid-column:1/-1;text-align:left}
+  .market-table .market-order{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px;justify-content:space-between}
+  .market-order-total{display:grid;gap:3px;text-align:right;justify-content:start;margin-bottom:3px}
+  .market-order-controls{justify-content:start}
+  .market-table .market-action>button{min-width:130px}
+}
+@media(pointer:coarse){
+  .market-table .market-order-controls button,.market-table .market-quantity input,.market-table .market-action>button,.market-tabs button,.cargo-manifest .actions button,.cargo-empty button{min-height:44px}
+}
