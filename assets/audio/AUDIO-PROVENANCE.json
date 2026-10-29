@@ -1,0 +1,2604 @@
+{
+  "schemaVersion": 1,
+  "source": "Suno",
+  "builtAtUtc": "2026-10-28T21:41:46.880258+00:00",
+  "license": "Suno-generated audio; account-dependent rights are documented by the project",
+  "partial": false,
+  "complete": true,
+  "requiredCueCount": 16,
+  "deliveredCueCount": 16,
+  "selectionMode": "technical_first_take_A",
+  "listenStatus": "not_performed_no_audio_input",
+  "listeningSelectionPerformedBy": [],
+  "missingCues": [],
+  "originalsKeptInInbox": true,
+  "registeredTakes": [
+    {
+      "id": "music.threat:A",
+      "source": "Suno",
+      "surface": "Songs",
+      "modelObserved": "v6",
+      "sourceId": "80484b3f-19bd-40cd-8726-cbb8f3ce973f",
+      "sourceUrlWithoutQuery": "https://suno.com/song/80484b3f-19bd-40cd-8726-cbb8f3ce973f",
+      "generatedAtObserved": null,
+      "uiDurationObserved": null,
+      "downloaded": true,
+      "remoteOnly": false,
+      "runtimeSelected": true,
+      "originalFilename": "Jump-1 - Collection Notice.mp3",
+      "originalSha256": "1b7df2d2c8e2a8d3825525a6f74e46965d5d9da0226c8941b0fe9357f0ece6d4",
+      "originalBytes": 2956359,
+      "originalProbe": {
+        "durationSeconds": 127.84,
+        "codec": "mp3",
+        "sampleRate": 48000,
+        "channels": 2,
+        "bitRate": 185003
+      }
+    },
+    {
+      "id": "music.threat:B",
+      "source": "Suno",
+      "surface": "Songs",
+      "modelObserved": "v6",
+      "sourceId": "0f7b3f0c-117e-4b7f-9b11-99325ebe9370",
+      "sourceUrlWithoutQuery": "https://suno.com/song/0f7b3f0c-117e-4b7f-9b11-99325ebe9370",
+      "generatedAtObserved": null,
+      "uiDurationObserved": null,
+      "downloaded": true,
+      "remoteOnly": false,
+      "runtimeSelected": false,
+      "originalFilename": "Jump-1 - Collection Notice (1).mp3",
+      "originalSha256": "75aff3ff9a4723c1b46f67f502362d67851b58d1357da06daceb54b365998d4b",
+      "originalBytes": 3942033,
+      "originalProbe": {
+        "durationSeconds": 173.2,
+        "codec": "mp3",
+        "sampleRate": 48000,
+        "channels": 2,
+        "bitRate": 182080
+      }
+    },
+    {
+      "id": "music.title:A",
+      "source": "Suno",
+      "surface": "Songs",
+      "modelObserved": "v6",
+      "sourceId": "a81a9c63-8c35-4a33-9607-930ca81bf78b",
+      "sourceUrlWithoutQuery": "https://suno.com/song/a81a9c63-8c35-4a33-9607-930ca81bf78b",
+      "generatedAtObserved": null,
+      "uiDurationObserved": null,
+      "downloaded": true,
+      "remoteOnly": false,
+      "runtimeSelected": true,
+      "originalFilename": "Jump-1 - Lantern Ledger.mp3",
+      "originalSha256": "a540a687a7e89e60c56b08d4423b2c76f942a57768dae44f53132f4d0c745d7c",
+      "originalBytes": 4105640,
+      "originalProbe": {
+        "durationSeconds": 174.0,
+        "codec": "mp3",
+        "sampleRate": 48000,
+        "channels": 2,
+        "bitRate": 188765
+      }
+    },
+    {
+      "id": "music.title:B",
+      "source": "Suno",
+      "surface": "Songs",
+      "modelObserved": "v6",
+      "sourceId": "937a6f9c-029d-4784-b3d9-8f647d4f0445",
+      "sourceUrlWithoutQuery": "https://suno.com/song/937a6f9c-029d-4784-b3d9-8f647d4f0445",
+      "generatedAtObserved": null,
+      "uiDurationObserved": null,
+      "downloaded": true,
+      "remoteOnly": false,
+      "runtimeSelected": false,
+      "originalFilename": "Jump-1 - Lantern Ledger (1).mp3",
+      "originalSha256": "2af48f36c1ce23ee5b691899aff521c054504ce4c466fbcc53450bc369538c67",
+      "originalBytes": 4277690,
+      "originalProbe": {
+        "durationSeconds": 188.4,
+        "codec": "mp3",
+        "sampleRate": 48000,
+        "channels": 2,
+        "bitRate": 181642
+      }
+    },
+    {
+      "id": "music.travel:A",
+      "source": "Suno",
+      "surface": "Songs",
+      "modelObserved": "v6",
+      "sourceId": "1af2df72-c134-43ce-bded-624448368e9f",
+      "sourceUrlWithoutQuery": "https://suno.com/song/1af2df72-c134-43ce-bded-624448368e9f",
+      "generatedAtObserved": null,
+      "uiDurationObserved": null,
+      "downloaded": true,
+      "remoteOnly": false,
+      "runtimeSelected": true,
+      "originalFilename": "Jump-1 - Violet Crossing.mp3",
+      "originalSha256": "d8b46e65db3efc9816a40ea43066fbd4310888e6f2d0e8f1f74eaef8480f86bc",
+      "originalBytes": 3951932,
+      "originalProbe": {
+        "durationSeconds": 183.16,
+        "codec": "mp3",
+        "sampleRate": 48000,
+        "channels": 2,
+        "bitRate": 172611
+      }
+    },
+    {
+      "id": "music.travel:B",
+      "source": "Suno",
+      "surface": "Songs",
+      "modelObserved": "v6",
+      "sourceId": "2a1d7420-7f4c-42ab-9803-0eede839e780",
+      "sourceUrlWithoutQuery": "https://suno.com/song/2a1d7420-7f4c-42ab-9803-0eede839e780",
+      "generatedAtObserved": null,
+      "uiDurationObserved": null,
+      "downloaded": true,
+      "remoteOnly": false,
+      "runtimeSelected": false,
+      "originalFilename": "Jump-1 - Violet Crossing (1).mp3",
+      "originalSha256": "c343553540bbeca25433042529ea1bcdad455e3b48539570497cdceb1125b8ae",
+      "originalBytes": 4396434,
+      "originalProbe": {
+        "durationSeconds": 194.08,
+        "codec": "mp3",
+        "sampleRate": 48000,
+        "channels": 2,
+        "bitRate": 181221
+      }
+    },
+    {
+      "id": "sfx.alarm:A",
+      "source": "Suno",
+      "surface": "Sounds",
+      "modelObserved": null,
+      "sourceId": "92bc6025-3141-4cad-bc54-7274d07122f9",
+      "sourceUrlWithoutQuery": "https://suno.com/song/92bc6025-3141-4cad-bc54-7274d07122f9",
+      "generatedAtObserved": null,
+      "uiDurationObserved": null,
+      "downloaded": true,
+      "remoteOnly": false,
+      "runtimeSelected": true,
+      "originalFilename": "One Isolated 1.5-second Gentle Spacecraft Caution Signal_ Two Alternating Low....mp3",
+      "originalSha256": "8be927e4022164fd215858741b49033864343f799d8c04a90f3e068836ff398c",
+      "originalBytes": 227022,
+      "originalProbe": {
+        "durationSeconds": 9.6135,
+        "codec": "mp3",
+        "sampleRate": 48000,
+        "channels": 2,
+        "bitRate": 188919
+      }
+    },
+    {
+      "id": "sfx.alarm:B",
+      "source": "Suno",
+      "surface": "Sounds",
+      "modelObserved": null,
+      "sourceId": "21188b8d-15eb-462f-bf0e-3000b4a49a50",
+      "sourceUrlWithoutQuery": "https://suno.com/song/21188b8d-15eb-462f-bf0e-3000b4a49a50",
+      "generatedAtObserved": null,
+      "uiDurationObserved": null,
+      "downloaded": false,
+      "remoteOnly": true,
+      "runtimeSelected": false,
+      "originalFilename": null,
+      "originalSha256": null,
+      "originalBytes": null,
+      "originalProbe": null
+    },
+    {
+      "id": "sfx.arrival:A",
+      "source": "Suno",
+      "surface": "Sounds",
+      "modelObserved": null,
+      "sourceId": "bea51c79-0d43-486e-a779-ce2617482bee",
+      "sourceUrlWithoutQuery": "https://suno.com/song/bea51c79-0d43-486e-a779-ce2617482bee",
+      "generatedAtObserved": null,
+      "uiDurationObserved": null,
+      "downloaded": true,
+      "remoteOnly": false,
+      "runtimeSelected": true,
+      "originalFilename": "One Isolated 1.4-second Arrival Confirmation_ A Small Cargo Ship Docking Latc....mp3",
+      "originalSha256": "5a5a98b9be0d0872457d1b1c7d35fc5129aba56fb2dba761d3263166d22bcc16",
+      "originalBytes": 171214,
+      "originalProbe": {
+        "durationSeconds": 6.8135,
+        "codec": "mp3",
+        "sampleRate": 48000,
+        "channels": 2,
+        "bitRate": 201029
+      }
+    },
+    {
+      "id": "sfx.arrival:B",
+      "source": "Suno",
+      "surface": "Sounds",
+      "modelObserved": null,
+      "sourceId": "b7baa30b-cddd-4fe1-ba6e-f6cb6b3b33a6",
+      "sourceUrlWithoutQuery": "https://suno.com/song/b7baa30b-cddd-4fe1-ba6e-f6cb6b3b33a6",
+      "generatedAtObserved": null,
+      "uiDurationObserved": null,
+      "downloaded": false,
+      "remoteOnly": true,
+      "runtimeSelected": false,
+      "originalFilename": null,
+      "originalSha256": null,
+      "originalBytes": null,
+      "originalProbe": null
+    },
+    {
+      "id": "sfx.click:A",
+      "source": "Suno",
+      "surface": "Sounds",
+      "modelObserved": null,
+      "sourceId": "eaded2c0-e8dc-4a52-b3b6-0a9370b03c6a",
+      "sourceUrlWithoutQuery": "https://suno.com/song/eaded2c0-e8dc-4a52-b3b6-0a9370b03c6a",
+      "generatedAtObserved": null,
+      "uiDurationObserved": "0:03",
+      "downloaded": true,
+      "remoteOnly": false,
+      "runtimeSelected": true,
+      "originalFilename": "Single Short Tactile User-interface Click For A Brass-and-copper Spaceship Co....m4a",
+      "originalSha256": "8d3e2ad3fc39a1b565da6eece1b5e6260600d18a13abc00be1a62d948dd203d9",
+      "originalBytes": 72235,
+      "originalProbe": {
+        "durationSeconds": 3.2,
+        "codec": "opus",
+        "sampleRate": 48000,
+        "channels": 2,
+        "bitRate": 180587
+      }
+    },
+    {
+      "id": "sfx.click:B",
+      "source": "Suno",
+      "surface": "Sounds",
+      "modelObserved": null,
+      "sourceId": "8a7a96ef-9401-4943-8fd1-6ae52d18e5a3",
+      "sourceUrlWithoutQuery": "https://suno.com/song/8a7a96ef-9401-4943-8fd1-6ae52d18e5a3",
+      "generatedAtObserved": null,
+      "uiDurationObserved": "0:02",
+      "downloaded": false,
+      "remoteOnly": true,
+      "runtimeSelected": false,
+      "originalFilename": null,
+      "originalSha256": null,
+      "originalBytes": null,
+      "originalProbe": null
+    },
+    {
+      "id": "sfx.dice:A",
+      "source": "Suno",
+      "surface": "Sounds",
+      "modelObserved": null,
+      "sourceId": "c21b4da0-821e-450a-902e-7b775d94f70f",
+      "sourceUrlWithoutQuery": "https://suno.com/song/c21b4da0-821e-450a-902e-7b775d94f70f",
+      "generatedAtObserved": null,
+      "uiDurationObserved": null,
+      "downloaded": true,
+      "remoteOnly": false,
+      "runtimeSelected": true,
+      "originalFilename": "One Isolated 0.9-second Sound Of Two Small Brass Dice Tumbling Together Onto ....mp3",
+      "originalSha256": "fd8d5daa362726b3ab46c838cf110452c9cd999847131de5aaa510ceae806dc2",
+      "originalBytes": 73588,
+      "originalProbe": {
+        "durationSeconds": 2.3735,
+        "codec": "mp3",
+        "sampleRate": 48000,
+        "channels": 2,
+        "bitRate": 248032
+      }
+    },
+    {
+      "id": "sfx.dice:B",
+      "source": "Suno",
+      "surface": "Sounds",
+      "modelObserved": null,
+      "sourceId": "8691a08f-f7fc-48b4-b393-abe820cfdb22",
+      "sourceUrlWithoutQuery": "https://suno.com/song/8691a08f-f7fc-48b4-b393-abe820cfdb22",
+      "generatedAtObserved": null,
+      "uiDurationObserved": null,
+      "downloaded": false,
+      "remoteOnly": true,
+      "runtimeSelected": false,
+      "originalFilename": null,
+      "originalSha256": null,
+      "originalBytes": null,
+      "originalProbe": null
+    },
+    {
+      "id": "sfx.impact:A",
+      "source": "Suno",
+      "surface": "Sounds",
+      "modelObserved": null,
+      "sourceId": "91777910-c356-426f-96ca-926609634544",
+      "sourceUrlWithoutQuery": "https://suno.com/song/91777910-c356-426f-96ca-926609634544",
+      "generatedAtObserved": null,
+      "uiDurationObserved": null,
+      "downloaded": true,
+      "remoteOnly": false,
+      "runtimeSelected": true,
+      "originalFilename": "One Isolated 0.7-second Glancing Spacecraft Hull Impact_ A Muted Metal Clang ....mp3",
+      "originalSha256": "cfe7f856d2a5ad53fb70de12087c301d323f0a663cabccbbc2eedf19bfccc770",
+      "originalBytes": 97870,
+      "originalProbe": {
+        "durationSeconds": 3.2135,
+        "codec": "mp3",
+        "sampleRate": 48000,
+        "channels": 2,
+        "bitRate": 243647
+      }
+    },
+    {
+      "id": "sfx.impact:B",
+      "source": "Suno",
+      "surface": "Sounds",
+      "modelObserved": null,
+      "sourceId": "bebeb26a-0a43-4026-884c-f0d712ba0756",
+      "sourceUrlWithoutQuery": "https://suno.com/song/bebeb26a-0a43-4026-884c-f0d712ba0756",
+      "generatedAtObserved": null,
+      "uiDurationObserved": null,
+      "downloaded": false,
+      "remoteOnly": true,
+      "runtimeSelected": false,
+      "originalFilename": null,
+      "originalSha256": null,
+      "originalBytes": null,
+      "originalProbe": null
+    },
+    {
+      "id": "sfx.jump:A",
+      "source": "Suno",
+      "surface": "Sounds",
+      "modelObserved": null,
+      "sourceId": "1a3b5f04-2b39-4977-9843-8104b3c9802c",
+      "sourceUrlWithoutQuery": "https://suno.com/song/1a3b5f04-2b39-4977-9843-8104b3c9802c",
+      "generatedAtObserved": null,
+      "uiDurationObserved": null,
+      "downloaded": true,
+      "remoteOnly": false,
+      "runtimeSelected": true,
+      "originalFilename": "One Isolated 2.8-second Spacecraft Jump Effect_ A Rounded Low Analog Engine T....mp3",
+      "originalSha256": "997c7df8dd59781ec973ba788b8117825560e3cc5442ee0cafc825570b27379d",
+      "originalBytes": 173387,
+      "originalProbe": {
+        "durationSeconds": 6.2935,
+        "codec": "mp3",
+        "sampleRate": 48000,
+        "channels": 2,
+        "bitRate": 220401
+      }
+    },
+    {
+      "id": "sfx.jump:B",
+      "source": "Suno",
+      "surface": "Sounds",
+      "modelObserved": null,
+      "sourceId": "53ff3579-6107-4f4d-b047-32e2699b0982",
+      "sourceUrlWithoutQuery": "https://suno.com/song/53ff3579-6107-4f4d-b047-32e2699b0982",
+      "generatedAtObserved": null,
+      "uiDurationObserved": null,
+      "downloaded": false,
+      "remoteOnly": true,
+      "runtimeSelected": false,
+      "originalFilename": null,
+      "originalSha256": null,
+      "originalBytes": null,
+      "originalProbe": null
+    },
+    {
+      "id": "sfx.laser:A",
+      "source": "Suno",
+      "surface": "Sounds",
+      "modelObserved": null,
+      "sourceId": "73c145fe-5d08-4972-9fec-fff94502c860",
+      "sourceUrlWithoutQuery": "https://suno.com/song/73c145fe-5d08-4972-9fec-fff94502c860",
+      "generatedAtObserved": null,
+      "uiDurationObserved": null,
+      "downloaded": true,
+      "remoteOnly": false,
+      "runtimeSelected": true,
+      "originalFilename": "One Isolated 0.35-second Shot From A Compact Spacecraft Pulse Laser_ A Dry Lo....mp3",
+      "originalSha256": "bd9f22e9178a42c253565541676c3fc2ecc999a40af12595c29b2962c805bc56",
+      "originalBytes": 147716,
+      "originalProbe": {
+        "durationSeconds": 5.6135,
+        "codec": "mp3",
+        "sampleRate": 48000,
+        "channels": 2,
+        "bitRate": 210515
+      }
+    },
+    {
+      "id": "sfx.laser:B",
+      "source": "Suno",
+      "surface": "Sounds",
+      "modelObserved": null,
+      "sourceId": "f9bba116-53c5-4f3a-93ab-9ba48ac03126",
+      "sourceUrlWithoutQuery": "https://suno.com/song/f9bba116-53c5-4f3a-93ab-9ba48ac03126",
+      "generatedAtObserved": null,
+      "uiDurationObserved": null,
+      "downloaded": false,
+      "remoteOnly": true,
+      "runtimeSelected": false,
+      "originalFilename": null,
+      "originalSha256": null,
+      "originalBytes": null,
+      "originalProbe": null
+    },
+    {
+      "id": "sfx.message:A",
+      "source": "Suno",
+      "surface": "Sounds",
+      "modelObserved": null,
+      "sourceId": "806b488b-cfb0-4fed-b5a7-4012a471cc3c",
+      "sourceUrlWithoutQuery": "https://suno.com/song/806b488b-cfb0-4fed-b5a7-4012a471cc3c",
+      "generatedAtObserved": null,
+      "uiDurationObserved": null,
+      "downloaded": true,
+      "remoteOnly": false,
+      "runtimeSelected": true,
+      "originalFilename": "One Isolated 1.2-second Incoming Bank-message Cue_ Three Mellow Muted-brass C....mp3",
+      "originalSha256": "1abe6c3dfca89f67bd43815e63cdab52a1b42c4f5990dd49c78ff7420d90f4b2",
+      "originalBytes": 135574,
+      "originalProbe": {
+        "durationSeconds": 5.2135,
+        "codec": "mp3",
+        "sampleRate": 48000,
+        "channels": 2,
+        "bitRate": 208035
+      }
+    },
+    {
+      "id": "sfx.message:B",
+      "source": "Suno",
+      "surface": "Sounds",
+      "modelObserved": null,
+      "sourceId": "cde9cc46-d911-4d16-bd54-28e2cac2bacd",
+      "sourceUrlWithoutQuery": "https://suno.com/song/cde9cc46-d911-4d16-bd54-28e2cac2bacd",
+      "generatedAtObserved": null,
+      "uiDurationObserved": null,
+      "downloaded": false,
+      "remoteOnly": true,
+      "runtimeSelected": false,
+      "originalFilename": null,
+      "originalSha256": null,
+      "originalBytes": null,
+      "originalProbe": null
+    },
+    {
+      "id": "sfx.refuel:A",
+      "source": "Suno",
+      "surface": "Sounds",
+      "modelObserved": null,
+      "sourceId": "50cfc692-8974-481b-9167-550b4235444d",
+      "sourceUrlWithoutQuery": "https://suno.com/song/50cfc692-8974-481b-9167-550b4235444d",
+      "generatedAtObserved": null,
+      "uiDurationObserved": null,
+      "downloaded": true,
+      "remoteOnly": false,
+      "runtimeSelected": true,
+      "originalFilename": "One Isolated 1.5-second Cargo-ship Refuelling Sound_ A Soft Metal Valve Unloc....mp3",
+      "originalSha256": "c8c2cc7d6147cc456bbc7b4d85578cc11ec654abae99ebb0f1c89d8cf8ef2b23",
+      "originalBytes": 149465,
+      "originalProbe": {
+        "durationSeconds": 5.5335,
+        "codec": "mp3",
+        "sampleRate": 48000,
+        "channels": 2,
+        "bitRate": 216087
+      }
+    },
+    {
+      "id": "sfx.refuel:B",
+      "source": "Suno",
+      "surface": "Sounds",
+      "modelObserved": null,
+      "sourceId": "744651c2-2bae-4f81-b1a1-cfaee4e9b837",
+      "sourceUrlWithoutQuery": "https://suno.com/song/744651c2-2bae-4f81-b1a1-cfaee4e9b837",
+      "generatedAtObserved": null,
+      "uiDurationObserved": null,
+      "downloaded": false,
+      "remoteOnly": true,
+      "runtimeSelected": false,
+      "originalFilename": null,
+      "originalSha256": null,
+      "originalBytes": null,
+      "originalProbe": null
+    },
+    {
+      "id": "sfx.repair:A",
+      "source": "Suno",
+      "surface": "Sounds",
+      "modelObserved": null,
+      "sourceId": "756f43fe-2534-410e-945f-bef1c418440a",
+      "sourceUrlWithoutQuery": "https://suno.com/song/756f43fe-2534-410e-945f-bef1c418440a",
+      "generatedAtObserved": null,
+      "uiDurationObserved": null,
+      "downloaded": true,
+      "remoteOnly": false,
+      "runtimeSelected": true,
+      "originalFilename": "One Isolated 1.4-second Repair Completion_ Two Small Ratchet Turns On Aged Br....mp3",
+      "originalSha256": "416773557c01814e22b7fef6f1dbe07018568697f9057a59ae2f4176903dae54",
+      "originalBytes": 86780,
+      "originalProbe": {
+        "durationSeconds": 2.7735,
+        "codec": "mp3",
+        "sampleRate": 48000,
+        "channels": 2,
+        "bitRate": 250311
+      }
+    },
+    {
+      "id": "sfx.repair:B",
+      "source": "Suno",
+      "surface": "Sounds",
+      "modelObserved": null,
+      "sourceId": "384f312a-6391-43ba-9e11-1a934b0e4539",
+      "sourceUrlWithoutQuery": "https://suno.com/song/384f312a-6391-43ba-9e11-1a934b0e4539",
+      "generatedAtObserved": null,
+      "uiDurationObserved": null,
+      "downloaded": false,
+      "remoteOnly": true,
+      "runtimeSelected": false,
+      "originalFilename": null,
+      "originalSha256": null,
+      "originalBytes": null,
+      "originalProbe": null
+    },
+    {
+      "id": "sfx.trade:A",
+      "source": "Suno",
+      "surface": "Sounds",
+      "modelObserved": null,
+      "sourceId": "cf76ef1d-da8d-43b9-9671-fe76094ea704",
+      "sourceUrlWithoutQuery": "https://suno.com/song/cf76ef1d-da8d-43b9-9671-fe76094ea704",
+      "generatedAtObserved": null,
+      "uiDurationObserved": null,
+      "downloaded": true,
+      "remoteOnly": false,
+      "runtimeSelected": true,
+      "originalFilename": "One Isolated 0.7-second Trading Confirmation_ A Paper Ledger Slides, A Small ....mp3",
+      "originalSha256": "97f9f095ab8ae1fe960ad77e8f3b251c9f4607e6549dda9432a7d2a2e363abe1",
+      "originalBytes": 81937,
+      "originalProbe": {
+        "durationSeconds": 2.0135,
+        "codec": "mp3",
+        "sampleRate": 48000,
+        "channels": 2,
+        "bitRate": 325550
+      }
+    },
+    {
+      "id": "sfx.trade:B",
+      "source": "Suno",
+      "surface": "Sounds",
+      "modelObserved": null,
+      "sourceId": "7af37ca2-bcda-4ef3-b616-afea18c36c0d",
+      "sourceUrlWithoutQuery": "https://suno.com/song/7af37ca2-bcda-4ef3-b616-afea18c36c0d",
+      "generatedAtObserved": null,
+      "uiDurationObserved": null,
+      "downloaded": false,
+      "remoteOnly": true,
+      "runtimeSelected": false,
+      "originalFilename": null,
+      "originalSha256": null,
+      "originalBytes": null,
+      "originalProbe": null
+    },
+    {
+      "id": "stinger.defeat:A",
+      "source": "Suno",
+      "surface": "Sounds",
+      "modelObserved": null,
+      "sourceId": "62da818c-170f-4384-8c26-418ff4d2574d",
+      "sourceUrlWithoutQuery": "https://suno.com/song/62da818c-170f-4384-8c26-418ff4d2574d",
+      "generatedAtObserved": null,
+      "uiDurationObserved": null,
+      "downloaded": true,
+      "remoteOnly": false,
+      "runtimeSelected": true,
+      "originalFilename": "A Single Original 10-second Instrumental Defeat Sting For A Small Cargo Ship ....mp3",
+      "originalSha256": "44ac9d79040ca36f6baa70a888bdb8aa22fea441882f0be162abf9398473c08b",
+      "originalBytes": 231787,
+      "originalProbe": {
+        "durationSeconds": 10.0135,
+        "codec": "mp3",
+        "sampleRate": 48000,
+        "channels": 2,
+        "bitRate": 185179
+      }
+    },
+    {
+      "id": "stinger.defeat:B",
+      "source": "Suno",
+      "surface": "Sounds",
+      "modelObserved": null,
+      "sourceId": "7c7d6b03-d2a4-4bcf-8f02-3068f48ac043",
+      "sourceUrlWithoutQuery": "https://suno.com/song/7c7d6b03-d2a4-4bcf-8f02-3068f48ac043",
+      "generatedAtObserved": null,
+      "uiDurationObserved": null,
+      "downloaded": false,
+      "remoteOnly": true,
+      "runtimeSelected": false,
+      "originalFilename": null,
+      "originalSha256": null,
+      "originalBytes": null,
+      "originalProbe": null
+    },
+    {
+      "id": "stinger.victory:A",
+      "source": "Suno",
+      "surface": "Sounds",
+      "modelObserved": null,
+      "sourceId": "90b2946b-15e8-469e-8284-29aa9176249b",
+      "sourceUrlWithoutQuery": "https://suno.com/song/90b2946b-15e8-469e-8284-29aa9176249b",
+      "generatedAtObserved": null,
+      "uiDurationObserved": null,
+      "downloaded": true,
+      "remoteOnly": false,
+      "runtimeSelected": true,
+      "originalFilename": "A Single Original 10-second Instrumental Victory Sting For Finally Owning A S....mp3",
+      "originalSha256": "5da562d327ae70945b32057ab9a44363443426dedcabd9d4fee8f22530bbec36",
+      "originalBytes": 184006,
+      "originalProbe": {
+        "durationSeconds": 7.2135,
+        "codec": "mp3",
+        "sampleRate": 48000,
+        "channels": 2,
+        "bitRate": 204068
+      }
+    },
+    {
+      "id": "stinger.victory:B",
+      "source": "Suno",
+      "surface": "Sounds",
+      "modelObserved": null,
+      "sourceId": "2c66f705-f01f-4b05-b60a-cacfb51d22de",
+      "sourceUrlWithoutQuery": "https://suno.com/song/2c66f705-f01f-4b05-b60a-cacfb51d22de",
+      "generatedAtObserved": null,
+      "uiDurationObserved": null,
+      "downloaded": false,
+      "remoteOnly": true,
+      "runtimeSelected": false,
+      "originalFilename": null,
+      "originalSha256": null,
+      "originalBytes": null,
+      "originalProbe": null
+    }
+  ],
+  "clips": [
+    {
+      "key": "music.title",
+      "provenanceId": "music.title:A",
+      "source": {
+        "id": "music.title:A",
+        "source": "Suno",
+        "surface": "Songs",
+        "modelObserved": "v6",
+        "sourceId": "a81a9c63-8c35-4a33-9607-930ca81bf78b",
+        "sourceUrlWithoutQuery": "https://suno.com/song/a81a9c63-8c35-4a33-9607-930ca81bf78b",
+        "generatedAtObserved": null,
+        "uiDurationObserved": null,
+        "downloaded": true,
+        "remoteOnly": false,
+        "runtimeSelected": true,
+        "originalFilename": "Jump-1 - Lantern Ledger.mp3",
+        "originalSha256": "a540a687a7e89e60c56b08d4423b2c76f942a57768dae44f53132f4d0c745d7c",
+        "originalBytes": 4105640,
+        "originalProbe": {
+          "durationSeconds": 174.0,
+          "codec": "mp3",
+          "sampleRate": 48000,
+          "channels": 2,
+          "bitRate": 188765
+        }
+      },
+      "listenStatus": "not_performed_no_audio_input",
+      "selectionReason": "First take A retained as the explicit technical reference; no artistic preference or listening assessment",
+      "listeningReview": {
+        "listened": false,
+        "reviewer": null,
+        "notes": null
+      },
+      "technicalCueAdaptation": null,
+      "sourceSegmentSeconds": {
+        "start": 0.0,
+        "end": 174.0
+      },
+      "fadeMs": {
+        "in": 10.0,
+        "out": 50.0
+      },
+      "normalization": {
+        "type": "two_pass_loudnorm",
+        "targetIntegratedLUFS": -20.0,
+        "maximumEncodedTruePeakDbTP": -1.5,
+        "preEncodeTruePeakCeilingDbTP": -2.5,
+        "sourceMeasurement": {
+          "input_i": -14.99,
+          "input_tp": -3.47,
+          "input_lra": 6.2,
+          "input_thresh": -25.14,
+          "output_i": -18.81,
+          "output_tp": -5.06,
+          "output_lra": 3.7,
+          "output_thresh": -28.87,
+          "normalization_type": "dynamic",
+          "target_offset": -1.19
+        },
+        "additionalPostCodecGainDb": 0.0,
+        "encodingAttempts": 1
+      },
+      "encoding": {
+        "codec": "MP3/libmp3lame",
+        "bitrateKbps": 128,
+        "sampleRate": 44100,
+        "channels": 2,
+        "ffmpegVersion": "ffmpeg version 9.0-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers"
+      },
+      "output": {
+        "src": "assets/audio/music-title.mp3",
+        "sha256": "d1f1c6b49f50b986c2c6b0c82bed6ae0fd1d2ad59e5e6a91fc4f2dc229b3ad6e",
+        "bytes": 2784928,
+        "probe": {
+          "durationSeconds": 174.0,
+          "codec": "mp3",
+          "sampleRate": 44100,
+          "channels": 2,
+          "bitRate": 128042
+        },
+        "measurement": {
+          "input_i": -20.45,
+          "input_tp": -8.81,
+          "input_lra": 6.2,
+          "input_thresh": -30.59,
+          "output_i": -19.81,
+          "output_tp": -6.27,
+          "output_lra": 3.7,
+          "output_thresh": -29.87,
+          "normalization_type": "dynamic",
+          "target_offset": -1.19
+        },
+        "measurementAnalysisPaddingSeconds": 0.0,
+        "standaloneIntegratedLUFS": -20.45
+      }
+    },
+    {
+      "key": "music.travel",
+      "provenanceId": "music.travel:A",
+      "source": {
+        "id": "music.travel:A",
+        "source": "Suno",
+        "surface": "Songs",
+        "modelObserved": "v6",
+        "sourceId": "1af2df72-c134-43ce-bded-624448368e9f",
+        "sourceUrlWithoutQuery": "https://suno.com/song/1af2df72-c134-43ce-bded-624448368e9f",
+        "generatedAtObserved": null,
+        "uiDurationObserved": null,
+        "downloaded": true,
+        "remoteOnly": false,
+        "runtimeSelected": true,
+        "originalFilename": "Jump-1 - Violet Crossing.mp3",
+        "originalSha256": "d8b46e65db3efc9816a40ea43066fbd4310888e6f2d0e8f1f74eaef8480f86bc",
+        "originalBytes": 3951932,
+        "originalProbe": {
+          "durationSeconds": 183.16,
+          "codec": "mp3",
+          "sampleRate": 48000,
+          "channels": 2,
+          "bitRate": 172611
+        }
+      },
+      "listenStatus": "not_performed_no_audio_input",
+      "selectionReason": "First take A retained as the explicit technical reference; no artistic preference or listening assessment",
+      "listeningReview": {
+        "listened": false,
+        "reviewer": null,
+        "notes": null
+      },
+      "technicalCueAdaptation": null,
+      "sourceSegmentSeconds": {
+        "start": 0.0,
+        "end": 183.16
+      },
+      "fadeMs": {
+        "in": 10.0,
+        "out": 50.0
+      },
+      "normalization": {
+        "type": "two_pass_loudnorm",
+        "targetIntegratedLUFS": -20.0,
+        "maximumEncodedTruePeakDbTP": -1.5,
+        "preEncodeTruePeakCeilingDbTP": -2.5,
+        "sourceMeasurement": {
+          "input_i": -17.42,
+          "input_tp": -3.83,
+          "input_lra": 7.5,
+          "input_thresh": -27.58,
+          "output_i": -20.22,
+          "output_tp": -4.79,
+          "output_lra": 7.2,
+          "output_thresh": -30.29,
+          "normalization_type": "dynamic",
+          "target_offset": 0.22
+        },
+        "additionalPostCodecGainDb": 0.0,
+        "encodingAttempts": 1
+      },
+      "encoding": {
+        "codec": "MP3/libmp3lame",
+        "bitrateKbps": 128,
+        "sampleRate": 44100,
+        "channels": 2,
+        "ffmpegVersion": "ffmpeg version 9.0-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers"
+      },
+      "output": {
+        "src": "assets/audio/music-travel.mp3",
+        "sha256": "fd4dd5bbcf6339b873763e61c644052433c51a50b55b19de993acfff86c78cc8",
+        "bytes": 2931632,
+        "probe": {
+          "durationSeconds": 183.16,
+          "codec": "mp3",
+          "sampleRate": 44100,
+          "channels": 2,
+          "bitRate": 128046
+        },
+        "measurement": {
+          "input_i": -20.45,
+          "input_tp": -6.64,
+          "input_lra": 7.5,
+          "input_thresh": -30.6,
+          "output_i": -21.22,
+          "output_tp": -5.77,
+          "output_lra": 7.2,
+          "output_thresh": -31.3,
+          "normalization_type": "dynamic",
+          "target_offset": 0.22
+        },
+        "measurementAnalysisPaddingSeconds": 0.0,
+        "standaloneIntegratedLUFS": -20.45
+      }
+    },
+    {
+      "key": "music.threat",
+      "provenanceId": "music.threat:A",
+      "source": {
+        "id": "music.threat:A",
+        "source": "Suno",
+        "surface": "Songs",
+        "modelObserved": "v6",
+        "sourceId": "80484b3f-19bd-40cd-8726-cbb8f3ce973f",
+        "sourceUrlWithoutQuery": "https://suno.com/song/80484b3f-19bd-40cd-8726-cbb8f3ce973f",
+        "generatedAtObserved": null,
+        "uiDurationObserved": null,
+        "downloaded": true,
+        "remoteOnly": false,
+        "runtimeSelected": true,
+        "originalFilename": "Jump-1 - Collection Notice.mp3",
+        "originalSha256": "1b7df2d2c8e2a8d3825525a6f74e46965d5d9da0226c8941b0fe9357f0ece6d4",
+        "originalBytes": 2956359,
+        "originalProbe": {
+          "durationSeconds": 127.84,
+          "codec": "mp3",
+          "sampleRate": 48000,
+          "channels": 2,
+          "bitRate": 185003
+        }
+      },
+      "listenStatus": "not_performed_no_audio_input",
+      "selectionReason": "First take A retained as the explicit technical reference; no artistic preference or listening assessment",
+      "listeningReview": {
+        "listened": false,
+        "reviewer": null,
+        "notes": null
+      },
+      "technicalCueAdaptation": null,
+      "sourceSegmentSeconds": {
+        "start": 0.0,
+        "end": 127.84
+      },
+      "fadeMs": {
+        "in": 10.0,
+        "out": 50.0
+      },
+      "normalization": {
+        "type": "two_pass_loudnorm",
+        "targetIntegratedLUFS": -20.0,
+        "maximumEncodedTruePeakDbTP": -1.5,
+        "preEncodeTruePeakCeilingDbTP": -2.5,
+        "sourceMeasurement": {
+          "input_i": -17.4,
+          "input_tp": -3.46,
+          "input_lra": 6.5,
+          "input_thresh": -27.62,
+          "output_i": -18.96,
+          "output_tp": -4.67,
+          "output_lra": 5.5,
+          "output_thresh": -29.05,
+          "normalization_type": "dynamic",
+          "target_offset": -1.04
+        },
+        "additionalPostCodecGainDb": 0.0,
+        "encodingAttempts": 1
+      },
+      "encoding": {
+        "codec": "MP3/libmp3lame",
+        "bitrateKbps": 128,
+        "sampleRate": 44100,
+        "channels": 2,
+        "ffmpegVersion": "ffmpeg version 9.0-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers"
+      },
+      "output": {
+        "src": "assets/audio/music-threat.mp3",
+        "sha256": "f5da5361e087d509c3f934a52bcd0c554398c586ac66ab4d132c836fa047eba0",
+        "bytes": 2046395,
+        "probe": {
+          "durationSeconds": 127.84,
+          "codec": "mp3",
+          "sampleRate": 44100,
+          "channels": 2,
+          "bitRate": 128059
+        },
+        "measurement": {
+          "input_i": -20.44,
+          "input_tp": -6.52,
+          "input_lra": 6.6,
+          "input_thresh": -30.66,
+          "output_i": -19.95,
+          "output_tp": -5.66,
+          "output_lra": 5.5,
+          "output_thresh": -30.05,
+          "normalization_type": "dynamic",
+          "target_offset": -1.05
+        },
+        "measurementAnalysisPaddingSeconds": 0.0,
+        "standaloneIntegratedLUFS": -20.44
+      }
+    },
+    {
+      "key": "stinger.victory",
+      "provenanceId": "stinger.victory:A",
+      "source": {
+        "id": "stinger.victory:A",
+        "source": "Suno",
+        "surface": "Sounds",
+        "modelObserved": null,
+        "sourceId": "90b2946b-15e8-469e-8284-29aa9176249b",
+        "sourceUrlWithoutQuery": "https://suno.com/song/90b2946b-15e8-469e-8284-29aa9176249b",
+        "generatedAtObserved": null,
+        "uiDurationObserved": null,
+        "downloaded": true,
+        "remoteOnly": false,
+        "runtimeSelected": true,
+        "originalFilename": "A Single Original 10-second Instrumental Victory Sting For Finally Owning A S....mp3",
+        "originalSha256": "5da562d327ae70945b32057ab9a44363443426dedcabd9d4fee8f22530bbec36",
+        "originalBytes": 184006,
+        "originalProbe": {
+          "durationSeconds": 7.2135,
+          "codec": "mp3",
+          "sampleRate": 48000,
+          "channels": 2,
+          "bitRate": 204068
+        }
+      },
+      "listenStatus": "not_performed_no_audio_input",
+      "selectionReason": "First take A retained as the explicit technical reference; no artistic preference or listening assessment",
+      "listeningReview": {
+        "listened": false,
+        "reviewer": null,
+        "notes": null
+      },
+      "technicalCueAdaptation": null,
+      "sourceSegmentSeconds": {
+        "start": 0.0,
+        "end": 7.2135
+      },
+      "fadeMs": {
+        "in": 1.0,
+        "out": 10.0
+      },
+      "normalization": {
+        "type": "two_pass_loudnorm",
+        "targetIntegratedLUFS": -20.0,
+        "maximumEncodedTruePeakDbTP": -1.5,
+        "preEncodeTruePeakCeilingDbTP": -2.5,
+        "sourceMeasurement": {
+          "input_i": -15.57,
+          "input_tp": -3.0,
+          "input_lra": 8.6,
+          "input_thresh": -27.06,
+          "output_i": -20.66,
+          "output_tp": -9.01,
+          "output_lra": 6.3,
+          "output_thresh": -31.71,
+          "normalization_type": "dynamic",
+          "target_offset": 0.66
+        },
+        "additionalPostCodecGainDb": 0.0,
+        "encodingAttempts": 1
+      },
+      "encoding": {
+        "codec": "MP3/libmp3lame",
+        "bitrateKbps": 96,
+        "sampleRate": 44100,
+        "channels": 2,
+        "ffmpegVersion": "ffmpeg version 9.0-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers"
+      },
+      "output": {
+        "src": "assets/audio/stinger-victory.mp3",
+        "sha256": "8b14794dd6a9dd79ede116212ee87faaa74563f58a63b9658ca250979461ea88",
+        "bytes": 87529,
+        "probe": {
+          "durationSeconds": 7.213515,
+          "codec": "mp3",
+          "sampleRate": 44100,
+          "channels": 2,
+          "bitRate": 97072
+        },
+        "measurement": {
+          "input_i": -20.45,
+          "input_tp": -7.93,
+          "input_lra": 8.6,
+          "input_thresh": -31.94,
+          "output_i": -21.66,
+          "output_tp": -10.06,
+          "output_lra": 6.4,
+          "output_thresh": -32.7,
+          "normalization_type": "dynamic",
+          "target_offset": 0.66
+        },
+        "measurementAnalysisPaddingSeconds": 0.0,
+        "standaloneIntegratedLUFS": -20.45
+      }
+    },
+    {
+      "key": "stinger.defeat",
+      "provenanceId": "stinger.defeat:A",
+      "source": {
+        "id": "stinger.defeat:A",
+        "source": "Suno",
+        "surface": "Sounds",
+        "modelObserved": null,
+        "sourceId": "62da818c-170f-4384-8c26-418ff4d2574d",
+        "sourceUrlWithoutQuery": "https://suno.com/song/62da818c-170f-4384-8c26-418ff4d2574d",
+        "generatedAtObserved": null,
+        "uiDurationObserved": null,
+        "downloaded": true,
+        "remoteOnly": false,
+        "runtimeSelected": true,
+        "originalFilename": "A Single Original 10-second Instrumental Defeat Sting For A Small Cargo Ship ....mp3",
+        "originalSha256": "44ac9d79040ca36f6baa70a888bdb8aa22fea441882f0be162abf9398473c08b",
+        "originalBytes": 231787,
+        "originalProbe": {
+          "durationSeconds": 10.0135,
+          "codec": "mp3",
+          "sampleRate": 48000,
+          "channels": 2,
+          "bitRate": 185179
+        }
+      },
+      "listenStatus": "not_performed_no_audio_input",
+      "selectionReason": "First take A retained as the explicit technical reference; no artistic preference or listening assessment",
+      "listeningReview": {
+        "listened": false,
+        "reviewer": null,
+        "notes": null
+      },
+      "technicalCueAdaptation": null,
+      "sourceSegmentSeconds": {
+        "start": 0.0,
+        "end": 10.0135
+      },
+      "fadeMs": {
+        "in": 1.0,
+        "out": 10.0
+      },
+      "normalization": {
+        "type": "two_pass_loudnorm",
+        "targetIntegratedLUFS": -20.0,
+        "maximumEncodedTruePeakDbTP": -1.5,
+        "preEncodeTruePeakCeilingDbTP": -2.5,
+        "sourceMeasurement": {
+          "input_i": -16.77,
+          "input_tp": -2.37,
+          "input_lra": 11.2,
+          "input_thresh": -28.29,
+          "output_i": -19.53,
+          "output_tp": -6.07,
+          "output_lra": 2.2,
+          "output_thresh": -30.61,
+          "normalization_type": "dynamic",
+          "target_offset": -0.47
+        },
+        "additionalPostCodecGainDb": 0.0,
+        "encodingAttempts": 1
+      },
+      "encoding": {
+        "codec": "MP3/libmp3lame",
+        "bitrateKbps": 96,
+        "sampleRate": 44100,
+        "channels": 2,
+        "ffmpegVersion": "ffmpeg version 9.0-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers"
+      },
+      "output": {
+        "src": "assets/audio/stinger-defeat.mp3",
+        "sha256": "53d89316f5843e9452832ed73a72a43cdef9b8820e6f59e4e35d36cbb22275b3",
+        "bytes": 121069,
+        "probe": {
+          "durationSeconds": 10.013515,
+          "codec": "mp3",
+          "sampleRate": 44100,
+          "channels": 2,
+          "bitRate": 96724
+        },
+        "measurement": {
+          "input_i": -20.96,
+          "input_tp": -7.01,
+          "input_lra": 11.1,
+          "input_thresh": -32.41,
+          "output_i": -20.93,
+          "output_tp": -7.01,
+          "output_lra": 2.3,
+          "output_thresh": -31.95,
+          "normalization_type": "dynamic",
+          "target_offset": -0.07
+        },
+        "measurementAnalysisPaddingSeconds": 0.0,
+        "standaloneIntegratedLUFS": -20.96
+      }
+    },
+    {
+      "key": "sfx.click",
+      "provenanceId": "sfx.click:A",
+      "source": {
+        "id": "sfx.click:A",
+        "source": "Suno",
+        "surface": "Sounds",
+        "modelObserved": null,
+        "sourceId": "eaded2c0-e8dc-4a52-b3b6-0a9370b03c6a",
+        "sourceUrlWithoutQuery": "https://suno.com/song/eaded2c0-e8dc-4a52-b3b6-0a9370b03c6a",
+        "generatedAtObserved": null,
+        "uiDurationObserved": "0:03",
+        "downloaded": true,
+        "remoteOnly": false,
+        "runtimeSelected": true,
+        "originalFilename": "Single Short Tactile User-interface Click For A Brass-and-copper Spaceship Co....m4a",
+        "originalSha256": "8d3e2ad3fc39a1b565da6eece1b5e6260600d18a13abc00be1a62d948dd203d9",
+        "originalBytes": 72235,
+        "originalProbe": {
+          "durationSeconds": 3.2,
+          "codec": "opus",
+          "sampleRate": 48000,
+          "channels": 2,
+          "bitRate": 180587
+        }
+      },
+      "listenStatus": "not_performed_no_audio_input",
+      "selectionReason": "First take A retained as the explicit technical reference; no artistic preference or listening assessment",
+      "listeningReview": {
+        "listened": false,
+        "reviewer": null,
+        "notes": null
+      },
+      "technicalCueAdaptation": {
+        "thresholdDbFS": -55.0,
+        "minimumSilenceSeconds": 0.15,
+        "intervals": [],
+        "method": "FFmpeg silencedetect; measured amplitude only",
+        "leadingSafetyMarginSeconds": 0.02,
+        "trailingSafetyMarginSeconds": 0.08,
+        "retainedStart": 0.885,
+        "retainedEnd": 1.205,
+        "functionalMaximumSeconds": 0.32,
+        "onsetDetection": {
+          "method": "first energetic RMS onset; no subjective selection",
+          "analysisSampleRate": 16000,
+          "analysisChannels": 1,
+          "frameSeconds": 0.01,
+          "absoluteRmsFloorDbFS": -50,
+          "relativeThresholdDbBelowMaximumRMS": -18,
+          "measuredMaximumFrameRmsDbFS": -8.780942649467686,
+          "effectiveThresholdDbFS": -26.780942649467686,
+          "requiredConsecutiveFrames": 2,
+          "singleFrameFallbackUsed": false,
+          "detectedOnsetSeconds": 0.89,
+          "preOnsetSafetySeconds": 0.005
+        },
+        "trimReason": "First energetic onset plus deterministic functional cue cap and measured terminal silence; no artistic preference"
+      },
+      "sourceSegmentSeconds": {
+        "start": 0.885,
+        "end": 1.205
+      },
+      "fadeMs": {
+        "in": 1.0,
+        "out": 10.0
+      },
+      "normalization": {
+        "type": "measured_static_loudness_gain",
+        "targetIntegratedLUFS": -18.0,
+        "maximumEncodedTruePeakDbTP": -1.5,
+        "preEncodeTruePeakCeilingDbTP": -2.5,
+        "sourceMeasurement": {
+          "input_i": -22.89,
+          "input_tp": -4.72,
+          "input_lra": 0.0,
+          "input_thresh": -34.13,
+          "output_i": -19.69,
+          "output_tp": -1.5,
+          "output_lra": 0.0,
+          "output_thresh": -30.93,
+          "normalization_type": "linear",
+          "target_offset": 1.69
+        },
+        "analysisPaddingSeconds": 1.0,
+        "standaloneIntegratedLoudnessDefined": false,
+        "desiredLoudnessGainDb": 4.890000000000001,
+        "appliedGainDb": 2.2199999999999998,
+        "peakConstraintApplied": true,
+        "maximumPositiveGainDb": 12.0,
+        "paddingOnlyUsedForMeasurementNotWrittenToAudio": true,
+        "additionalPostCodecGainDb": 0.0,
+        "encodingAttempts": 1
+      },
+      "encoding": {
+        "codec": "MP3/libmp3lame",
+        "bitrateKbps": 80,
+        "sampleRate": 44100,
+        "channels": 1,
+        "ffmpegVersion": "ffmpeg version 9.0-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers"
+      },
+      "output": {
+        "src": "assets/audio/sfx-click.mp3",
+        "sha256": "2edabbeb3c971505614667c3cd15e38a00b7ab98010f5b66ba4257f168eec598",
+        "bytes": 3983,
+        "probe": {
+          "durationSeconds": 0.32,
+          "codec": "mp3",
+          "sampleRate": 44100,
+          "channels": 1,
+          "bitRate": 99575
+        },
+        "measurement": {
+          "input_i": -21.09,
+          "input_tp": -3.73,
+          "input_lra": 0.0,
+          "input_thresh": -32.33,
+          "output_i": -21.0,
+          "output_tp": -3.64,
+          "output_lra": 0.0,
+          "output_thresh": -32.24,
+          "normalization_type": "linear",
+          "target_offset": 0.0
+        },
+        "measurementAnalysisPaddingSeconds": 1.0,
+        "standaloneIntegratedLUFS": null
+      }
+    },
+    {
+      "key": "sfx.dice",
+      "provenanceId": "sfx.dice:A",
+      "source": {
+        "id": "sfx.dice:A",
+        "source": "Suno",
+        "surface": "Sounds",
+        "modelObserved": null,
+        "sourceId": "c21b4da0-821e-450a-902e-7b775d94f70f",
+        "sourceUrlWithoutQuery": "https://suno.com/song/c21b4da0-821e-450a-902e-7b775d94f70f",
+        "generatedAtObserved": null,
+        "uiDurationObserved": null,
+        "downloaded": true,
+        "remoteOnly": false,
+        "runtimeSelected": true,
+        "originalFilename": "One Isolated 0.9-second Sound Of Two Small Brass Dice Tumbling Together Onto ....mp3",
+        "originalSha256": "fd8d5daa362726b3ab46c838cf110452c9cd999847131de5aaa510ceae806dc2",
+        "originalBytes": 73588,
+        "originalProbe": {
+          "durationSeconds": 2.3735,
+          "codec": "mp3",
+          "sampleRate": 48000,
+          "channels": 2,
+          "bitRate": 248032
+        }
+      },
+      "listenStatus": "not_performed_no_audio_input",
+      "selectionReason": "First take A retained as the explicit technical reference; no artistic preference or listening assessment",
+      "listeningReview": {
+        "listened": false,
+        "reviewer": null,
+        "notes": null
+      },
+      "technicalCueAdaptation": {
+        "thresholdDbFS": -55.0,
+        "minimumSilenceSeconds": 0.15,
+        "intervals": [
+          {
+            "start": 1.500021,
+            "end": 1.969042
+          },
+          {
+            "start": 1.969062,
+            "end": 2.3735
+          }
+        ],
+        "method": "FFmpeg silencedetect; measured amplitude only",
+        "leadingSafetyMarginSeconds": 0.02,
+        "trailingSafetyMarginSeconds": 0.08,
+        "retainedStart": 0.055,
+        "retainedEnd": 1.055,
+        "functionalMaximumSeconds": 1.0,
+        "onsetDetection": {
+          "method": "first energetic RMS onset; no subjective selection",
+          "analysisSampleRate": 16000,
+          "analysisChannels": 1,
+          "frameSeconds": 0.01,
+          "absoluteRmsFloorDbFS": -50,
+          "relativeThresholdDbBelowMaximumRMS": -18,
+          "measuredMaximumFrameRmsDbFS": -8.855959331240786,
+          "effectiveThresholdDbFS": -26.855959331240786,
+          "requiredConsecutiveFrames": 2,
+          "singleFrameFallbackUsed": false,
+          "detectedOnsetSeconds": 0.06,
+          "preOnsetSafetySeconds": 0.005
+        },
+        "trimReason": "First energetic onset plus deterministic functional cue cap and measured terminal silence; no artistic preference"
+      },
+      "sourceSegmentSeconds": {
+        "start": 0.055,
+        "end": 1.055
+      },
+      "fadeMs": {
+        "in": 1.0,
+        "out": 10.0
+      },
+      "normalization": {
+        "type": "measured_static_loudness_gain",
+        "targetIntegratedLUFS": -18.0,
+        "maximumEncodedTruePeakDbTP": -1.5,
+        "preEncodeTruePeakCeilingDbTP": -2.5,
+        "sourceMeasurement": {
+          "input_i": -27.21,
+          "input_tp": 1.46,
+          "input_lra": 0.0,
+          "input_thresh": -37.21,
+          "output_i": -30.19,
+          "output_tp": -1.5,
+          "output_lra": 0.0,
+          "output_thresh": -40.19,
+          "normalization_type": "linear",
+          "target_offset": 12.19
+        },
+        "analysisPaddingSeconds": 0.0,
+        "standaloneIntegratedLoudnessDefined": true,
+        "desiredLoudnessGainDb": 9.21,
+        "appliedGainDb": -3.96,
+        "peakConstraintApplied": true,
+        "maximumPositiveGainDb": 12.0,
+        "paddingOnlyUsedForMeasurementNotWrittenToAudio": true,
+        "additionalPostCodecGainDb": 0.0,
+        "encodingAttempts": 1
+      },
+      "encoding": {
+        "codec": "MP3/libmp3lame",
+        "bitrateKbps": 80,
+        "sampleRate": 44100,
+        "channels": 1,
+        "ffmpegVersion": "ffmpeg version 9.0-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers"
+      },
+      "output": {
+        "src": "assets/audio/sfx-dice.mp3",
+        "sha256": "16e3058929072de9072b9d0675c8126919749bcd6b3a936d30e0b0859bbd7798",
+        "bytes": 10774,
+        "probe": {
+          "durationSeconds": 1.0,
+          "codec": "mp3",
+          "sampleRate": 44100,
+          "channels": 1,
+          "bitRate": 86192
+        },
+        "measurement": {
+          "input_i": -31.61,
+          "input_tp": -3.01,
+          "input_lra": 0.0,
+          "input_thresh": -41.61,
+          "output_i": -30.61,
+          "output_tp": -2.0,
+          "output_lra": 0.0,
+          "output_thresh": -40.61,
+          "normalization_type": "linear",
+          "target_offset": 9.61
+        },
+        "measurementAnalysisPaddingSeconds": 0.0,
+        "standaloneIntegratedLUFS": -31.61
+      }
+    },
+    {
+      "key": "sfx.trade",
+      "provenanceId": "sfx.trade:A",
+      "source": {
+        "id": "sfx.trade:A",
+        "source": "Suno",
+        "surface": "Sounds",
+        "modelObserved": null,
+        "sourceId": "cf76ef1d-da8d-43b9-9671-fe76094ea704",
+        "sourceUrlWithoutQuery": "https://suno.com/song/cf76ef1d-da8d-43b9-9671-fe76094ea704",
+        "generatedAtObserved": null,
+        "uiDurationObserved": null,
+        "downloaded": true,
+        "remoteOnly": false,
+        "runtimeSelected": true,
+        "originalFilename": "One Isolated 0.7-second Trading Confirmation_ A Paper Ledger Slides, A Small ....mp3",
+        "originalSha256": "97f9f095ab8ae1fe960ad77e8f3b251c9f4607e6549dda9432a7d2a2e363abe1",
+        "originalBytes": 81937,
+        "originalProbe": {
+          "durationSeconds": 2.0135,
+          "codec": "mp3",
+          "sampleRate": 48000,
+          "channels": 2,
+          "bitRate": 325550
+        }
+      },
+      "listenStatus": "not_performed_no_audio_input",
+      "selectionReason": "First take A retained as the explicit technical reference; no artistic preference or listening assessment",
+      "listeningReview": {
+        "listened": false,
+        "reviewer": null,
+        "notes": null
+      },
+      "technicalCueAdaptation": {
+        "thresholdDbFS": -55.0,
+        "minimumSilenceSeconds": 0.15,
+        "intervals": [
+          {
+            "start": 1.547917,
+            "end": 1.99275
+          }
+        ],
+        "method": "FFmpeg silencedetect; measured amplitude only",
+        "leadingSafetyMarginSeconds": 0.02,
+        "trailingSafetyMarginSeconds": 0.08,
+        "retainedStart": 0.075,
+        "retainedEnd": 1.075,
+        "functionalMaximumSeconds": 1.0,
+        "onsetDetection": {
+          "method": "first energetic RMS onset; no subjective selection",
+          "analysisSampleRate": 16000,
+          "analysisChannels": 1,
+          "frameSeconds": 0.01,
+          "absoluteRmsFloorDbFS": -50,
+          "relativeThresholdDbBelowMaximumRMS": -18,
+          "measuredMaximumFrameRmsDbFS": -5.416386188230278,
+          "effectiveThresholdDbFS": -23.416386188230277,
+          "requiredConsecutiveFrames": 2,
+          "singleFrameFallbackUsed": false,
+          "detectedOnsetSeconds": 0.08,
+          "preOnsetSafetySeconds": 0.005
+        },
+        "trimReason": "First energetic onset plus deterministic functional cue cap and measured terminal silence; no artistic preference"
+      },
+      "sourceSegmentSeconds": {
+        "start": 0.075,
+        "end": 1.075
+      },
+      "fadeMs": {
+        "in": 1.0,
+        "out": 10.0
+      },
+      "normalization": {
+        "type": "measured_static_loudness_gain",
+        "targetIntegratedLUFS": -18.0,
+        "maximumEncodedTruePeakDbTP": -1.5,
+        "preEncodeTruePeakCeilingDbTP": -2.5,
+        "sourceMeasurement": {
+          "input_i": -21.15,
+          "input_tp": 3.38,
+          "input_lra": 0.0,
+          "input_thresh": -36.5,
+          "output_i": -26.05,
+          "output_tp": -1.5,
+          "output_lra": 0.0,
+          "output_thresh": -41.4,
+          "normalization_type": "linear",
+          "target_offset": 8.05
+        },
+        "analysisPaddingSeconds": 0.0,
+        "standaloneIntegratedLoudnessDefined": true,
+        "desiredLoudnessGainDb": 3.1499999999999986,
+        "appliedGainDb": -5.88,
+        "peakConstraintApplied": true,
+        "maximumPositiveGainDb": 12.0,
+        "paddingOnlyUsedForMeasurementNotWrittenToAudio": true,
+        "additionalPostCodecGainDb": 0.0,
+        "encodingAttempts": 1
+      },
+      "encoding": {
+        "codec": "MP3/libmp3lame",
+        "bitrateKbps": 80,
+        "sampleRate": 44100,
+        "channels": 1,
+        "ffmpegVersion": "ffmpeg version 9.0-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers"
+      },
+      "output": {
+        "src": "assets/audio/sfx-trade.mp3",
+        "sha256": "1c6d1381259c664eede9354a27fcddb4ca2ffc0ce2e89174144d82ef476ccaf3",
+        "bytes": 10775,
+        "probe": {
+          "durationSeconds": 1.0,
+          "codec": "mp3",
+          "sampleRate": 44100,
+          "channels": 1,
+          "bitRate": 86200
+        },
+        "measurement": {
+          "input_i": -27.36,
+          "input_tp": -2.92,
+          "input_lra": 0.0,
+          "input_thresh": -42.71,
+          "output_i": -26.46,
+          "output_tp": -2.0,
+          "output_lra": 0.0,
+          "output_thresh": -41.81,
+          "normalization_type": "linear",
+          "target_offset": 5.46
+        },
+        "measurementAnalysisPaddingSeconds": 0.0,
+        "standaloneIntegratedLUFS": -27.36
+      }
+    },
+    {
+      "key": "sfx.jump",
+      "provenanceId": "sfx.jump:A",
+      "source": {
+        "id": "sfx.jump:A",
+        "source": "Suno",
+        "surface": "Sounds",
+        "modelObserved": null,
+        "sourceId": "1a3b5f04-2b39-4977-9843-8104b3c9802c",
+        "sourceUrlWithoutQuery": "https://suno.com/song/1a3b5f04-2b39-4977-9843-8104b3c9802c",
+        "generatedAtObserved": null,
+        "uiDurationObserved": null,
+        "downloaded": true,
+        "remoteOnly": false,
+        "runtimeSelected": true,
+        "originalFilename": "One Isolated 2.8-second Spacecraft Jump Effect_ A Rounded Low Analog Engine T....mp3",
+        "originalSha256": "997c7df8dd59781ec973ba788b8117825560e3cc5442ee0cafc825570b27379d",
+        "originalBytes": 173387,
+        "originalProbe": {
+          "durationSeconds": 6.2935,
+          "codec": "mp3",
+          "sampleRate": 48000,
+          "channels": 2,
+          "bitRate": 220401
+        }
+      },
+      "listenStatus": "not_performed_no_audio_input",
+      "selectionReason": "First take A retained as the explicit technical reference; no artistic preference or listening assessment",
+      "listeningReview": {
+        "listened": false,
+        "reviewer": null,
+        "notes": null
+      },
+      "technicalCueAdaptation": {
+        "thresholdDbFS": -55.0,
+        "minimumSilenceSeconds": 0.15,
+        "intervals": [
+          {
+            "start": 0.0255625,
+            "end": 0.434521
+          },
+          {
+            "start": 6.034937,
+            "end": 6.250667
+          }
+        ],
+        "method": "FFmpeg silencedetect; measured amplitude only",
+        "leadingSafetyMarginSeconds": 0.02,
+        "trailingSafetyMarginSeconds": 0.08,
+        "retainedStart": 1.1150000000000002,
+        "retainedEnd": 4.115,
+        "functionalMaximumSeconds": 3.0,
+        "onsetDetection": {
+          "method": "first energetic RMS onset; no subjective selection",
+          "analysisSampleRate": 16000,
+          "analysisChannels": 1,
+          "frameSeconds": 0.01,
+          "absoluteRmsFloorDbFS": -50,
+          "relativeThresholdDbBelowMaximumRMS": -18,
+          "measuredMaximumFrameRmsDbFS": -4.314129341482972,
+          "effectiveThresholdDbFS": -22.31412934148297,
+          "requiredConsecutiveFrames": 2,
+          "singleFrameFallbackUsed": false,
+          "detectedOnsetSeconds": 1.12,
+          "preOnsetSafetySeconds": 0.005
+        },
+        "trimReason": "First energetic onset plus deterministic functional cue cap and measured terminal silence; no artistic preference"
+      },
+      "sourceSegmentSeconds": {
+        "start": 1.1150000000000002,
+        "end": 4.115
+      },
+      "fadeMs": {
+        "in": 1.0,
+        "out": 10.0
+      },
+      "normalization": {
+        "type": "measured_static_loudness_gain",
+        "targetIntegratedLUFS": -18.0,
+        "maximumEncodedTruePeakDbTP": -1.5,
+        "preEncodeTruePeakCeilingDbTP": -2.5,
+        "sourceMeasurement": {
+          "input_i": -14.09,
+          "input_tp": 0.91,
+          "input_lra": 0.2,
+          "input_thresh": -24.09,
+          "output_i": -17.64,
+          "output_tp": -2.75,
+          "output_lra": 0.0,
+          "output_thresh": -27.64,
+          "normalization_type": "dynamic",
+          "target_offset": -0.36
+        },
+        "analysisPaddingSeconds": 0.0,
+        "standaloneIntegratedLoudnessDefined": true,
+        "desiredLoudnessGainDb": -3.91,
+        "appliedGainDb": -3.91,
+        "peakConstraintApplied": false,
+        "maximumPositiveGainDb": 12.0,
+        "paddingOnlyUsedForMeasurementNotWrittenToAudio": true,
+        "additionalPostCodecGainDb": 0.0,
+        "encodingAttempts": 1
+      },
+      "encoding": {
+        "codec": "MP3/libmp3lame",
+        "bitrateKbps": 80,
+        "sampleRate": 44100,
+        "channels": 1,
+        "ffmpegVersion": "ffmpeg version 9.0-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers"
+      },
+      "output": {
+        "src": "assets/audio/sfx-jump.mp3",
+        "sha256": "b9ad1f0240e41002a76186e4e6c88d5a85a2b65d835b9b2574183845c71f6332",
+        "bytes": 30627,
+        "probe": {
+          "durationSeconds": 3.0,
+          "codec": "mp3",
+          "sampleRate": 44100,
+          "channels": 1,
+          "bitRate": 81672
+        },
+        "measurement": {
+          "input_i": -18.45,
+          "input_tp": -3.44,
+          "input_lra": 0.1,
+          "input_thresh": -28.45,
+          "output_i": -20.64,
+          "output_tp": -5.74,
+          "output_lra": 0.0,
+          "output_thresh": -30.64,
+          "normalization_type": "dynamic",
+          "target_offset": -0.36
+        },
+        "measurementAnalysisPaddingSeconds": 0.0,
+        "standaloneIntegratedLUFS": -18.45
+      }
+    },
+    {
+      "key": "sfx.arrival",
+      "provenanceId": "sfx.arrival:A",
+      "source": {
+        "id": "sfx.arrival:A",
+        "source": "Suno",
+        "surface": "Sounds",
+        "modelObserved": null,
+        "sourceId": "bea51c79-0d43-486e-a779-ce2617482bee",
+        "sourceUrlWithoutQuery": "https://suno.com/song/bea51c79-0d43-486e-a779-ce2617482bee",
+        "generatedAtObserved": null,
+        "uiDurationObserved": null,
+        "downloaded": true,
+        "remoteOnly": false,
+        "runtimeSelected": true,
+        "originalFilename": "One Isolated 1.4-second Arrival Confirmation_ A Small Cargo Ship Docking Latc....mp3",
+        "originalSha256": "5a5a98b9be0d0872457d1b1c7d35fc5129aba56fb2dba761d3263166d22bcc16",
+        "originalBytes": 171214,
+        "originalProbe": {
+          "durationSeconds": 6.8135,
+          "codec": "mp3",
+          "sampleRate": 48000,
+          "channels": 2,
+          "bitRate": 201029
+        }
+      },
+      "listenStatus": "not_performed_no_audio_input",
+      "selectionReason": "First take A retained as the explicit technical reference; no artistic preference or listening assessment",
+      "listeningReview": {
+        "listened": false,
+        "reviewer": null,
+        "notes": null
+      },
+      "technicalCueAdaptation": {
+        "thresholdDbFS": -55.0,
+        "minimumSilenceSeconds": 0.15,
+        "intervals": [
+          {
+            "start": 0.03375,
+            "end": 0.445479
+          }
+        ],
+        "method": "FFmpeg silencedetect; measured amplitude only",
+        "leadingSafetyMarginSeconds": 0.02,
+        "trailingSafetyMarginSeconds": 0.08,
+        "retainedStart": 0.845,
+        "retainedEnd": 2.8449999999999998,
+        "functionalMaximumSeconds": 2.0,
+        "onsetDetection": {
+          "method": "first energetic RMS onset; no subjective selection",
+          "analysisSampleRate": 16000,
+          "analysisChannels": 1,
+          "frameSeconds": 0.01,
+          "absoluteRmsFloorDbFS": -50,
+          "relativeThresholdDbBelowMaximumRMS": -18,
+          "measuredMaximumFrameRmsDbFS": -3.945246955432192,
+          "effectiveThresholdDbFS": -21.94524695543219,
+          "requiredConsecutiveFrames": 2,
+          "singleFrameFallbackUsed": false,
+          "detectedOnsetSeconds": 0.85,
+          "preOnsetSafetySeconds": 0.005
+        },
+        "trimReason": "First energetic onset plus deterministic functional cue cap and measured terminal silence; no artistic preference"
+      },
+      "sourceSegmentSeconds": {
+        "start": 0.845,
+        "end": 2.8449999999999998
+      },
+      "fadeMs": {
+        "in": 1.0,
+        "out": 10.0
+      },
+      "normalization": {
+        "type": "measured_static_loudness_gain",
+        "targetIntegratedLUFS": -18.0,
+        "maximumEncodedTruePeakDbTP": -1.5,
+        "preEncodeTruePeakCeilingDbTP": -2.5,
+        "sourceMeasurement": {
+          "input_i": -15.69,
+          "input_tp": 2.75,
+          "input_lra": 0.0,
+          "input_thresh": -25.69,
+          "output_i": -19.95,
+          "output_tp": -1.5,
+          "output_lra": 0.0,
+          "output_thresh": -29.95,
+          "normalization_type": "linear",
+          "target_offset": 1.95
+        },
+        "analysisPaddingSeconds": 0.0,
+        "standaloneIntegratedLoudnessDefined": true,
+        "desiredLoudnessGainDb": -2.3100000000000005,
+        "appliedGainDb": -5.25,
+        "peakConstraintApplied": true,
+        "maximumPositiveGainDb": 12.0,
+        "paddingOnlyUsedForMeasurementNotWrittenToAudio": true,
+        "additionalPostCodecGainDb": 0.0,
+        "encodingAttempts": 1
+      },
+      "encoding": {
+        "codec": "MP3/libmp3lame",
+        "bitrateKbps": 80,
+        "sampleRate": 44100,
+        "channels": 1,
+        "ffmpegVersion": "ffmpeg version 9.0-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers"
+      },
+      "output": {
+        "src": "assets/audio/sfx-arrival.mp3",
+        "sha256": "1f124efa7db6af266083341f7078b76eb24a585e40aec2e6c12d69938d88e1c4",
+        "bytes": 20704,
+        "probe": {
+          "durationSeconds": 2.0,
+          "codec": "mp3",
+          "sampleRate": 44100,
+          "channels": 1,
+          "bitRate": 82816
+        },
+        "measurement": {
+          "input_i": -21.38,
+          "input_tp": -2.91,
+          "input_lra": 0.0,
+          "input_thresh": -31.38,
+          "output_i": -21.03,
+          "output_tp": -2.54,
+          "output_lra": 0.0,
+          "output_thresh": -31.03,
+          "normalization_type": "linear",
+          "target_offset": 0.03
+        },
+        "measurementAnalysisPaddingSeconds": 0.0,
+        "standaloneIntegratedLUFS": -21.38
+      }
+    },
+    {
+      "key": "sfx.laser",
+      "provenanceId": "sfx.laser:A",
+      "source": {
+        "id": "sfx.laser:A",
+        "source": "Suno",
+        "surface": "Sounds",
+        "modelObserved": null,
+        "sourceId": "73c145fe-5d08-4972-9fec-fff94502c860",
+        "sourceUrlWithoutQuery": "https://suno.com/song/73c145fe-5d08-4972-9fec-fff94502c860",
+        "generatedAtObserved": null,
+        "uiDurationObserved": null,
+        "downloaded": true,
+        "remoteOnly": false,
+        "runtimeSelected": true,
+        "originalFilename": "One Isolated 0.35-second Shot From A Compact Spacecraft Pulse Laser_ A Dry Lo....mp3",
+        "originalSha256": "bd9f22e9178a42c253565541676c3fc2ecc999a40af12595c29b2962c805bc56",
+        "originalBytes": 147716,
+        "originalProbe": {
+          "durationSeconds": 5.6135,
+          "codec": "mp3",
+          "sampleRate": 48000,
+          "channels": 2,
+          "bitRate": 210515
+        }
+      },
+      "listenStatus": "not_performed_no_audio_input",
+      "selectionReason": "First take A retained as the explicit technical reference; no artistic preference or listening assessment",
+      "listeningReview": {
+        "listened": false,
+        "reviewer": null,
+        "notes": null
+      },
+      "technicalCueAdaptation": {
+        "thresholdDbFS": -55.0,
+        "minimumSilenceSeconds": 0.15,
+        "intervals": [],
+        "method": "FFmpeg silencedetect; measured amplitude only",
+        "leadingSafetyMarginSeconds": 0.02,
+        "trailingSafetyMarginSeconds": 0.08,
+        "retainedStart": 0.045000000000000005,
+        "retainedEnd": 0.645,
+        "functionalMaximumSeconds": 0.6,
+        "onsetDetection": {
+          "method": "first energetic RMS onset; no subjective selection",
+          "analysisSampleRate": 16000,
+          "analysisChannels": 1,
+          "frameSeconds": 0.01,
+          "absoluteRmsFloorDbFS": -50,
+          "relativeThresholdDbBelowMaximumRMS": -18,
+          "measuredMaximumFrameRmsDbFS": -5.651964477375321,
+          "effectiveThresholdDbFS": -23.65196447737532,
+          "requiredConsecutiveFrames": 2,
+          "singleFrameFallbackUsed": false,
+          "detectedOnsetSeconds": 0.05,
+          "preOnsetSafetySeconds": 0.005
+        },
+        "trimReason": "First energetic onset plus deterministic functional cue cap and measured terminal silence; no artistic preference"
+      },
+      "sourceSegmentSeconds": {
+        "start": 0.045000000000000005,
+        "end": 0.645
+      },
+      "fadeMs": {
+        "in": 1.0,
+        "out": 10.0
+      },
+      "normalization": {
+        "type": "measured_static_loudness_gain",
+        "targetIntegratedLUFS": -18.0,
+        "maximumEncodedTruePeakDbTP": -1.5,
+        "preEncodeTruePeakCeilingDbTP": -2.5,
+        "sourceMeasurement": {
+          "input_i": -15.78,
+          "input_tp": -2.47,
+          "input_lra": 0.0,
+          "input_thresh": -25.78,
+          "output_i": -17.98,
+          "output_tp": -4.7,
+          "output_lra": 0.0,
+          "output_thresh": -27.98,
+          "normalization_type": "linear",
+          "target_offset": -0.02
+        },
+        "analysisPaddingSeconds": 0.0,
+        "standaloneIntegratedLoudnessDefined": true,
+        "desiredLoudnessGainDb": -2.2200000000000006,
+        "appliedGainDb": -2.2200000000000006,
+        "peakConstraintApplied": false,
+        "maximumPositiveGainDb": 12.0,
+        "paddingOnlyUsedForMeasurementNotWrittenToAudio": true,
+        "additionalPostCodecGainDb": 0.0,
+        "encodingAttempts": 1
+      },
+      "encoding": {
+        "codec": "MP3/libmp3lame",
+        "bitrateKbps": 80,
+        "sampleRate": 44100,
+        "channels": 1,
+        "ffmpegVersion": "ffmpeg version 9.0-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers"
+      },
+      "output": {
+        "src": "assets/audio/sfx-laser.mp3",
+        "sha256": "a61c8449ead4fdbac1b7c0548365a0348cacde0979026a79a13418cd0e373684",
+        "bytes": 6596,
+        "probe": {
+          "durationSeconds": 0.6,
+          "codec": "mp3",
+          "sampleRate": 44100,
+          "channels": 1,
+          "bitRate": 87946
+        },
+        "measurement": {
+          "input_i": -18.46,
+          "input_tp": -5.13,
+          "input_lra": 0.0,
+          "input_thresh": -28.46,
+          "output_i": -20.98,
+          "output_tp": -7.68,
+          "output_lra": 0.0,
+          "output_thresh": -30.98,
+          "normalization_type": "linear",
+          "target_offset": -0.02
+        },
+        "measurementAnalysisPaddingSeconds": 0.0,
+        "standaloneIntegratedLUFS": -18.46
+      }
+    },
+    {
+      "key": "sfx.impact",
+      "provenanceId": "sfx.impact:A",
+      "source": {
+        "id": "sfx.impact:A",
+        "source": "Suno",
+        "surface": "Sounds",
+        "modelObserved": null,
+        "sourceId": "91777910-c356-426f-96ca-926609634544",
+        "sourceUrlWithoutQuery": "https://suno.com/song/91777910-c356-426f-96ca-926609634544",
+        "generatedAtObserved": null,
+        "uiDurationObserved": null,
+        "downloaded": true,
+        "remoteOnly": false,
+        "runtimeSelected": true,
+        "originalFilename": "One Isolated 0.7-second Glancing Spacecraft Hull Impact_ A Muted Metal Clang ....mp3",
+        "originalSha256": "cfe7f856d2a5ad53fb70de12087c301d323f0a663cabccbbc2eedf19bfccc770",
+        "originalBytes": 97870,
+        "originalProbe": {
+          "durationSeconds": 3.2135,
+          "codec": "mp3",
+          "sampleRate": 48000,
+          "channels": 2,
+          "bitRate": 243647
+        }
+      },
+      "listenStatus": "not_performed_no_audio_input",
+      "selectionReason": "First take A retained as the explicit technical reference; no artistic preference or listening assessment",
+      "listeningReview": {
+        "listened": false,
+        "reviewer": null,
+        "notes": null
+      },
+      "technicalCueAdaptation": {
+        "thresholdDbFS": -55.0,
+        "minimumSilenceSeconds": 0.15,
+        "intervals": [],
+        "method": "FFmpeg silencedetect; measured amplitude only",
+        "leadingSafetyMarginSeconds": 0.02,
+        "trailingSafetyMarginSeconds": 0.08,
+        "retainedStart": 0.415,
+        "retainedEnd": 1.415,
+        "functionalMaximumSeconds": 1.0,
+        "onsetDetection": {
+          "method": "first energetic RMS onset; no subjective selection",
+          "analysisSampleRate": 16000,
+          "analysisChannels": 1,
+          "frameSeconds": 0.01,
+          "absoluteRmsFloorDbFS": -50,
+          "relativeThresholdDbBelowMaximumRMS": -18,
+          "measuredMaximumFrameRmsDbFS": -2.0771191790452046,
+          "effectiveThresholdDbFS": -20.077119179045205,
+          "requiredConsecutiveFrames": 2,
+          "singleFrameFallbackUsed": false,
+          "detectedOnsetSeconds": 0.42,
+          "preOnsetSafetySeconds": 0.005
+        },
+        "trimReason": "First energetic onset plus deterministic functional cue cap and measured terminal silence; no artistic preference"
+      },
+      "sourceSegmentSeconds": {
+        "start": 0.415,
+        "end": 1.415
+      },
+      "fadeMs": {
+        "in": 1.0,
+        "out": 10.0
+      },
+      "normalization": {
+        "type": "measured_static_loudness_gain",
+        "targetIntegratedLUFS": -18.0,
+        "maximumEncodedTruePeakDbTP": -1.5,
+        "preEncodeTruePeakCeilingDbTP": -2.5,
+        "sourceMeasurement": {
+          "input_i": -13.47,
+          "input_tp": 2.15,
+          "input_lra": 0.0,
+          "input_thresh": -23.47,
+          "output_i": -17.99,
+          "output_tp": -2.38,
+          "output_lra": 0.0,
+          "output_thresh": -27.99,
+          "normalization_type": "linear",
+          "target_offset": -0.01
+        },
+        "analysisPaddingSeconds": 0.0,
+        "standaloneIntegratedLoudnessDefined": true,
+        "desiredLoudnessGainDb": -4.529999999999999,
+        "appliedGainDb": -4.65,
+        "peakConstraintApplied": true,
+        "maximumPositiveGainDb": 12.0,
+        "paddingOnlyUsedForMeasurementNotWrittenToAudio": true,
+        "additionalPostCodecGainDb": 0.0,
+        "encodingAttempts": 1
+      },
+      "encoding": {
+        "codec": "MP3/libmp3lame",
+        "bitrateKbps": 80,
+        "sampleRate": 44100,
+        "channels": 1,
+        "ffmpegVersion": "ffmpeg version 9.0-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers"
+      },
+      "output": {
+        "src": "assets/audio/sfx-impact.mp3",
+        "sha256": "9f9e81cb398a2ec0dc10beab194ec55a85e9b27aee5b36ae00d0501707794d3e",
+        "bytes": 10776,
+        "probe": {
+          "durationSeconds": 1.0,
+          "codec": "mp3",
+          "sampleRate": 44100,
+          "channels": 1,
+          "bitRate": 86208
+        },
+        "measurement": {
+          "input_i": -18.57,
+          "input_tp": -3.04,
+          "input_lra": 0.0,
+          "input_thresh": -28.57,
+          "output_i": -20.99,
+          "output_tp": -5.47,
+          "output_lra": 0.0,
+          "output_thresh": -30.99,
+          "normalization_type": "linear",
+          "target_offset": -0.01
+        },
+        "measurementAnalysisPaddingSeconds": 0.0,
+        "standaloneIntegratedLUFS": -18.57
+      }
+    },
+    {
+      "key": "sfx.alarm",
+      "provenanceId": "sfx.alarm:A",
+      "source": {
+        "id": "sfx.alarm:A",
+        "source": "Suno",
+        "surface": "Sounds",
+        "modelObserved": null,
+        "sourceId": "92bc6025-3141-4cad-bc54-7274d07122f9",
+        "sourceUrlWithoutQuery": "https://suno.com/song/92bc6025-3141-4cad-bc54-7274d07122f9",
+        "generatedAtObserved": null,
+        "uiDurationObserved": null,
+        "downloaded": true,
+        "remoteOnly": false,
+        "runtimeSelected": true,
+        "originalFilename": "One Isolated 1.5-second Gentle Spacecraft Caution Signal_ Two Alternating Low....mp3",
+        "originalSha256": "8be927e4022164fd215858741b49033864343f799d8c04a90f3e068836ff398c",
+        "originalBytes": 227022,
+        "originalProbe": {
+          "durationSeconds": 9.6135,
+          "codec": "mp3",
+          "sampleRate": 48000,
+          "channels": 2,
+          "bitRate": 188919
+        }
+      },
+      "listenStatus": "not_performed_no_audio_input",
+      "selectionReason": "First take A retained as the explicit technical reference; no artistic preference or listening assessment",
+      "listeningReview": {
+        "listened": false,
+        "reviewer": null,
+        "notes": null
+      },
+      "technicalCueAdaptation": {
+        "thresholdDbFS": -55.0,
+        "minimumSilenceSeconds": 0.15,
+        "intervals": [],
+        "method": "FFmpeg silencedetect; measured amplitude only",
+        "leadingSafetyMarginSeconds": 0.02,
+        "trailingSafetyMarginSeconds": 0.08,
+        "retainedStart": 0.105,
+        "retainedEnd": 2.105,
+        "functionalMaximumSeconds": 2.0,
+        "onsetDetection": {
+          "method": "first energetic RMS onset; no subjective selection",
+          "analysisSampleRate": 16000,
+          "analysisChannels": 1,
+          "frameSeconds": 0.01,
+          "absoluteRmsFloorDbFS": -50,
+          "relativeThresholdDbBelowMaximumRMS": -18,
+          "measuredMaximumFrameRmsDbFS": -3.6281198938805876,
+          "effectiveThresholdDbFS": -21.628119893880587,
+          "requiredConsecutiveFrames": 2,
+          "singleFrameFallbackUsed": false,
+          "detectedOnsetSeconds": 0.11,
+          "preOnsetSafetySeconds": 0.005
+        },
+        "trimReason": "First energetic onset plus deterministic functional cue cap and measured terminal silence; no artistic preference"
+      },
+      "sourceSegmentSeconds": {
+        "start": 0.105,
+        "end": 2.105
+      },
+      "fadeMs": {
+        "in": 1.0,
+        "out": 10.0
+      },
+      "normalization": {
+        "type": "measured_static_loudness_gain",
+        "targetIntegratedLUFS": -18.0,
+        "maximumEncodedTruePeakDbTP": -1.5,
+        "preEncodeTruePeakCeilingDbTP": -2.5,
+        "sourceMeasurement": {
+          "input_i": -14.5,
+          "input_tp": 0.37,
+          "input_lra": 0.0,
+          "input_thresh": -24.5,
+          "output_i": -18.0,
+          "output_tp": -3.13,
+          "output_lra": 0.0,
+          "output_thresh": -28.0,
+          "normalization_type": "linear",
+          "target_offset": -0.0
+        },
+        "analysisPaddingSeconds": 0.0,
+        "standaloneIntegratedLoudnessDefined": true,
+        "desiredLoudnessGainDb": -3.5,
+        "appliedGainDb": -3.5,
+        "peakConstraintApplied": false,
+        "maximumPositiveGainDb": 12.0,
+        "paddingOnlyUsedForMeasurementNotWrittenToAudio": true,
+        "additionalPostCodecGainDb": 0.0,
+        "encodingAttempts": 1
+      },
+      "encoding": {
+        "codec": "MP3/libmp3lame",
+        "bitrateKbps": 80,
+        "sampleRate": 44100,
+        "channels": 1,
+        "ffmpegVersion": "ffmpeg version 9.0-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers"
+      },
+      "output": {
+        "src": "assets/audio/sfx-alarm.mp3",
+        "sha256": "e42c3b6d4e42f25cd8ab94582d303f89d609e0c3b093e0284cd82b59d1afe35d",
+        "bytes": 20702,
+        "probe": {
+          "durationSeconds": 2.0,
+          "codec": "mp3",
+          "sampleRate": 44100,
+          "channels": 1,
+          "bitRate": 82808
+        },
+        "measurement": {
+          "input_i": -18.46,
+          "input_tp": -3.58,
+          "input_lra": 0.0,
+          "input_thresh": -28.46,
+          "output_i": -21.0,
+          "output_tp": -6.12,
+          "output_lra": 0.0,
+          "output_thresh": -31.0,
+          "normalization_type": "linear",
+          "target_offset": -0.0
+        },
+        "measurementAnalysisPaddingSeconds": 0.0,
+        "standaloneIntegratedLUFS": -18.46
+      }
+    },
+    {
+      "key": "sfx.repair",
+      "provenanceId": "sfx.repair:A",
+      "source": {
+        "id": "sfx.repair:A",
+        "source": "Suno",
+        "surface": "Sounds",
+        "modelObserved": null,
+        "sourceId": "756f43fe-2534-410e-945f-bef1c418440a",
+        "sourceUrlWithoutQuery": "https://suno.com/song/756f43fe-2534-410e-945f-bef1c418440a",
+        "generatedAtObserved": null,
+        "uiDurationObserved": null,
+        "downloaded": true,
+        "remoteOnly": false,
+        "runtimeSelected": true,
+        "originalFilename": "One Isolated 1.4-second Repair Completion_ Two Small Ratchet Turns On Aged Br....mp3",
+        "originalSha256": "416773557c01814e22b7fef6f1dbe07018568697f9057a59ae2f4176903dae54",
+        "originalBytes": 86780,
+        "originalProbe": {
+          "durationSeconds": 2.7735,
+          "codec": "mp3",
+          "sampleRate": 48000,
+          "channels": 2,
+          "bitRate": 250311
+        }
+      },
+      "listenStatus": "not_performed_no_audio_input",
+      "selectionReason": "First take A retained as the explicit technical reference; no artistic preference or listening assessment",
+      "listeningReview": {
+        "listened": false,
+        "reviewer": null,
+        "notes": null
+      },
+      "technicalCueAdaptation": {
+        "thresholdDbFS": -55.0,
+        "minimumSilenceSeconds": 0.15,
+        "intervals": [],
+        "method": "FFmpeg silencedetect; measured amplitude only",
+        "leadingSafetyMarginSeconds": 0.02,
+        "trailingSafetyMarginSeconds": 0.08,
+        "retainedStart": 0.765,
+        "retainedEnd": 2.765,
+        "functionalMaximumSeconds": 2.0,
+        "onsetDetection": {
+          "method": "first energetic RMS onset; no subjective selection",
+          "analysisSampleRate": 16000,
+          "analysisChannels": 1,
+          "frameSeconds": 0.01,
+          "absoluteRmsFloorDbFS": -50,
+          "relativeThresholdDbBelowMaximumRMS": -18,
+          "measuredMaximumFrameRmsDbFS": -3.51394561341988,
+          "effectiveThresholdDbFS": -21.513945613419878,
+          "requiredConsecutiveFrames": 2,
+          "singleFrameFallbackUsed": false,
+          "detectedOnsetSeconds": 0.77,
+          "preOnsetSafetySeconds": 0.005
+        },
+        "trimReason": "First energetic onset plus deterministic functional cue cap and measured terminal silence; no artistic preference"
+      },
+      "sourceSegmentSeconds": {
+        "start": 0.765,
+        "end": 2.765
+      },
+      "fadeMs": {
+        "in": 1.0,
+        "out": 10.0
+      },
+      "normalization": {
+        "type": "measured_static_loudness_gain",
+        "targetIntegratedLUFS": -18.0,
+        "maximumEncodedTruePeakDbTP": -1.5,
+        "preEncodeTruePeakCeilingDbTP": -2.5,
+        "sourceMeasurement": {
+          "input_i": -16.8,
+          "input_tp": 2.37,
+          "input_lra": 0.0,
+          "input_thresh": -29.07,
+          "output_i": -20.68,
+          "output_tp": -1.5,
+          "output_lra": 0.0,
+          "output_thresh": -32.95,
+          "normalization_type": "linear",
+          "target_offset": 2.68
+        },
+        "analysisPaddingSeconds": 0.0,
+        "standaloneIntegratedLoudnessDefined": true,
+        "desiredLoudnessGainDb": -1.1999999999999993,
+        "appliedGainDb": -4.87,
+        "peakConstraintApplied": true,
+        "maximumPositiveGainDb": 12.0,
+        "paddingOnlyUsedForMeasurementNotWrittenToAudio": true,
+        "additionalPostCodecGainDb": 0.0,
+        "encodingAttempts": 1
+      },
+      "encoding": {
+        "codec": "MP3/libmp3lame",
+        "bitrateKbps": 80,
+        "sampleRate": 44100,
+        "channels": 1,
+        "ffmpegVersion": "ffmpeg version 9.0-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers"
+      },
+      "output": {
+        "src": "assets/audio/sfx-repair.mp3",
+        "sha256": "ad80987ac6841118910a35c3071b949ca2b95a17786634112eed07a3d2f6ac2e",
+        "bytes": 20703,
+        "probe": {
+          "durationSeconds": 2.0,
+          "codec": "mp3",
+          "sampleRate": 44100,
+          "channels": 1,
+          "bitRate": 82812
+        },
+        "measurement": {
+          "input_i": -22.1,
+          "input_tp": -2.91,
+          "input_lra": 0.0,
+          "input_thresh": -34.37,
+          "output_i": -21.2,
+          "output_tp": -2.0,
+          "output_lra": 0.0,
+          "output_thresh": -33.47,
+          "normalization_type": "linear",
+          "target_offset": 0.2
+        },
+        "measurementAnalysisPaddingSeconds": 0.0,
+        "standaloneIntegratedLUFS": -22.1
+      }
+    },
+    {
+      "key": "sfx.refuel",
+      "provenanceId": "sfx.refuel:A",
+      "source": {
+        "id": "sfx.refuel:A",
+        "source": "Suno",
+        "surface": "Sounds",
+        "modelObserved": null,
+        "sourceId": "50cfc692-8974-481b-9167-550b4235444d",
+        "sourceUrlWithoutQuery": "https://suno.com/song/50cfc692-8974-481b-9167-550b4235444d",
+        "generatedAtObserved": null,
+        "uiDurationObserved": null,
+        "downloaded": true,
+        "remoteOnly": false,
+        "runtimeSelected": true,
+        "originalFilename": "One Isolated 1.5-second Cargo-ship Refuelling Sound_ A Soft Metal Valve Unloc....mp3",
+        "originalSha256": "c8c2cc7d6147cc456bbc7b4d85578cc11ec654abae99ebb0f1c89d8cf8ef2b23",
+        "originalBytes": 149465,
+        "originalProbe": {
+          "durationSeconds": 5.5335,
+          "codec": "mp3",
+          "sampleRate": 48000,
+          "channels": 2,
+          "bitRate": 216087
+        }
+      },
+      "listenStatus": "not_performed_no_audio_input",
+      "selectionReason": "First take A retained as the explicit technical reference; no artistic preference or listening assessment",
+      "listeningReview": {
+        "listened": false,
+        "reviewer": null,
+        "notes": null
+      },
+      "technicalCueAdaptation": {
+        "thresholdDbFS": -55.0,
+        "minimumSilenceSeconds": 0.15,
+        "intervals": [],
+        "method": "FFmpeg silencedetect; measured amplitude only",
+        "leadingSafetyMarginSeconds": 0.02,
+        "trailingSafetyMarginSeconds": 0.08,
+        "retainedStart": 0.275,
+        "retainedEnd": 2.275,
+        "functionalMaximumSeconds": 2.0,
+        "onsetDetection": {
+          "method": "first energetic RMS onset; no subjective selection",
+          "analysisSampleRate": 16000,
+          "analysisChannels": 1,
+          "frameSeconds": 0.01,
+          "absoluteRmsFloorDbFS": -50,
+          "relativeThresholdDbBelowMaximumRMS": -18,
+          "measuredMaximumFrameRmsDbFS": -3.583713139477399,
+          "effectiveThresholdDbFS": -21.5837131394774,
+          "requiredConsecutiveFrames": 2,
+          "singleFrameFallbackUsed": false,
+          "detectedOnsetSeconds": 0.28,
+          "preOnsetSafetySeconds": 0.005
+        },
+        "trimReason": "First energetic onset plus deterministic functional cue cap and measured terminal silence; no artistic preference"
+      },
+      "sourceSegmentSeconds": {
+        "start": 0.275,
+        "end": 2.275
+      },
+      "fadeMs": {
+        "in": 1.0,
+        "out": 10.0
+      },
+      "normalization": {
+        "type": "measured_static_loudness_gain",
+        "targetIntegratedLUFS": -18.0,
+        "maximumEncodedTruePeakDbTP": -1.5,
+        "preEncodeTruePeakCeilingDbTP": -2.5,
+        "sourceMeasurement": {
+          "input_i": -13.55,
+          "input_tp": -0.48,
+          "input_lra": 0.0,
+          "input_thresh": -23.55,
+          "output_i": -18.0,
+          "output_tp": -4.93,
+          "output_lra": 0.0,
+          "output_thresh": -28.0,
+          "normalization_type": "linear",
+          "target_offset": -0.0
+        },
+        "analysisPaddingSeconds": 0.0,
+        "standaloneIntegratedLoudnessDefined": true,
+        "desiredLoudnessGainDb": -4.449999999999999,
+        "appliedGainDb": -4.449999999999999,
+        "peakConstraintApplied": false,
+        "maximumPositiveGainDb": 12.0,
+        "paddingOnlyUsedForMeasurementNotWrittenToAudio": true,
+        "additionalPostCodecGainDb": 0.0,
+        "encodingAttempts": 1
+      },
+      "encoding": {
+        "codec": "MP3/libmp3lame",
+        "bitrateKbps": 80,
+        "sampleRate": 44100,
+        "channels": 1,
+        "ffmpegVersion": "ffmpeg version 9.0-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers"
+      },
+      "output": {
+        "src": "assets/audio/sfx-refuel.mp3",
+        "sha256": "728eda556debe5ab995f909dc93c717eb3f4b66a7fbe59deb9af99880f9160d2",
+        "bytes": 20703,
+        "probe": {
+          "durationSeconds": 2.0,
+          "codec": "mp3",
+          "sampleRate": 44100,
+          "channels": 1,
+          "bitRate": 82812
+        },
+        "measurement": {
+          "input_i": -18.45,
+          "input_tp": -5.38,
+          "input_lra": 0.0,
+          "input_thresh": -28.45,
+          "output_i": -20.99,
+          "output_tp": -7.93,
+          "output_lra": 0.0,
+          "output_thresh": -30.99,
+          "normalization_type": "linear",
+          "target_offset": -0.01
+        },
+        "measurementAnalysisPaddingSeconds": 0.0,
+        "standaloneIntegratedLUFS": -18.45
+      }
+    },
+    {
+      "key": "sfx.message",
+      "provenanceId": "sfx.message:A",
+      "source": {
+        "id": "sfx.message:A",
+        "source": "Suno",
+        "surface": "Sounds",
+        "modelObserved": null,
+        "sourceId": "806b488b-cfb0-4fed-b5a7-4012a471cc3c",
+        "sourceUrlWithoutQuery": "https://suno.com/song/806b488b-cfb0-4fed-b5a7-4012a471cc3c",
+        "generatedAtObserved": null,
+        "uiDurationObserved": null,
+        "downloaded": true,
+        "remoteOnly": false,
+        "runtimeSelected": true,
+        "originalFilename": "One Isolated 1.2-second Incoming Bank-message Cue_ Three Mellow Muted-brass C....mp3",
+        "originalSha256": "1abe6c3dfca89f67bd43815e63cdab52a1b42c4f5990dd49c78ff7420d90f4b2",
+        "originalBytes": 135574,
+        "originalProbe": {
+          "durationSeconds": 5.2135,
+          "codec": "mp3",
+          "sampleRate": 48000,
+          "channels": 2,
+          "bitRate": 208035
+        }
+      },
+      "listenStatus": "not_performed_no_audio_input",
+      "selectionReason": "First take A retained as the explicit technical reference; no artistic preference or listening assessment",
+      "listeningReview": {
+        "listened": false,
+        "reviewer": null,
+        "notes": null
+      },
+      "technicalCueAdaptation": {
+        "thresholdDbFS": -55.0,
+        "minimumSilenceSeconds": 0.15,
+        "intervals": [],
+        "method": "FFmpeg silencedetect; measured amplitude only",
+        "leadingSafetyMarginSeconds": 0.02,
+        "trailingSafetyMarginSeconds": 0.08,
+        "retainedStart": 0.095,
+        "retainedEnd": 2.095,
+        "functionalMaximumSeconds": 2.0,
+        "onsetDetection": {
+          "method": "first energetic RMS onset; no subjective selection",
+          "analysisSampleRate": 16000,
+          "analysisChannels": 1,
+          "frameSeconds": 0.01,
+          "absoluteRmsFloorDbFS": -50,
+          "relativeThresholdDbBelowMaximumRMS": -18,
+          "measuredMaximumFrameRmsDbFS": -2.3973189997253317,
+          "effectiveThresholdDbFS": -20.397318999725332,
+          "requiredConsecutiveFrames": 2,
+          "singleFrameFallbackUsed": false,
+          "detectedOnsetSeconds": 0.1,
+          "preOnsetSafetySeconds": 0.005
+        },
+        "trimReason": "First energetic onset plus deterministic functional cue cap and measured terminal silence; no artistic preference"
+      },
+      "sourceSegmentSeconds": {
+        "start": 0.095,
+        "end": 2.095
+      },
+      "fadeMs": {
+        "in": 1.0,
+        "out": 10.0
+      },
+      "normalization": {
+        "type": "measured_static_loudness_gain",
+        "targetIntegratedLUFS": -18.0,
+        "maximumEncodedTruePeakDbTP": -1.5,
+        "preEncodeTruePeakCeilingDbTP": -2.5,
+        "sourceMeasurement": {
+          "input_i": -16.3,
+          "input_tp": 1.35,
+          "input_lra": 0.0,
+          "input_thresh": -28.56,
+          "output_i": -19.14,
+          "output_tp": -1.5,
+          "output_lra": 0.0,
+          "output_thresh": -31.39,
+          "normalization_type": "linear",
+          "target_offset": 1.14
+        },
+        "analysisPaddingSeconds": 0.0,
+        "standaloneIntegratedLoudnessDefined": true,
+        "desiredLoudnessGainDb": -1.6999999999999993,
+        "appliedGainDb": -3.85,
+        "peakConstraintApplied": true,
+        "maximumPositiveGainDb": 12.0,
+        "paddingOnlyUsedForMeasurementNotWrittenToAudio": true,
+        "additionalPostCodecGainDb": 0.0,
+        "encodingAttempts": 1
+      },
+      "encoding": {
+        "codec": "MP3/libmp3lame",
+        "bitrateKbps": 80,
+        "sampleRate": 44100,
+        "channels": 1,
+        "ffmpegVersion": "ffmpeg version 9.0-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers"
+      },
+      "output": {
+        "src": "assets/audio/sfx-message.mp3",
+        "sha256": "036bfbb477f7a95f7f5527d083501d6ea6ee2125ccdfbe8d5fa92d06767eaf0a",
+        "bytes": 20704,
+        "probe": {
+          "durationSeconds": 2.0,
+          "codec": "mp3",
+          "sampleRate": 44100,
+          "channels": 1,
+          "bitRate": 82816
+        },
+        "measurement": {
+          "input_i": -20.55,
+          "input_tp": -2.95,
+          "input_lra": 0.0,
+          "input_thresh": -32.8,
+          "output_i": -21.04,
+          "output_tp": -3.41,
+          "output_lra": 0.0,
+          "output_thresh": -33.29,
+          "normalization_type": "linear",
+          "target_offset": 0.04
+        },
+        "measurementAnalysisPaddingSeconds": 0.0,
+        "standaloneIntegratedLUFS": -20.55
+      }
+    }
+  ],
+  "sourceInventoryUpdatedAtUtc": "2026-10-28T21:44:59.606444+00:00",
+  "sourceInventory": {
+    "registeredIdentities": 32,
+    "localPreservedSources": 19,
+    "remoteOnlyIdentities": 13,
+    "runtimeSources": 16,
+    "localAlternativeMusicTakes": 3,
+    "localSourcesSha256Audited": true,
+    "localSourceBytes": 25462669,
+    "localSourceDurationSeconds": 1110.562
+  }
+}

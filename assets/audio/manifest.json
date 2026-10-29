@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "source": "Suno",
+  "partial": false,
+  "complete": true,
+  "requiredCueCount": 16,
+  "deliveredCueCount": 16,
+  "missingCues": [],
+  "listenStatus": "not_performed_no_audio_input",
+  "clips": {
+    "music.title": {
+      "src": "assets/audio/music-title.mp3",
+      "volume": 1.0,
+      "loop": true,
+      "kind": "music",
+      "fadeMs": 900,
+      "provenanceId": "music.title:A",
+      "license": "Suno-generated audio; account-dependent rights are documented by the project"
+    },
+    "music.travel": {
+      "src": "assets/audio/music-travel.mp3",
+      "volume": 1.0,
+      "loop": true,
+      "kind": "music",
+      "fadeMs": 900,
+      "provenanceId": "music.travel:A",
+      "license": "Suno-generated audio; account-dependent rights are documented by the project"
+    },
+    "music.threat": {
+      "src": "assets/audio/music-threat.mp3",
+      "volume": 1.0,
+      "loop": true,
+      "kind": "music",
+      "fadeMs": 900,
+      "provenanceId": "music.threat:A",
+      "license": "Suno-generated audio; account-dependent rights are documented by the project"
+    },
+    "stinger.victory": {
+      "src": "assets/audio/stinger-victory.mp3",
+      "volume": 0.9,
+      "loop": false,
+      "kind": "stinger",
+      "fadeMs": 900,
+      "provenanceId": "stinger.victory:A",
+      "license": "Suno-generated audio; account-dependent rights are documented by the project"
+    },
+    "stinger.defeat": {
+      "src": "assets/audio/stinger-defeat.mp3",
+      "volume": 0.9,
+      "loop": false,
+      "kind": "stinger",
+      "fadeMs": 900,
+      "provenanceId": "stinger.defeat:A",
+      "license": "Suno-generated audio; account-dependent rights are documented by the project"
+    },
+    "sfx.click": {
+      "src": "assets/audio/sfx-click.mp3",
+      "volume": 1.0,
+      "loop": false,
+      "kind": "sfx",
+      "fadeMs": 900,
+      "provenanceId": "sfx.click:A",
+      "license": "Suno-generated audio; account-dependent rights are documented by the project"
+    },
+    "sfx.dice": {
+      "src": "assets/audio/sfx-dice.mp3",
+      "volume": 1.0,
+      "loop": false,
+      "kind": "sfx",
+      "fadeMs": 900,
+      "provenanceId": "sfx.dice:A",
+      "license": "Suno-generated audio; account-dependent rights are documented by the project"
+    },
+    "sfx.trade": {
+      "src": "assets/audio/sfx-trade.mp3",
+      "volume": 1.0,
+      "loop": false,
+      "kind": "sfx",
+      "fadeMs": 900,
+      "provenanceId": "sfx.trade:A",
+      "license": "Suno-generated audio; account-dependent rights are documented by the project"
+    },
+    "sfx.jump": {
+      "src": "assets/audio/sfx-jump.mp3",
+      "volume": 1.0,
+      "loop": false,
+      "kind": "sfx",
+      "fadeMs": 900,
+      "provenanceId": "sfx.jump:A",
+      "license": "Suno-generated audio; account-dependent rights are documented by the project"
+    },
+    "sfx.arrival": {
+      "src": "assets/audio/sfx-arrival.mp3",
+      "volume": 1.0,
+      "loop": false,
+      "kind": "sfx",
+      "fadeMs": 900,
+      "provenanceId": "sfx.arrival:A",
+      "license": "Suno-generated audio; account-dependent rights are documented by the project"
+    },
+    "sfx.laser": {
+      "src": "assets/audio/sfx-laser.mp3",
+      "volume": 1.0,
+      "loop": false,
+      "kind": "sfx",
+      "fadeMs": 900,
+      "provenanceId": "sfx.laser:A",
+      "license": "Suno-generated audio; account-dependent rights are documented by the project"
+    },
+    "sfx.impact": {
+      "src": "assets/audio/sfx-impact.mp3",
+      "volume": 1.0,
+      "loop": false,
+      "kind": "sfx",
+      "fadeMs": 900,
+      "provenanceId": "sfx.impact:A",
+      "license": "Suno-generated audio; account-dependent rights are documented by the project"
+    },
+    "sfx.alarm": {
+      "src": "assets/audio/sfx-alarm.mp3",
+      "volume": 1.0,
+      "loop": false,
+      "kind": "sfx",
+      "fadeMs": 900,
+      "provenanceId": "sfx.alarm:A",
+      "license": "Suno-generated audio; account-dependent rights are documented by the project"
+    },
+    "sfx.repair": {
+      "src": "assets/audio/sfx-repair.mp3",
+      "volume": 1.0,
+      "loop": false,
+      "kind": "sfx",
+      "fadeMs": 900,
+      "provenanceId": "sfx.repair:A",
+      "license": "Suno-generated audio; account-dependent rights are documented by the project"
+    },
+    "sfx.refuel": {
+      "src": "assets/audio/sfx-refuel.mp3",
+      "volume": 1.0,
+      "loop": false,
+      "kind": "sfx",
+      "fadeMs": 900,
+      "provenanceId": "sfx.refuel:A",
+      "license": "Suno-generated audio; account-dependent rights are documented by the project"
+    },
+    "sfx.message": {
+      "src": "assets/audio/sfx-message.mp3",
+      "volume": 1.0,
+      "loop": false,
+      "kind": "sfx",
+      "fadeMs": 900,
+      "provenanceId": "sfx.message:A",
+      "license": "Suno-generated audio; account-dependent rights are documented by the project"
+    },
+    "music.port": "music.title"
+  }
+}

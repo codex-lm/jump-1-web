@@ -1,0 +1,701 @@
+{
+  "project": "Jump-1",
+  "artist": "Kimi K3.1",
+  "direction": "Cédric Bernadac",
+  "integrationAndIndependentQA": "Codex",
+  "cliVersion": "2.3.1",
+  "modelAlias": "kimi-code/k3.1-pro",
+  "orchestration": "AgentSwarm with four parallel art workers, model=primary",
+  "workers": [
+    {
+      "agentId": "agent-4",
+      "model": "k3.1-pro",
+      "modelAlias": "kimi-code/k3.1-pro",
+      "thinkingEffort": "high",
+      "type": "llm.request",
+      "kind": "loop"
+    },
+    {
+      "agentId": "agent-5",
+      "model": "k3.1-pro",
+      "modelAlias": "kimi-code/k3.1-pro",
+      "thinkingEffort": "high",
+      "type": "llm.request",
+      "kind": "loop"
+    },
+    {
+      "agentId": "agent-6",
+      "model": "k3.1-pro",
+      "modelAlias": "kimi-code/k3.1-pro",
+      "thinkingEffort": "high",
+      "type": "llm.request",
+      "kind": "loop"
+    },
+    {
+      "agentId": "agent-7",
+      "model": "k3.1-pro",
+      "modelAlias": "kimi-code/k3.1-pro",
+      "thinkingEffort": "high",
+      "type": "llm.request",
+      "kind": "loop"
+    }
+  ],
+  "verifiedAtUtc": "2026-10-28T22:40:56.078695+00:00",
+  "images": 60,
+  "canonicalBlenderScenes": 55,
+  "assetBytes": 14679382,
+  "checks": {
+    "exactDimensions": true,
+    "manifestPaths": true,
+    "transparentSpritesWithUnclippedMargins": 42,
+    "losslessSpritesVP8L": 42,
+    "opaqueSceneAndMapImages": 18,
+    "paperEdgeMeanRGBDifferenceX": 0.5172526041666666,
+    "paperEdgeMeanRGBDifferenceY": 0.5777994791666666,
+    "missingRequiredFiles": [],
+    "hdCutawayExactRgbaPngWebp": true,
+    "hdCutawayBaseImageAndGeometryUnchanged": true
+  },
+  "licenses": {
+    "rendersAndEditableModels": "CC0-1.0",
+    "generatorCode": "MIT",
+    "fonts": "SIL-OFL-1.1"
+  },
+  "assets": [
+    {
+      "key": "ship/hero-pristine",
+      "bytes": 1184072,
+      "size": [
+        2400,
+        1500
+      ],
+      "sha256": "d3db28e94357f33295eff56adc390d32193a488261cc1c3b41ab240b0864f8d7"
+    },
+    {
+      "key": "ship/hero-damaged",
+      "bytes": 1210252,
+      "size": [
+        2400,
+        1500
+      ],
+      "sha256": "3d981127eece4f7d0e6894e6cd89defa23df38b73b2d98109774f2e759f40f40"
+    },
+    {
+      "key": "ship/hero-jump",
+      "bytes": 1419760,
+      "size": [
+        2400,
+        1500
+      ],
+      "sha256": "93a8a8ed2dc40b0aab2fc78b0aa4f4f7dd8422092aae97271091088eb35f2d76"
+    },
+    {
+      "key": "ship/cutaway",
+      "bytes": 853318,
+      "size": [
+        2000,
+        900
+      ],
+      "sha256": "1a258fc287e2d149c7d47c1301daab3ae3d80726ad5e9ff44bec12bf20285a5c"
+    },
+    {
+      "key": "ship/cutaway-hd",
+      "bytes": 3104060,
+      "size": [
+        4000,
+        1800
+      ],
+      "sha256": "dffde17c76023883e2903e662e6cccd5f05c37fe71b7f2bfb16c75013a79ea2f"
+    },
+    {
+      "key": "worlds/vacuum",
+      "bytes": 127518,
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "d68f1b42286f7f825c42b2ee8d5025ee47b83c2664846460ca932fa084dc5cd6"
+    },
+    {
+      "key": "worlds/asteroids",
+      "bytes": 93966,
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "6c4402d79869f5fc914f9bcd1e28d1e3fe60ccd5240389399c737708b28a5433"
+    },
+    {
+      "key": "worlds/desert",
+      "bytes": 127754,
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "920b80e0963cda2e5a9c0af45678f03ff6801863af5327d8bf9ef7e35837f10a"
+    },
+    {
+      "key": "worlds/rocky",
+      "bytes": 144120,
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "d9041812caa1411a7f1b3a1e1c2eef93cd708bc0078e3870067e9bd0af042723"
+    },
+    {
+      "key": "worlds/ice",
+      "bytes": 163098,
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "fe1bcb61f0a59c08bd440e728de08e28c90baf037195bdcab28c01a56f30b7e0"
+    },
+    {
+      "key": "worlds/ocean",
+      "bytes": 168646,
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "bd82cb3e627f8d479f685fab3c18c5857b3a80fd4a96acdcab783c2420dc01b9"
+    },
+    {
+      "key": "worlds/garden",
+      "bytes": 179526,
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "5c15ee3215143fbb7960d0d183b2e28dede6fae16f923db87bf70f923087accd"
+    },
+    {
+      "key": "worlds/jungle",
+      "bytes": 168254,
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "f28ad178f87768bef9bd7d5aedf5ba6896c6ae420d1d6baff25ad1ec3368902c"
+    },
+    {
+      "key": "worlds/volcanic",
+      "bytes": 162258,
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "282e20e33ead13de9d5c0103cebd6457ebe02554ee85806bfb875bc430432f2a"
+    },
+    {
+      "key": "worlds/exotic",
+      "bytes": 171824,
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "7466ac2d34e105fe9c09aaf5b2ce793e4ff008ebd181caeb35b6f432571fde3b"
+    },
+    {
+      "key": "worlds/city",
+      "bytes": 169708,
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "eee3a05618a17b1ee395385620e34254630c1ac778646657f81d3ce182abc4c2"
+    },
+    {
+      "key": "worlds/frozen-ocean",
+      "bytes": 146098,
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "df691e61d6c887b2ad0a02eb7a47bd0e0a0f0b0187868723513d2f17a7fc29d8"
+    },
+    {
+      "key": "worlds/gas-giant",
+      "bytes": 311214,
+      "size": [
+        768,
+        768
+      ],
+      "sha256": "15a68a9925b67ef874e5eb26bbcf7fe478510fc8e49ae4a92c3b63b4a9621f11"
+    },
+    {
+      "key": "ships/corsair",
+      "bytes": 202700,
+      "size": [
+        1200,
+        600
+      ],
+      "sha256": "abd796d13226d6cf6c4813499e39580242faa26a5c157167c7dc401023396858"
+    },
+    {
+      "key": "ships/patrol",
+      "bytes": 215510,
+      "size": [
+        1200,
+        600
+      ],
+      "sha256": "0894a3a5c8ea5960d6c6a38779837eac22a672499f132345e2390872f727a1d0"
+    },
+    {
+      "key": "ships/trader",
+      "bytes": 342222,
+      "size": [
+        1200,
+        600
+      ],
+      "sha256": "eff9f6ad3f5f7aa64baa13e41e86c716d35d5b3d0f5088f12f2b572c94d80a0f"
+    },
+    {
+      "key": "ships/diligence",
+      "bytes": 260792,
+      "size": [
+        1200,
+        600
+      ],
+      "sha256": "e362118e745095339d63a2cd3fa659ccc5e9ed0adda76aea1ea10a8e679c5d61"
+    },
+    {
+      "key": "ships/corsair-map",
+      "bytes": 6504,
+      "size": [
+        128,
+        128
+      ],
+      "sha256": "a78b304d235a348dce1d650817cb674895b300a9e7a7ca9338d12806b5904579"
+    },
+    {
+      "key": "ships/patrol-map",
+      "bytes": 6480,
+      "size": [
+        128,
+        128
+      ],
+      "sha256": "6c4fd0cccf75674016f3fa3d09cb74d7bdf993b80bbe170d58223d8ad25da2dc"
+    },
+    {
+      "key": "ships/trader-map",
+      "bytes": 9404,
+      "size": [
+        128,
+        128
+      ],
+      "sha256": "283127d52300463ce70cffb5fcd00d165daf41f809ae3fe8430c66ccbd64e745"
+    },
+    {
+      "key": "ships/diligence-map",
+      "bytes": 8158,
+      "size": [
+        128,
+        128
+      ],
+      "sha256": "3eb8911c203e4906a1a98ba78c008f35b86e8f39eedb4f4c8741c637b0a5f175"
+    },
+    {
+      "key": "scenes/pirate",
+      "bytes": 28754,
+      "size": [
+        1600,
+        600
+      ],
+      "sha256": "919ce7b53bbe6fcc60c136b724cdb6aa8ae4b1bafe24201b89255075ada4aeee"
+    },
+    {
+      "key": "scenes/patrol",
+      "bytes": 25008,
+      "size": [
+        1600,
+        600
+      ],
+      "sha256": "f90f8174d2c2485fb799c30bd2d39fd615fcc98af7011490cdfc38330387e5cd"
+    },
+    {
+      "key": "scenes/customs",
+      "bytes": 28532,
+      "size": [
+        1600,
+        600
+      ],
+      "sha256": "5e4d9a751dd40097420630d698a9159304d683141ff5eb17312289c18b143896"
+    },
+    {
+      "key": "scenes/derelict",
+      "bytes": 24664,
+      "size": [
+        1600,
+        600
+      ],
+      "sha256": "1ea5a5e687b3bda01b888de696df833bc894c8c2a678aeeb0bdeeee41dd0539c"
+    },
+    {
+      "key": "scenes/gas-skim",
+      "bytes": 63616,
+      "size": [
+        1600,
+        600
+      ],
+      "sha256": "feb63b577302b25c125c7da612ec8d9b78d3ecee7c46fefab77964b2ac9beced"
+    },
+    {
+      "key": "scenes/jumpspace",
+      "bytes": 85068,
+      "size": [
+        1600,
+        600
+      ],
+      "sha256": "eb1b50bb5cfd642dcae5c83544bfbf6408979c817a54d9540bd2e44d8c1f1d34"
+    },
+    {
+      "key": "scenes/drift",
+      "bytes": 26944,
+      "size": [
+        1600,
+        600
+      ],
+      "sha256": "caaac7ef19e36fdf6e7dbbe979ce33e786e948186dfea522ff13546cccb22c32"
+    },
+    {
+      "key": "scenes/port-a",
+      "bytes": 29300,
+      "size": [
+        1600,
+        600
+      ],
+      "sha256": "827ca4eb8d39600e00b7abf6062488d6ea4ec6c678c53de9f361a82852a602c1"
+    },
+    {
+      "key": "scenes/port-c",
+      "bytes": 31818,
+      "size": [
+        1600,
+        600
+      ],
+      "sha256": "a0bb2180516b0821bdbf302c0b6c2db661d87369971eb527c25e525565e8ea26"
+    },
+    {
+      "key": "scenes/port-e",
+      "bytes": 26270,
+      "size": [
+        1600,
+        600
+      ],
+      "sha256": "9ca507e00a07adfafcbb1eddaad6d792d06d8423b273881d476f610980470d57"
+    },
+    {
+      "key": "scenes/bar",
+      "bytes": 33662,
+      "size": [
+        1600,
+        600
+      ],
+      "sha256": "7de38877b6c9e345e890c56c57bedad00d7ef1f903f56fce2346e675610fe4ac"
+    },
+    {
+      "key": "scenes/sickbay",
+      "bytes": 27652,
+      "size": [
+        1600,
+        600
+      ],
+      "sha256": "9ec87b0d6fdccde11fb8ce840aec9c5e7337ec5aabed5d33d21ed61d3cc1b0ea"
+    },
+    {
+      "key": "scenes/repo",
+      "bytes": 26950,
+      "size": [
+        1600,
+        600
+      ],
+      "sha256": "5bb67f27a05e8ffdcce66d746507d339c682eb8753054ec8d1d35a47e45b4f62"
+    },
+    {
+      "key": "scenes/bank",
+      "bytes": 40814,
+      "size": [
+        1600,
+        600
+      ],
+      "sha256": "81158a988afaa0c898f57a12ae010e45d9a36fc417a4bfb9caa32a7d03282f3a"
+    },
+    {
+      "key": "scenes/victory",
+      "bytes": 38306,
+      "size": [
+        1600,
+        600
+      ],
+      "sha256": "8b0ec2aa1a7703c5449de2770bff5751bce03826a459fa599388c0c00e1f42b5"
+    },
+    {
+      "key": "scenes/defeat",
+      "bytes": 31232,
+      "size": [
+        1600,
+        600
+      ],
+      "sha256": "2fefb17ea9dba7914b253364d80f72040ef89d10fa1a1e9de8efe93fe2d2e79f"
+    },
+    {
+      "key": "crew/medallion-01",
+      "bytes": 194376,
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "6e4da0d6515eca2a19194f554ffd663bdb5d8de04065b1d15d3d81ea59d50008"
+    },
+    {
+      "key": "crew/medallion-02",
+      "bytes": 193660,
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "b51717496ec9e91bbdab3f087003e5735ebef3d6be307913aa493c1e9876018d"
+    },
+    {
+      "key": "crew/medallion-03",
+      "bytes": 193658,
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "cd130642030e4bf82478a0db552fbe64751760ed153e4cf202595f8b9966a81b"
+    },
+    {
+      "key": "crew/medallion-04",
+      "bytes": 194670,
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "0ec76bb80595acf4a4bcf288855caa1fecacde7f278f3dbab239f1ac76b86709"
+    },
+    {
+      "key": "crew/medallion-05",
+      "bytes": 193924,
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "5af1eb82a9bc1d48580f2f57a41e7be612cdcac1388a2091ac83c3c94708610c"
+    },
+    {
+      "key": "crew/medallion-06",
+      "bytes": 193650,
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "6f1515bc00af017a0f8a5b3f03e3926ec83a4eadb0ee047193220af00fe07b43"
+    },
+    {
+      "key": "crew/medallion-07",
+      "bytes": 191932,
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "6e2bb58cc7744ee26605ff196bfb29cabd041230b6d6e5d009a40476313322a3"
+    },
+    {
+      "key": "crew/medallion-08",
+      "bytes": 194472,
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "e433f4ffb78b3c6c5f110793c620d5c76a3bb4cf1bbf3b1b17d43750541d48ea"
+    },
+    {
+      "key": "crew/medallion-09",
+      "bytes": 194888,
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "5411b8dd19cfaf7dc43f7057fc0fe537e6015f75277b7770d2795f6bd2234539"
+    },
+    {
+      "key": "crew/medallion-10",
+      "bytes": 194158,
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "609b2e54d72c5c916da56960233136c9207ef530ac6223488ab00b01fbc039fb"
+    },
+    {
+      "key": "crew/medallion-11",
+      "bytes": 194262,
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "61d2d705952a9d8326bc5b3c6c18d4d1f57852efc48d01ddca240c795016700d"
+    },
+    {
+      "key": "crew/medallion-12",
+      "bytes": 195664,
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "73d479d0bb5beae810c9f9ecfcc4ee261f056f511754bdda3f0d6087717e3160"
+    },
+    {
+      "key": "crew/medallion-13",
+      "bytes": 194358,
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "3d480cb31e9868dbe9b53a2541905d5ccf626822eaa5dbf30986d7df98c7eec6"
+    },
+    {
+      "key": "crew/medallion-14",
+      "bytes": 194438,
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "7bd35f72797b66a2af14e48096ce97a4ccb967292d6f77335cda543f75182c61"
+    },
+    {
+      "key": "crew/medallion-15",
+      "bytes": 192616,
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "c1bf1d94f5ad86fd82d0092b22329013deff183d72555bc8e956c286f8373d69"
+    },
+    {
+      "key": "crew/medallion-16",
+      "bytes": 195238,
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "cd40b0f1ab031861e88356fbe03f43ed0c51081a030b3cd00fc00396ce3bb491"
+    },
+    {
+      "key": "map/backdrop",
+      "bytes": 41822,
+      "size": [
+        2048,
+        1280
+      ],
+      "sha256": "164183155f90223d1a14b31baaae31c2d25a2b1bc03aa07023ac5c7d21dc72a5"
+    },
+    {
+      "key": "map/paper",
+      "bytes": 5790,
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "597447ff6544e5c55fd91c673b2a937f6c428c0bb3d63e5380776ca64cc484d6"
+    }
+  ],
+  "savedBlenderFilesIncludingRenderVariants": 56,
+  "hdCutawayRefinement": {
+    "artist": "Kimi K3.1",
+    "orchestration": "AgentSwarm with two parallel workers, model=primary",
+    "workers": [
+      {
+        "agentId": "agent-9",
+        "model": "k3.1-pro",
+        "modelAlias": "kimi-code/k3.1-pro",
+        "thinkingEffort": "low",
+        "type": "llm.request",
+        "kind": "loop"
+      },
+      {
+        "agentId": "agent-10",
+        "model": "k3.1-pro",
+        "modelAlias": "kimi-code/k3.1-pro",
+        "thinkingEffort": "low",
+        "type": "llm.request",
+        "kind": "loop"
+      }
+    ],
+    "nativeRender": true,
+    "upscaling": false,
+    "rasterSharpening": false,
+    "sourceScene": "art/models/ships/cutaway.blend",
+    "renderVariant": "art/models/ships/cutaway-hd-canonical.blend",
+    "renderer": "art/rerender-cutaway-hd.py",
+    "exporter": "art/export-cutaway-hd.py",
+    "settings": {
+      "engine": "BLENDER_EEVEE_NEXT",
+      "eevee_render_samples": 128,
+      "resolution": [
+        4000,
+        1800
+      ],
+      "resolution_percentage": 100,
+      "pixel_aspect": [
+        1.0,
+        1.0
+      ],
+      "pixel_filter_size": 0.75,
+      "image_format": "PNG",
+      "color_mode": "RGBA",
+      "color_depth": "8",
+      "camera_type": "ORTHO",
+      "camera_ortho_scale": 20.0,
+      "view_transform": "AgX",
+      "look": "AgX - Medium High Contrast",
+      "exposure": 0.3499999940395355,
+      "gamma": 1.0
+    },
+    "fogGlowChanges": [
+      {
+        "node": "Glare",
+        "property": "inputs['Strength'].default_value",
+        "before": 0.18000000715255737,
+        "after": 0.11999999731779099
+      }
+    ],
+    "timingsSeconds": {
+      "save_blend": 0.00566699996124953,
+      "render": 3.3897025000769645,
+      "script_total_before_webp_conversion": 3.4438152000075206,
+      "webp_conversion": 3.920571600086987
+    },
+    "protectedBaseSha256": {
+      "assets/img/ship/cutaway.webp": "1a258fc287e2d149c7d47c1301daab3ae3d80726ad5e9ff44bec12bf20285a5c",
+      "assets/img/ship/cutaway.json": "a07b6e89b33217fd65be6e0c95f0a54dcb97855ffd91dc99f85d050426732a29"
+    },
+    "sceneInvariants": {
+      "geometryTransformsMaterialsLightsCameraSha256": "f7b96fc9d81842b5733623354781d914377f4c4e04ed8e0b01d296793be71c0f",
+      "objects": 183,
+      "cameraName": "Orthographic lateral cutaway",
+      "orthoScale": 20.0,
+      "color": [
+        "AgX",
+        "AgX - Medium High Contrast",
+        0.3499999940395355,
+        1.0
+      ]
+    },
+    "sceneInvariantsUnchanged": true,
+    "webpConversion": {
+      "library": "Pillow",
+      "lossless": true,
+      "exact": true,
+      "size": [
+        4000,
+        1800
+      ],
+      "mode": "RGBA"
+    },
+    "independentQa": "Native PNG visually inspected; decoded WebP exactly equals PNG RGBA; protected base hashes and scene invariants verified."
+  }
+}

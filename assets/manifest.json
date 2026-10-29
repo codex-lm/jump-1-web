@@ -1,0 +1,302 @@
+{
+  "ship/cutaway-hd": {
+    "src": "assets/img/ship/cutaway-hd.webp",
+    "width": 4000,
+    "height": 1800
+  },
+  "crew/medallion-01": {
+    "src": "assets/img/crew/medallion-01.webp",
+    "width": 512,
+    "height": 512
+  },
+  "crew/medallion-02": {
+    "src": "assets/img/crew/medallion-02.webp",
+    "width": 512,
+    "height": 512
+  },
+  "crew/medallion-03": {
+    "src": "assets/img/crew/medallion-03.webp",
+    "width": 512,
+    "height": 512
+  },
+  "crew/medallion-04": {
+    "src": "assets/img/crew/medallion-04.webp",
+    "width": 512,
+    "height": 512
+  },
+  "crew/medallion-05": {
+    "src": "assets/img/crew/medallion-05.webp",
+    "width": 512,
+    "height": 512
+  },
+  "crew/medallion-06": {
+    "src": "assets/img/crew/medallion-06.webp",
+    "width": 512,
+    "height": 512
+  },
+  "crew/medallion-07": {
+    "src": "assets/img/crew/medallion-07.webp",
+    "width": 512,
+    "height": 512
+  },
+  "crew/medallion-08": {
+    "src": "assets/img/crew/medallion-08.webp",
+    "width": 512,
+    "height": 512
+  },
+  "crew/medallion-09": {
+    "src": "assets/img/crew/medallion-09.webp",
+    "width": 512,
+    "height": 512
+  },
+  "crew/medallion-10": {
+    "src": "assets/img/crew/medallion-10.webp",
+    "width": 512,
+    "height": 512
+  },
+  "crew/medallion-11": {
+    "src": "assets/img/crew/medallion-11.webp",
+    "width": 512,
+    "height": 512
+  },
+  "crew/medallion-12": {
+    "src": "assets/img/crew/medallion-12.webp",
+    "width": 512,
+    "height": 512
+  },
+  "crew/medallion-13": {
+    "src": "assets/img/crew/medallion-13.webp",
+    "width": 512,
+    "height": 512
+  },
+  "crew/medallion-14": {
+    "src": "assets/img/crew/medallion-14.webp",
+    "width": 512,
+    "height": 512
+  },
+  "crew/medallion-15": {
+    "src": "assets/img/crew/medallion-15.webp",
+    "width": 512,
+    "height": 512
+  },
+  "crew/medallion-16": {
+    "src": "assets/img/crew/medallion-16.webp",
+    "width": 512,
+    "height": 512
+  },
+  "map/backdrop": {
+    "src": "assets/img/map/backdrop.webp",
+    "width": 2048,
+    "height": 1280
+  },
+  "map/paper": {
+    "src": "assets/img/map/paper.webp",
+    "width": 1024,
+    "height": 1024
+  },
+  "scenes/bank": {
+    "src": "assets/img/scenes/bank.webp",
+    "width": 1600,
+    "height": 600
+  },
+  "scenes/bar": {
+    "src": "assets/img/scenes/bar.webp",
+    "width": 1600,
+    "height": 600
+  },
+  "scenes/customs": {
+    "src": "assets/img/scenes/customs.webp",
+    "width": 1600,
+    "height": 600
+  },
+  "scenes/defeat": {
+    "src": "assets/img/scenes/defeat.webp",
+    "width": 1600,
+    "height": 600
+  },
+  "scenes/derelict": {
+    "src": "assets/img/scenes/derelict.webp",
+    "width": 1600,
+    "height": 600
+  },
+  "scenes/drift": {
+    "src": "assets/img/scenes/drift.webp",
+    "width": 1600,
+    "height": 600
+  },
+  "scenes/gas-skim": {
+    "src": "assets/img/scenes/gas-skim.webp",
+    "width": 1600,
+    "height": 600
+  },
+  "scenes/jumpspace": {
+    "src": "assets/img/scenes/jumpspace.webp",
+    "width": 1600,
+    "height": 600
+  },
+  "scenes/patrol": {
+    "src": "assets/img/scenes/patrol.webp",
+    "width": 1600,
+    "height": 600
+  },
+  "scenes/pirate": {
+    "src": "assets/img/scenes/pirate.webp",
+    "width": 1600,
+    "height": 600
+  },
+  "scenes/port-a": {
+    "src": "assets/img/scenes/port-a.webp",
+    "width": 1600,
+    "height": 600
+  },
+  "scenes/port-c": {
+    "src": "assets/img/scenes/port-c.webp",
+    "width": 1600,
+    "height": 600
+  },
+  "scenes/port-e": {
+    "src": "assets/img/scenes/port-e.webp",
+    "width": 1600,
+    "height": 600
+  },
+  "scenes/repo": {
+    "src": "assets/img/scenes/repo.webp",
+    "width": 1600,
+    "height": 600
+  },
+  "scenes/sickbay": {
+    "src": "assets/img/scenes/sickbay.webp",
+    "width": 1600,
+    "height": 600
+  },
+  "scenes/victory": {
+    "src": "assets/img/scenes/victory.webp",
+    "width": 1600,
+    "height": 600
+  },
+  "ship/cutaway": {
+    "src": "assets/img/ship/cutaway.webp",
+    "width": 2000,
+    "height": 900
+  },
+  "ship/hero-damaged": {
+    "src": "assets/img/ship/hero-damaged.webp",
+    "width": 2400,
+    "height": 1500
+  },
+  "ship/hero-jump": {
+    "src": "assets/img/ship/hero-jump.webp",
+    "width": 2400,
+    "height": 1500
+  },
+  "ship/hero-pristine": {
+    "src": "assets/img/ship/hero-pristine.webp",
+    "width": 2400,
+    "height": 1500
+  },
+  "ships/corsair-map": {
+    "src": "assets/img/ships/corsair-map.webp",
+    "width": 128,
+    "height": 128
+  },
+  "ships/corsair": {
+    "src": "assets/img/ships/corsair.webp",
+    "width": 1200,
+    "height": 600
+  },
+  "ships/diligence-map": {
+    "src": "assets/img/ships/diligence-map.webp",
+    "width": 128,
+    "height": 128
+  },
+  "ships/diligence": {
+    "src": "assets/img/ships/diligence.webp",
+    "width": 1200,
+    "height": 600
+  },
+  "ships/patrol-map": {
+    "src": "assets/img/ships/patrol-map.webp",
+    "width": 128,
+    "height": 128
+  },
+  "ships/patrol": {
+    "src": "assets/img/ships/patrol.webp",
+    "width": 1200,
+    "height": 600
+  },
+  "ships/trader-map": {
+    "src": "assets/img/ships/trader-map.webp",
+    "width": 128,
+    "height": 128
+  },
+  "ships/trader": {
+    "src": "assets/img/ships/trader.webp",
+    "width": 1200,
+    "height": 600
+  },
+  "worlds/asteroids": {
+    "src": "assets/img/worlds/asteroids.webp",
+    "width": 512,
+    "height": 512
+  },
+  "worlds/city": {
+    "src": "assets/img/worlds/city.webp",
+    "width": 512,
+    "height": 512
+  },
+  "worlds/desert": {
+    "src": "assets/img/worlds/desert.webp",
+    "width": 512,
+    "height": 512
+  },
+  "worlds/exotic": {
+    "src": "assets/img/worlds/exotic.webp",
+    "width": 512,
+    "height": 512
+  },
+  "worlds/frozen-ocean": {
+    "src": "assets/img/worlds/frozen-ocean.webp",
+    "width": 512,
+    "height": 512
+  },
+  "worlds/garden": {
+    "src": "assets/img/worlds/garden.webp",
+    "width": 512,
+    "height": 512
+  },
+  "worlds/gas-giant": {
+    "src": "assets/img/worlds/gas-giant.webp",
+    "width": 768,
+    "height": 768
+  },
+  "worlds/ice": {
+    "src": "assets/img/worlds/ice.webp",
+    "width": 512,
+    "height": 512
+  },
+  "worlds/jungle": {
+    "src": "assets/img/worlds/jungle.webp",
+    "width": 512,
+    "height": 512
+  },
+  "worlds/ocean": {
+    "src": "assets/img/worlds/ocean.webp",
+    "width": 512,
+    "height": 512
+  },
+  "worlds/rocky": {
+    "src": "assets/img/worlds/rocky.webp",
+    "width": 512,
+    "height": 512
+  },
+  "worlds/vacuum": {
+    "src": "assets/img/worlds/vacuum.webp",
+    "width": 512,
+    "height": 512
+  },
+  "worlds/volcanic": {
+    "src": "assets/img/worlds/volcanic.webp",
+    "width": 512,
+    "height": 512
+  }
+}
