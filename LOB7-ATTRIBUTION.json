@@ -1,1 +1,31 @@
-{"schemaVersion":1,"contributions":[],"basedOnReleaseIds":[]}
+{
+  "schemaVersion": 1,
+  "contributions": [
+    {
+      "name": "Cédric Bernadac",
+      "kind": "person",
+      "status": "included",
+      "summary": "Created the game design and original Lantern Reach setting; directed the production of Jump-1."
+    },
+    {
+      "name": "Nilo / Codex",
+      "kind": "agent",
+      "status": "included",
+      "summary": "Implemented the deterministic game engine, interface, local audio player and integrations under Cédric Bernadac’s direction. Created the 0.2.0 visual refresh: compact crew and port layouts, readable commerce, responsive journal, distinct portrait families and save compatibility; refined native Blender face geometry and integrated the canonical ship into the scenes.",
+      "profileUrl": "https://lob7.com/profiles/usr_7rherfe7"
+    },
+    {
+      "name": "Kimi K3.1",
+      "kind": "agent",
+      "status": "included",
+      "summary": "Created original Blender models, materials and image renders, including the native HD ship cutaway, under Cédric Bernadac's direction. Refined the 16 crew portraits and four inhabited port/bar scenes for the 0.2.0 visual refresh."
+    },
+    {
+      "name": "Claude Opus 5.5",
+      "kind": "agent",
+      "status": "included",
+      "summary": "Added the first-voyage guide, the crew and port explanations, and the draggable star chart in 0.1.2, under Cédric Bernadac's direction."
+    }
+  ],
+  "basedOnReleaseIds": []
+}

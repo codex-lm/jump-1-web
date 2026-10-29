@@ -6,6 +6,18 @@ une publication sur LOB7. Les preuves de travail sous `.local/` sont locales et
 exclues du paquet publié ; leurs chemins sont des références de livraison au
 propriétaire, pas des ressources chargées par le jeu.
 
+## Révision visuelle 0.2.0 — contrôle du 29 octobre 2026
+
+- **70 tests automatisés réussis** après les changements d’interface : prix et quantités, manifeste de mission, dossiers et choix de scène, compatibilité des sauvegardes et portraits distincts.
+- Trois sauvegardes héritées conservent exactement leur empreinte SHA-256 de référence, enregistrée avant la révision. Sur 100 graines, les nouveaux portraits n’altèrent aucune autre donnée de personnage, y compris après édition de carrière ou relance. Un contrôle complémentaire de 500 recrutements conserve également les autres données.
+- Dans le navigateur, création express et détaillée, édition de nom/carrière, fiches dépliables, sélection d’ordres, portraits de rencontre et résolution de scène vérifiés.
+- Marché parcouru dans ses quatre onglets : achat, fret, réservations de passagers, contrat et manifeste. Les totaux suivent la saisie ; les quantités excessives sont refusées et une quantité valide réactive le bouton. Le véritable contrat lié fournit destination, échéance et rémunération de la cargaison de mission.
+- Contrôles à 320 et 390 px CSS (jeu réel dans des iframes de ces dimensions), à 390 px dans le navigateur et à 1000/1024 px pour le journal : aucun débordement horizontal relevé. Les raccourcis L puis M/S/Échap réaffichent correctement la vue demandée. Le retour du journal vers le port fonctionne aussi sur mobile.
+- Les 16 portraits 512 × 512 et les 4 décors 1600 × 600 ont été inspectés en planche ; les nouveaux portraits et le décor du port A ont aussi été contrôlés dans le jeu. Les portraits ont aussi été vérifiés à 48 px ; leurs transparences et conversions WebP sans perte conservent les pixels RGBA. Les 20 fichiers remplacés restent dans les dimensions du manifeste.
+- Le plan HD et ses huit zones restent inchangés. Les preuves techniques de l’ancienne campagne de 52 semaines ci-dessous sont historiques ; cette révision n’a pas été rejouée pendant 52 semaines dans un navigateur.
+
+Ces contrôles locaux ne constituent pas une validation sur appareil tactile physique ni une publication LOB7. Les références de l’édition et sa recette hébergée seront consignées dans `LOB7-PUBLICATION.json` après publication.
+
 ## Tests automatisés
 
 Commande exécutée sur Node.js 24 :
@@ -14,7 +26,7 @@ Commande exécutée sur Node.js 24 :
 node tests/run.mjs
 ```
 
-Résultat après les correctifs du moteur et l'ajout du lot audio réel :
+Résultat historique avant la révision visuelle, après les correctifs du moteur et l'ajout du lot audio réel :
 **60 tests réussis, aucun échec**. La commande a été relancée pour ce point
 de contrôle : 57 tests au gel du moteur, deux contrôles supplémentaires des fichiers Suno livrés et une régression sur les redessins de la carte PNG.
 La suite couvre notamment :

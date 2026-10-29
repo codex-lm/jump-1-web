@@ -11,6 +11,7 @@ export function createInitialState(seed,config={}) {
   seed=String(seed||'lantern-01').slice(0,120);
   const difficulty=['easy','normal','hard'].includes(config.difficulty)?config.difficulty:'normal';
   const normalized={difficulty,shipName:String(config.shipName||'La Lanterne').slice(0,40),daily:!!config.daily,showSecrets:!!config.showSecrets&&!config.daily,humanStations:Array.isArray(config.humanStations)?[...new Set(config.humanStations.map(Number).filter(n=>n>=1&&n<=5))].sort():[1]};
+  if(config.portraitEdition===2)normalized.portraitEdition=2;
   if(normalized.daily)normalized.difficulty='normal';
   const subsector=generateSubsector(seed),crew=generateCrew(seed,normalized);
   return {meta:{seed,config:normalized,version:SAVE_VERSION,actionCount:0,rerollUsed:false,chargenComplete:false},phase:'chargen',clock:{week:1,month:1,day:1,completedWeeks:0,lostWeeksPending:0},crew,ship:createShip(normalized.shipName,subsector.startHex),subsector,economy:createEconomy(normalized),cargo:[],passengers:[],contracts:[],collector:createCollector(seed,subsector),bonds:generateBonds(seed,crew),scene:null,sceneQueue:[],log:[],milestones:[],ending:null,stats:{jumps:0,weeksLost:0,maxPressure:0,contractsCompleted:0,lowDeaths:0,rounds:0},route:[subsector.startHex],routines:{...DEFAULT_ROUTINES},portActions:{},marketPurchases:{},bookedOffers:[],knownMarkets:{},arrivalWeek:0,portPending:false,portWorked:false,portWeekComplete:false,pendingDeparture:null,captainStation:1,objections:[],lastError:null};

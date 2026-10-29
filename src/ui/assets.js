@@ -3,7 +3,7 @@ let manifest = Object.create(null);
 const escape = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 export async function loadAssets() {
   try {
-    const response = await fetch('./assets/manifest.json');
+    const response = await fetch(new URL('../../assets/manifest.json', import.meta.url));
     if (response.ok) {
       const data = await response.json();
       manifest = data.assets || data;

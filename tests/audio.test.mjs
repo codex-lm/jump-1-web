@@ -60,7 +60,7 @@ test('audio is locked before a gesture; empty manifests and unavailable storage 
     player.setContext('port');player.onAction(null,null,{t:'UI_CLICK'});
     assert.equal(mock.contexts.length,0);assert.equal(mock.requests.length,0);
     assert.equal(await player.unlock(),true);
-    assert.deepEqual(mock.events.slice(0,3),['construct','resume','fetch:./assets/audio/manifest.json']);
+    assert.deepEqual(mock.events.slice(0,3),['construct','resume',`fetch:${new URL('../assets/audio/manifest.json', import.meta.url)}`]);
     assert.equal(mock.contexts[0].sources.length,0);assert.equal(statuses.at(-1).available,false);
     await player.unlock();assert.equal(mock.requests.length,1);
     assert.doesNotThrow(()=>player.setVolumes({music:.4,sfx:.2}));
@@ -156,7 +156,7 @@ test('autoplay refusal, missing clips and hostile manifest paths are isolated',a
   try{
     const player=createAudioPlayer();await player.unlock();
     player.setContext('travel');player.onAction(null,null,{t:'UI_CLICK'});await flush();
-    assert.ok(mock.requests.every(url=>url.startsWith('./assets/audio/')));
+    assert.ok(mock.requests.every(url=>new URL(url,new URL('../',import.meta.url)).href.startsWith(new URL('../assets/audio/',import.meta.url).href)));
     assert.equal(mock.contexts[0].sources.length,0);player.close();
   }finally{mock.restore();}
 });

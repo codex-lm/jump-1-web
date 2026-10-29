@@ -22,6 +22,47 @@ The runtime helper in `src/ui/assets.js` provides a procedural plate if a manife
 
 ## Editable sources and regeneration
 
+### v0.2.0 visual refresh
+
+Kimi K3.1 produced refined native generators for all sixteen crew medallions
+and the bar plus class A, C and E ports. Two Kimi workers were explicitly bound
+to `kimi-code/k3.1-pro` through CLI 2.3.1. Nilo/Codex then corrected the native
+cheek-to-chin geometry with continuous, shape-preserving cubic interpolation,
+removed the separate spherical jowl primitives, and reused the original
+`hero-pristine.blend` geometry in the three scenes showing the freighter.
+The bar received a restrained face-fill light. No raster blur, upscaling,
+external textures or stock assets were used.
+
+The final portraits have open eyes, closer framing, a thinner brass rim,
+distinct hair/clothing silhouettes and mature variants with partial grey hair
+and restrained facial lines, suited to the crew's career ages.
+The four places add activity, props and local lighting while preserving a
+quiet left side for overlaid UI text. Asset keys and dimensions are unchanged.
+The hero images, worlds, map and both technical cutaway images are unchanged.
+
+All twenty final scenes were rendered natively in Blender 4.5.13 Eevee at
+96 samples. On `dev-assets`, regenerate this refinement with:
+
+```sh
+blender --background --factory-startup --python-exit-code 1 --python art/build-portraits.py -- --samples 96 --engine EEVEE
+python art/portrait-verify.py --contact-sheet
+blender --background --factory-startup --python-exit-code 1 --python art/build-places.py -- --samples 96
+python art/export-places.py
+```
+
+The places runner uses `scene-common.py`, `scene-ships.py`, `scene-places.py`
+and `canonical-freighter.py`. The latter requires the unchanged canonical
+`art/models/ships/hero-pristine.blend` and imports its native geometry and
+materials without its camera or lights. Portable authoring fallback paths
+under `.local/art-source/` are also supported. Final editable portraits belong
+under `art/models/crew/`, and final places under `art/models/scenes/` on the
+private source branch. Preview scenes and caches are not canonical sources.
+
+Final export checks cover exact dimensions, transparent exterior margins,
+byte-exact decoded PNG/WebP RGBA for portraits, opaque RGB scene banners,
+and unchanged hashes for every asset outside the twenty refreshed files.
+`PROVENANCE.json` records the current hashes, model evidence and source receipt.
+
 The publication branch contains ready-to-serve artwork. Generator scripts and editable `.blend` sources belong to `dev-assets`, which is kept separate from the static game. There are 55 scene designs: eight ship scenes, thirteen worlds, sixteen portraits, sixteen scene banners and two map textures. The HD cutaway retains its own render-settings variant, giving 56 saved `.blend` files. Map miniatures reuse the corresponding spacecraft geometry.
 
 Run the following commands from the repository root on the source branch. Development prerequisites are Blender 4.5.13 LTS, Python 3.12 and Pillow 12.2; they are not game runtime dependencies. Replace `blender` with the path to your Blender executable if necessary.
