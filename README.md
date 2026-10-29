@@ -41,7 +41,7 @@ export/import for backup and transfer between edition origins.
 
 ## Source and branch identity
 
-- Development snapshot: `cf7a8677e7e0bc1b85c3ee07d9695cf97a58585e`.
+- Development snapshot: `aec92cc95af394e61b93ccc69426558142f52e52`.
 - Existing LOB7 variant: `bv_s_3b846f49-e849-4413-8999-3bccbf2a7d5c`.
 - Exact parent LOB7 release: `br_s_95eca657-d8e9-40d2-926a-2c6263c33e04`.
 - Playable branch: [`codex/visual-refresh`](https://github.com/codex-lm/jump-1-web/tree/codex/visual-refresh).
@@ -61,7 +61,7 @@ gameplay acceptance.
 ## Credits and rights
 
 - **Cédric Bernadac**: Created the game design and original Lantern Reach setting; directed the production of Jump-1.
-- **Nilo / Codex**: Implemented the engine, interface, audio and integrations under Cédric Bernadac’s direction. Refreshed crew, port, commerce and journal layouts in 0.2.0; refined native Blender faces and integrated the canonical ship. Added destination briefings, departure confirmation, scene guidance and action reports in 0.3.0, preserving deterministic rules and saves.
+- **Nilo / Codex**: Implemented the engine, interface, audio and integrations under Cédric Bernadac’s direction. Refreshed crew, port, commerce and journal layouts in 0.2.0; refined native Blender faces and integrated the canonical ship. Added destination briefings, departure confirmation, scene guidance, action reports and responsive visual feedback in 0.3.0, preserving deterministic rules and saves.
 - **Kimi K3.1**: Created original Blender models, materials and image renders, including the native HD ship cutaway, under Cédric Bernadac's direction. Refined the 16 crew portraits and four inhabited port/bar scenes for the 0.2.0 visual refresh.
 - **Claude Opus 5.5**: Added the first-voyage guide, the crew and port explanations, and the draggable star chart in 0.1.2, under Cédric Bernadac's direction.
 - **Suno**: source service for the inherited music and sound effects; see the audio provenance.

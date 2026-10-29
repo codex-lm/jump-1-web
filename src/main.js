@@ -37,16 +37,19 @@ function primeAudio(){if(!audioStatus?.unlocked)void audio.unlock();}
 function audioControl(compact=true){return `<button class="${compact?'icon-button':'row'}" data-action="audio-toggle" aria-pressed="${audio.isEnabled()}" aria-label="${esc(t(audio.isEnabled()?'audio.mute':'audio.unmute'))}"><span data-audio-icon>${icon(audio.isEnabled()?'volume':'muted')}</span>${compact?'':`<span data-audio-label>${esc(t(audio.isEnabled()?'audio.on':'audio.off'))}</span>`}</button>`;}
 function screenAudioContext(){if(screen==='title'||!state||state.phase==='chargen')return 'title';if(state.ending)return state.ending.type==='victory'?'victory':'defeat';if(['pirate','repo','customs','patrol'].includes(state.scene?.type)||(state.collector?.pressure||0)>=2||state.phase==='payment')return 'threat';if(panel==='map'||['travel','drift','breakdown'].includes(state.scene?.type))return 'travel';return 'port';}
 let transport=null,state=null,screen='title',titleForm=false,detailed=false,panel='port',journalTab='log',marketTab='goods',mobile='central',selectedHex=null,sceneKey='',choices={},unmountMap=null,toastTimer=0,saveWarning=false,journalOpen=false;
-let lastReport=null;
-let settings={reduceMotion:matchMedia('(prefers-reduced-motion: reduce)').matches,font:16};
+let lastReport=null,shownReport=null,renderedState=null,pendingMapMotion=false,pendingStationMotion=null;
+const motionPreference=matchMedia('(prefers-reduced-motion: reduce)');
+let settings={reduceMotion:motionPreference.matches,font:16};
 try{settings={...settings,...JSON.parse(localStorage.getItem('jump1.settings')||'{}')};}catch{}
-function applySettings(){document.body.classList.toggle('reduce-motion',!!settings.reduceMotion);document.documentElement.style.setProperty('--font-size',`${Math.max(12,Math.min(18,Number(settings.font)||16))}px`);try{localStorage.setItem('jump1.settings',JSON.stringify(settings));}catch{}}
+function motionReduced(){return !!settings.reduceMotion||motionPreference.matches;}
+function applySettings(){document.body.classList.toggle('reduce-motion',motionReduced());document.documentElement.style.setProperty('--font-size',`${Math.max(12,Math.min(18,Number(settings.font)||16))}px`);try{localStorage.setItem('jump1.settings',JSON.stringify(settings));}catch{}}
+motionPreference.addEventListener('change',applySettings);
 function toast(message){const el=document.getElementById('toast');clearTimeout(toastTimer);el.textContent=message;el.classList.add('visible');toastTimer=setTimeout(()=>el.classList.remove('visible'),4200);}
 function showModal(title,html,{wide=false}={}){if(modal.open)modal.close();modal.classList.toggle('ship-zoom-modal',wide);modal.innerHTML=`<div class="modal-head"><h2 id="modal-title">${esc(title)}</h2><button class="icon-button" data-action="close" aria-label="${esc(t('common.close'))}">${icon('close')}</button></div><div class="modal-body">${html}</div>`;modal.showModal();attachAssetFallbacks(modal);}
 const GUIDE_KEY='jump1.guide.v1';let guideShown=false;function guideSeen(){if(guideShown)return true;try{return localStorage.getItem(GUIDE_KEY)==='1';}catch{return false;}}function markGuideSeen(){guideShown=true;try{localStorage.setItem(GUIDE_KEY,'1');}catch{}}
 function showHelp(){showModal(t('help.title'),`<div class="help-grid">${[1,2,3].map(i=>`<article class="help-step"><span class="number">0${i}</span><h3>${esc(t(`help.${i}title`))}</h3><p>${esc(t(`help.${i}`))}</p></article>`).join('')}</div><p class="mono muted" style="font-size:.7rem;margin:25px 0 0">${esc(t('help.shortcuts'))}</p>`);}
 function showCentral(){mobile='central';if(matchMedia('(max-width:1199px)').matches)journalOpen=false;}
-function connectLocal(seed,config,actions=[]){transport?.close();transport=createLocal(seed,config,actions);state=transport.getState();screen='game';panel='port';mobile='central';journalOpen=false;selectedHex=state.ship.hex;sceneKey='';lastReport=null;render();window.scrollTo(0,0);}
+function connectLocal(seed,config,actions=[]){transport?.close();transport=createLocal(seed,config,actions);state=transport.getState();screen='game';panel='port';mobile='central';journalOpen=false;selectedHex=state.ship.hex;sceneKey='';lastReport=null;shownReport=null;renderedState=null;pendingMapMotion=false;pendingStationMotion=null;render();window.scrollTo(0,0);}
 function send(action,{quiet=false}={}){
  if(!transport)return false;
  const previous=state,result=transport.send({by:'captain',...action});
@@ -65,7 +68,7 @@ function send(action,{quiet=false}={}){
  return true;
 }
 function startRun(seed,config){connectLocal(seed,{...config,portraitEdition:2});send({t:'CHARGEN_EXPRESS'});}
-function topbar(){const e=state.economy;return `<header class="topbar"><div class="brand-block"><div class="world-label">${esc(state.subsector.name)}</div><h1 class="ship-name">${esc(state.ship.name)}</h1></div><div class="top-stats"><div class="top-stat"><span>${esc(t('hud.week',{week:state.clock.week}))}</span><strong>${esc(t('hud.month',{month:state.clock.month}))}</strong></div><div class="top-stat"><span>${esc(t('hud.cash'))}</span><strong class="${e.credits<e.nextPayment?'red':'brass'}">${money(e.credits)} Cr</strong></div><div class="top-stat"><span>${esc(t('hud.due'))} · ${esc(t('hud.inweeks',{weeks:Math.max(0,e.nextPaymentWeek-state.clock.week)}))}</span><strong>${money(e.nextPayment)} Cr</strong></div><div class="top-stat"><span>${esc(t('hud.arrears'))}</span><strong class="${e.arrears?'red':''}">${money(e.arrears)}</strong></div><div class="top-stat pressure-stat"><span>${esc(t('hud.pressure'))} · ${state.collector.pressure}</span><div class="pressure" aria-label="${esc(t('hud.pressure'))}: ${state.collector.pressure}">${[1,2,3,4,5].map(i=>`<i class="${state.collector.pressure>=i?'on':''}"></i>`).join('')}</div></div></div><div class="actions">${audioControl()}<button class="small" data-action="language">${getLanguage()==='fr'?'EN':'FR'}</button><button class="icon-button" data-action="menu" aria-label="${esc(t('nav.menu'))}">${icon('settings')}</button></div></header>`;}
+function topbar(){const e=state.economy;return `<header class="topbar"><div class="brand-block"><div class="world-label">${esc(state.subsector.name)}</div><h1 class="ship-name">${esc(state.ship.name)}</h1></div><div class="top-stats"><div class="top-stat" data-hud="week"><span>${esc(t('hud.week',{week:state.clock.week}))}</span><strong>${esc(t('hud.month',{month:state.clock.month}))}</strong></div><div class="top-stat" data-hud="cash"><span>${esc(t('hud.cash'))}</span><strong class="${e.credits<e.nextPayment?'red':'brass'}">${money(e.credits)} Cr</strong></div><div class="top-stat"><span>${esc(t('hud.due'))} · ${esc(t('hud.inweeks',{weeks:Math.max(0,e.nextPaymentWeek-state.clock.week)}))}</span><strong>${money(e.nextPayment)} Cr</strong></div><div class="top-stat"><span>${esc(t('hud.arrears'))}</span><strong class="${e.arrears?'red':''}">${money(e.arrears)}</strong></div><div class="top-stat pressure-stat"><span>${esc(t('hud.pressure'))} · ${state.collector.pressure}</span><div class="pressure" aria-label="${esc(t('hud.pressure'))}: ${state.collector.pressure}">${[1,2,3,4,5].map(i=>`<i class="${state.collector.pressure>=i?'on':''}"></i>`).join('')}</div></div></div><div class="actions">${audioControl()}<button class="small" data-action="language">${getLanguage()==='fr'?'EN':'FR'}</button><button class="icon-button" data-action="menu" aria-label="${esc(t('nav.menu'))}">${icon('settings')}</button></div></header>`;}
 function gameScreen(){
  if(state.phase==='chargen')return chargenScreen(state,detailed);
  if(state.ending)return endScreen(state,{audioControls:audioControl()});
@@ -87,14 +90,39 @@ function gameScreen(){
  <aside class="journal-panel" id="journal-panel" aria-label="${esc(t('nav.journal'))}"><div class="journal-heading"><h3>${esc(t('nav.journal'))}</h3><button class="icon-button" data-action="journal-toggle" aria-label="${esc(t('nav.closejournal'))}">${icon('close')}</button></div>${renderJournal(state,journalTab)}</aside>
  </div><nav class="mobile-tabs">${[['ship','ship'],['central','map'],['journal','log']].map(([p,i])=>`<button data-action="mobile" data-panel="${p}" class="${mobile===p?'active':''}" aria-pressed="${mobile===p}">${icon(i)} ${esc(t(p==='central'?'nav.port':p==='journal'?'nav.journal':'nav.ship'))}</button>`).join('')}</nav></main>`;
 }
-function render(){unmountMap?.();unmountMap=null;const scroll=window.scrollY;app.innerHTML=screen==='title'?titleScreen({form:titleForm,saved:!!readSave(),audioEnabled:audio.isEnabled()}):gameScreen();attachAssetFallbacks(app);if(screen==='game'&&state?.phase==='port'&&panel==='map')unmountMap=mountMap(state,selectedHex,hex=>selectDestination(hex));if(screen==='game'&&state?.phase==='port'&&!state.stats?.jumps&&!modal.open&&!guideSeen()){markGuideSeen();showHelp();}if(state?.ending&&screen==='game')document.fonts.ready.then(()=>drawRunCard(state));window.scrollTo({top:scroll,behavior:'auto'});audio.setContext(screenAudioContext());if(audioStatus)updateAudioControls(audioStatus);}
-function showMenu(){showModal(t('menu.title'),`<p class="section-intro">${esc(t('menu.saved'))}</p><div class="stack">${audioControl(false)}<label>${esc(t('audio.music'))}<span class="row"><input type="range" min="0" max="100" data-audio-volume="music" aria-label="${esc(t('audio.music'))}"><output data-audio-level="music"></output></span></label><label>${esc(t('audio.effects'))}<span class="row"><input type="range" min="0" max="100" data-audio-volume="sfx" aria-label="${esc(t('audio.effects'))}"><output data-audio-level="sfx"></output></span></label>${state?`<button data-action="export">${esc(t('menu.export'))}</button>`:''}<button data-action="load-save">${esc(t('menu.import'))}</button><button data-action="about">${esc(t('title.about'))}</button><label class="row"><input id="setting-motion" type="checkbox" ${settings.reduceMotion?'checked':''}>${esc(t('menu.reduce'))}</label><label>${esc(t('menu.font'))}<input id="setting-font" type="range" min="12" max="18" value="${settings.font}"></label><button data-action="home">${esc(t('menu.titleback'))}</button>${state&&!state.ending?`<button class="danger" data-action="abandon-prompt">${esc(t('menu.abandon'))}</button>`:''}</div>`);if(audioStatus)updateAudioControls(audioStatus);}
+function render(){
+ unmountMap?.();unmountMap=null;
+ const scroll=window.scrollY,previous=renderedState;
+ const oldMeters=new Map([...app.querySelectorAll('[role="meter"]')].map(el=>[el.getAttribute('aria-label'),Number(el.getAttribute('aria-valuenow'))]));
+ app.innerHTML=screen==='title'?titleScreen({form:titleForm,saved:!!readSave(),audioEnabled:audio.isEnabled()}):gameScreen();
+ attachAssetFallbacks(app);
+ const animate=!motionReduced(),report=app.querySelector('.action-report');
+ if(screen==='game'&&state?.phase==='port'&&panel==='map')unmountMap=mountMap(state,selectedHex,hex=>selectDestination(hex),{animateRoute:animate&&pendingMapMotion});
+ if(animate){
+  if(pendingMapMotion)app.querySelector('.destination-heading')?.classList.add('motion-reveal');
+  if(pendingStationMotion)app.querySelector(`[data-action="scene-choice"][data-station="${pendingStationMotion}"]`)?.closest('.scene-station')?.classList.add('motion-chosen');
+  if(report&&lastReport!==shownReport){report.classList.add('motion-new');if(lastReport?.arrival)app.querySelector('.world-header')?.classList.add('motion-reveal');}
+  if(screen==='game'&&previous&&previous!==state){
+   const delta=state.economy.credits-previous.economy.credits;
+   if(delta)app.querySelector('[data-hud="cash"]')?.classList.add(delta>0?'resource-gain':'resource-loss');
+   if(state.clock.week!==previous.clock.week)app.querySelector('[data-hud="week"]')?.classList.add('motion-chosen');
+   for(const meter of app.querySelectorAll('[role="meter"]')){const old=oldMeters.get(meter.getAttribute('aria-label')),value=Number(meter.getAttribute('aria-valuenow'));if(old!==undefined&&value!==old)meter.closest('.meter')?.classList.add(value>old?'resource-gain':'resource-loss');}
+   if(state.phase==='scene'&&(previous.phase!=='scene'||previous.scene?.type!==state.scene?.type))app.querySelector('.scene-banner')?.classList.add('motion-reveal');
+  }
+ }
+ if(report)shownReport=lastReport;
+ pendingMapMotion=false;pendingStationMotion=null;renderedState=screen==='game'?state:null;
+ if(screen==='game'&&state?.phase==='port'&&!state.stats?.jumps&&!modal.open&&!guideSeen()){markGuideSeen();showHelp();}
+ if(state?.ending&&screen==='game')document.fonts.ready.then(()=>drawRunCard(state));
+ window.scrollTo({top:scroll,behavior:'auto'});audio.setContext(screenAudioContext());if(audioStatus)updateAudioControls(audioStatus);
+}
+function showMenu(){showModal(t('menu.title'),`<p class="section-intro">${esc(t('menu.saved'))}</p><div class="stack">${audioControl(false)}<label>${esc(t('audio.music'))}<span class="row"><input type="range" min="0" max="100" data-audio-volume="music" aria-label="${esc(t('audio.music'))}"><output data-audio-level="music"></output></span></label><label>${esc(t('audio.effects'))}<span class="row"><input type="range" min="0" max="100" data-audio-volume="sfx" aria-label="${esc(t('audio.effects'))}"><output data-audio-level="sfx"></output></span></label>${state?`<button data-action="export">${esc(t('menu.export'))}</button>`:''}<button data-action="load-save">${esc(t('menu.import'))}</button><button data-action="about">${esc(t('title.about'))}</button><label class="row"><input id="setting-motion" type="checkbox" ${motionReduced()?'checked':''} ${motionPreference.matches?'disabled':''}>${esc(t('menu.reduce'))}</label>${motionPreference.matches?`<small class="muted">${esc(t('motion.system'))}</small>`:''}<label>${esc(t('menu.font'))}<input id="setting-font" type="range" min="12" max="18" value="${settings.font}"></label><button data-action="home">${esc(t('menu.titleback'))}</button>${state&&!state.ending?`<button class="danger" data-action="abandon-prompt">${esc(t('menu.abandon'))}</button>`:''}</div>`);if(audioStatus)updateAudioControls(audioStatus);}
 async function showAbout(licences=false){showModal(t('about.title'),`<div class="tabs"><button data-action="about" class="${!licences?'active':''}">${esc(t('about.game'))}</button><button data-action="licences" class="${licences?'active':''}">${esc(t('about.licences'))}</button></div>${licences?'<pre id="licence-text"></pre>':`<p>${esc(t('about.description'))}</p><p>${esc(t('about.compatible'))}</p><small class="muted">${esc(t('about.version'))}</small>`}`);if(licences){try{const result=await fetch(new URL('../OGL.md', import.meta.url));if(!result.ok)throw new Error();const text=await result.text();const target=document.getElementById('licence-text');if(target)target.textContent=text;}catch{const target=document.getElementById('licence-text');if(target)target.textContent=t('common.unavailable');}}}
 function showCrew(index){const p=state.crew[index];if(p)showModal(p.name,characterSheet(p,state.meta.config));}
 function download(blob,name){const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
 function exportSave(){const save=transport?.exportSave();if(save)download(new Blob([JSON.stringify(save,null,2)],{type:'application/json'}),`jump-1-${state.meta.seed.replace(/[^a-z0-9-]/gi,'-')}.json`);}
 async function copyText(text){try{await navigator.clipboard.writeText(text);toast(t('common.copied'));}catch{showModal(t('common.copy'),`<input readonly value="${esc(text)}">`);modal.querySelector('input')?.select();}}
-function selectDestination(hex){selectedHex=hex;panel='map';showCentral();render();const heading=document.querySelector('.destination-heading');if(heading){const r=heading.getBoundingClientRect();if(r.top<0||r.bottom>innerHeight)heading.scrollIntoView({block:'start',behavior:'auto'});}}
+function selectDestination(hex){pendingMapMotion=hex!==selectedHex;selectedHex=hex;panel='map';showCentral();render();const heading=document.querySelector('.destination-heading');if(heading){const r=heading.getBoundingClientRect();if(r.top<0||r.bottom>innerHeight)heading.scrollIntoView({block:'start',behavior:'auto'});}}
 function depart(hex,quick=false){
  if(!hex||state.phase!=='port')return;
  const preview=departurePreview(state,hex,{quick});
@@ -102,7 +130,8 @@ function depart(hex,quick=false){
 }
 function executeDeparture(hex,quick){
  modal.close();
- if(send({t:quick?'QUICK_STOP':'DEPART',hex})){panel='port';showCentral();render();window.scrollTo(0,0);if(!settings.reduceMotion){const flash=document.createElement('div');flash.className='jump-flash';document.body.append(flash);setTimeout(()=>flash.remove(),850);}}
+ panel='port';showCentral();
+ if(send({t:quick?'QUICK_STOP':'DEPART',hex}))window.scrollTo(0,0);
 }
 function showFuelOptions(){
  const world=state.subsector.worlds.find(w=>w.hex===state.ship.hex),tons=30-state.ship.fuel;
@@ -170,7 +199,7 @@ async function handleAction(button){const action=button.dataset.action;if(button
  case 'recruit':send({t:'RECRUIT',station:Number(button.dataset.station)});break;
  case 'depart':depart(button.dataset.hex);break;
  case 'quick':depart(button.dataset.hex,true);break;
- case 'scene-choice':choices[button.dataset.station]=button.dataset.choice;render();break;
+ case 'scene-choice':pendingStationMotion=button.dataset.station;choices[button.dataset.station]=button.dataset.choice;render();break;
  case 'resolve':{const previous=state;const type=state.scene.type,round=state.scene.round;const selected={...choices};for(let station=1;station<=5;station++){if(state.phase!=='scene'||state.scene.type!==type||state.scene.round!==round)break;if(state.scene.choices[station]||!state.crew[station-1]?.alive||state.crew[station-1]?.active===false)continue;send({t:'SCENE_CHOICE',by:station,station,choice:selected[station]||'hold'},{quiet:true});}sceneKey='';lastReport=actionReport(previous,state,'RESOLVE');render();window.scrollTo(0,0);break;}
  case 'pay':send({t:'PAY'});break;
  case 'partpay':send({t:'PAY',amount:Math.max(1,Math.floor(state.economy.credits))});break;

@@ -1,5 +1,5 @@
 import {market} from '../src/rules/trade.js';
-import {actionReport,newJournalEntries,renderActionReport,renderPortObjective} from '../src/ui/feedback.js';
+import {actionReport,newJournalEntries,recentReportRolls,renderActionReport,renderPortObjective} from '../src/ui/feedback.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createInitialState} from '../src/core/state.js';
@@ -10,6 +10,7 @@ import {monthlyCosts} from '../src/rules/economy.js';
 import {destinationServices,departurePreview,renderDepartureSummary,renderDestination} from '../src/ui/navigation.js';
 import {renderMap,mountMap,pickMapWorld} from '../src/ui/map.js';
 import {setLanguage} from '../src/ui/i18n.js';
+import {createScene} from '../src/rules/scenes/index.js';
 
 function fixture(){
  const state=reduce(createInitialState('navigation-preview'),{t:'CHARGEN_DONE'});
@@ -205,4 +206,47 @@ test('a completed quiet scene still produces a meaningful report',()=>{
  after.log=[{week:1,key:'log.sceneResolved',params:{type:'patron'}}];
  const html=renderActionReport(actionReport(before,after,'END_WEEK'));
  assert.ok(html.includes('resolved'));assert.ok(!html.includes('<ul></ul>'));
+});
+
+test('report cards show only the three latest recorded checks without rolling again or changing state',()=>{
+ const {state}=fixture();state.phase='scene';state.scene=createScene('pirate',state);
+ state.crew[2].secret=null;
+ const choices={1:'evade',2:'overload',3:'fire',4:'heal',5:'bluff'};
+ const after=[1,2,3,4,5].reduce((s,station)=>reduce(s,{t:'SCENE_CHOICE',station,choice:choices[station]}),state);
+ assert.equal(after.lastError,null);
+ const report=actionReport(state,after,'SCENE_CHOICE'),recorded=report.entries.filter(e=>e.roll);
+ assert.ok(recorded.length>3);
+ const last=recentReportRolls(report);assert.deepEqual(last,recorded.slice(-3));
+ const snapshot=JSON.stringify({state,after,report}),previousRandom=Math.random;
+ Math.random=()=>{throw Error('Rendering must not roll dice');};
+ try{
+  for(const language of ['en','fr']){
+   setLanguage(language);const html=renderActionReport(report);
+   assert.equal((html.match(/<article class="report-roll /g)||[]).length,3);
+   assert.equal((html.match(/class="report-dice" role="img"/g)||[]).length,3);
+   assert.deepEqual([...html.matchAll(/class="report-die" aria-hidden="true">(\d)<\/span>/g)].map(m=>Number(m[1])),last.flatMap(e=>e.roll.dice));
+   for(const entry of last)assert.ok(html.includes(`<strong>${entry.roll.total} <small>/ 8</small>`));
+   assert.ok(html.includes('report-roll-note'));assert.ok(!html.includes('motion-new'));
+   assert.equal(renderActionReport(report),html);
+  }
+ }finally{Math.random=previousRandom;setLanguage('en');}
+ assert.equal(JSON.stringify({state,after,report}),snapshot);
+ const invalid={entries:[{key:'log.task',roll:{dice:[2,7],total:9,difficulty:0,success:true}},
+  {key:'log.task',roll:{total:9,difficulty:0,success:true}},
+  {key:'unknown.roll',roll:recorded[0].roll}]};
+ assert.deepEqual(recentReportRolls(invalid),[]);
+});
+
+test('the jump route uses actual origin and destination and never appears for a departure held by an invoice',()=>{
+ setLanguage('en');const {state,origin,destination}=fixture();
+ const after=reduce(state,{t:'DEPART',hex:destination.hex}),report=actionReport(state,after,'DEPART');
+ assert.equal(report.origin,origin.name);assert.equal(report.destination,destination.name);
+ assert.match(renderActionReport(report),/class="jump-route"/);
+ if(after.scene){assert.equal(report.arrival,undefined);assert.ok(!renderActionReport(report).includes('Arrived at'));}
+ const blocked=structuredClone(state);blocked.clock.week=4;blocked.economy.credits=0;
+ const pending=reduce(blocked,{t:'DEPART',hex:destination.hex});
+ assert.equal(pending.phase,'payment');assert.equal(pending.ship.hex,blocked.ship.hex);
+ const invoice=actionReport(blocked,pending,'DEPART');
+ assert.equal(Object.hasOwn(invoice,'origin'),false);assert.equal(invoice.destination,null);
+ assert.ok(!renderActionReport(invoice).includes('class="jump-route"'));
 });

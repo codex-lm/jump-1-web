@@ -1,6 +1,16 @@
 import { engineCatalog } from './engine-catalog.js';
 // Each entry is [English, French]. Both complete dictionaries are built from this source.
 export const catalog = {
+  "feedback.rolls":["Latest recorded rolls", "Derniers jets enregistrés"],
+  "feedback.rollEnemy":["Opposing gunner", "Canonnier adverse"],
+  "feedback.rollDice":["Dice: {first} and {second}", "Dés : {first} et {second}"],
+  "feedback.rollTotal":["Total", "Total"],
+  "feedback.rollDifficulty":["Modifier {value}", "Modificateur {value}"],
+  "feedback.rollMet":["Target met", "Seuil atteint"],
+  "feedback.rollMissed":["Below target", "Sous le seuil"],
+  "feedback.rollOpposed":["An opposed check compares effects: reaching 8 does not guarantee the outcome shown above.", "En opposition, les effets sont comparés : atteindre 8 ne garantit pas l’issue indiquée ci-dessus."],
+  "feedback.jumpPassage":["Jump passage", "Passage en saut"],
+  "motion.system":["Reduced motion is enabled in your device settings.","La réduction des animations est activée dans les réglages de votre appareil."],
   'feedback.mixedFuel':['Adding refined fuel to raw fuel leaves a raw mixture and its jump penalty. Purge and refill all 30 t to switch to refined fuel.','Ajouter du raffiné au carburant brut laisse un mélange brut et sa pénalité de saut. Vidangez puis remplissez les 30 t pour passer au raffiné.'],
   'feedback.REFUEL':['Refuelling report','Bilan du ravitaillement'],
   "feedback.checkSucceeded":["{name} — {skill}: success.", "{name} — {skill} : réussite."],

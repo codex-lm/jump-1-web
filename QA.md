@@ -12,7 +12,7 @@ propriétaire, pas des ressources chargées par le jeu.
 
 La fiche de destination explique trajet, coordonnées, services, coûts, frais mensuels, risques et livraisons. Le départ passe par une confirmation, y compris au clavier ; les liens du commerce ouvrent la destination correspondante. Le bilan d’action rapproche résultat, dépenses et journal. Les prochaines étapes au port et les options de carburant disponibles rendent la suite du voyage explicite. Les scènes décrivent leurs enjeux et leurs choix à partir du résolveur réel, affichent les compétences utilisées et distinguent préparation et résolution, sans calcul de probabilité approximatif ni lecture des résultats aléatoires.
 
-**Tests automatisés : 86 réussis sur 86 au point de contrôle local.** Les vérifications des scènes confrontent notamment les compétences et difficultés affichées aux jets réellement consignés par le moteur, conservent les actions légales, signalent les équipiers inconscients et vérifient que la présentation ne modifie ni l’état ni les secrets cachés. Les finitions mobiles sont terminées et les mesures finales figurent ci-dessous.
+**Tests automatisés : 88 réussis sur 88 au point de contrôle local.** Les vérifications des scènes confrontent notamment les compétences et difficultés affichées aux jets réellement consignés par le moteur, conservent les actions légales, signalent les équipiers inconscients et vérifient que la présentation ne modifie ni l’état ni les secrets cachés. Les finitions mobiles sont terminées et les mesures finales figurent ci-dessous.
 
 ### Partie jouée dans le navigateur local
 
@@ -35,6 +35,14 @@ La graine `audit-visuel-2026` a été jouée en français par les contrôles de 
 Les vues de destination, la fenêtre de confirmation et son annulation ont été contrôlées à **390 et 320 px CSS**. L’annulation à 390 px conserve la semaine 6 et la destination sélectionnée. Après correction de la largeur minimale du `body`, le parcours à 320 px revient au port sans débordement horizontal : `clientWidth = scrollWidth = 305 px`, les 15 px restants correspondant à la barre de défilement verticale. Les finitions mobiles de ce parcours sont terminées.
 
 Cette recette française ne refait pas une campagne entière de 52 semaines. La fiche de destination a également été vérifiée en anglais ; la partie complète a été jouée en français. Aucun contrôle sur appareil tactile physique, aucune écoute perceptive de l’audio et aucune recette multijoueur réelle ne sont ajoutés par ce parcours. Aucune publication 0.3.0 n’est attestée ici.
+
+### Animations et prolongement de la recette locale
+
+Après la demande complémentaire, les trajets se tracent en 720 ms et les bilans montrent au plus trois jets réels avec leurs deux dés, total/seuil et difficulté. Les ordres sélectionnés, nouvelles scènes et variations de ressources ont un effet bref ; une simple réouverture du port ne rejoue pas le bilan. Aucun tirage ni attente bloquante n’est ajouté. Le mode réduit du jeu a été activé/désactivé par l’interface : la navigation reste complète avec `animation-name: none`. Le réglage système est également prioritaire.
+
+La même partie a été prolongée jusqu’à la semaine 10 : vidange/remplissage à Oster pour 15 000 Cr, quatrième saut vers Haldveld avec dégâts au moteur, échéance manquée et charges, puis semaine standard avec réparation et travail à l’hôpital. Le solde final est 62 920 Cr. À 320 px, les trois cartes de dés restent lisibles et `clientWidth = scrollWidth = 305 px`. Aucun avertissement ni erreur console. Les 88 tests passent ; deux nouveaux contrôles vérifient les jets enregistrés et l’absence de trajet affiché si une facture bloque réellement le saut.
+
+Le CLI générique `check-local --recipe static-web-v1` vise les contributions HTML autonomes et refuse les liens locaux du jeu modulaire ; son échec n’est pas compté comme un succès. Les vérifications de modules, ressources, archive et limites du paquet navigateur sont faites par les tests locaux et l’exporteur, puis par la préparation LOB7 du jeu navigateur.
 
 ## Révision visuelle 0.2.0 — contrôle du 29 octobre 2026
 
