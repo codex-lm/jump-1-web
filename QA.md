@@ -1,5 +1,20 @@
 # Jump-1 — vérifications et limites de livraison
 
+## Recette locale 0.4.0 — 29 octobre 2026
+
+- `node tests/run.mjs` : 117/117 tests. Parité FR/EN, références locales, budgets, anciens rejeux et nouvelles règles inclus. Les 20 anciens événements et la panne conservent exactement leur comportement hors édition 4.
+- 300 graines : au moins deux départs viables, différences commerciales vérifiées par les effets réels des marchandises et continuités de route. Retouches limitées à proximité du départ.
+- 12 campagnes v4 simulées via actions publiques acceptées, invariants après chaque action et rejeux identiques. Dix atteignent la semaine 52 (huit victoires et deux paiements finaux manqués), deux finissent en saisie. Les vingt événements apparaissent. Ce test automatique vérifie la robustesse ; il ne mesure pas le taux de victoire humain ni un équilibrage définitif. Les résultats économiques sont très dispersés.
+- Vrai navigateur : reprise legacy de `audit-visuel-2026` en semaine 10 à 62 920 Cr ; nouveau voyage avec la même graine, installation de la réserve, plein à 50 t, Haldveld → Nerasto → Haldveld, deux fois 60 t de fret livré, négociation pirate et inspections, mensualité payée, installation de l’atelier en semaine 5.
+- Deuxième départ naturel `v04-scene-8` : anniversaire présenté avant les ordres, promesse, arrivée à Pelivo, écopage avec dégât annoncé puis retour vers Istriane et contrôle.
+- Sauvegardes de recette issues de parties normales : incendie `v04-scene-70` joué avec maîtrise ratée (1 dégât) puis pause de sécurité (1 semaine, pas de dégât) ; panne `v04-scene-1` résolue au second round avec deux aides journalisées avant réparation ; promesse tenue pour 500 Cr et faveur de marchand encaissée pour 5 000 Cr.
+- Reprise de `v04-campaign-4` en espace inhabité : panneau de situation, cinq destinations réelles, départ puis arrivée à Myral. Le défaut de panneau vide observé a été corrigé.
+- Vues FR/EN, inspections compactes/détaillées, affichage des demandes et échéances, sauvegardes importées/exportées, mouvement réduit vérifiés. À 390 et 320 px : largeur de contenu égale à la largeur cliente (375/305 px avec barre verticale). Aucune erreur ni alerte console.
+
+Les essais ciblés ne constituent pas douze campagnes jouées manuellement ni une nouvelle campagne navigateur complète de 52 semaines. Pas de nouvel asset sonore, d’écoute perceptive, de test tactile physique ou de validation coop. Les preuves locales sont sous `.local/v04-simulation`, `.local/v04-tests-final.txt` et `C:/dev/jump-1/.local/voyage-0.4.0`.
+
+État : code en validation finale, publication 0.4.0 pas encore effectuée.
+
 Ce document distingue les preuves du jeu solo, les tests de transport, la
 production artistique et le lot sonore livré. Les publications LOB7 0.3.0 et 0.2.0 et leur
 recette hébergée sont consignées ci-dessous. Les preuves de travail sous `.local/` sont locales et

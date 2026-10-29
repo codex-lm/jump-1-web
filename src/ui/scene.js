@@ -3,6 +3,8 @@ import {assetMarkup} from './assets.js';
 import {sceneOptions} from '../core/reducer.js';
 import {characterStatus} from './character.js';
 import {characteristicDM} from '../rules/characteristics.js';
+import {voyageRules,voyageContext,inspectionProcedure} from '../rules/scenes/index.js';
+import {fuelCapacity,repairBonus} from '../rules/ship.js';
 
 const conscious=person=>person.alive&&person.active!==false&&!person.unconscious;
 const combat=type=>type==='pirate'||type==='repo';
@@ -18,8 +20,9 @@ const TASK_CHARACTERISTICS={Pilot:'DEX',Engineering:'INT',Mechanics:'INT',Gunner
 export function sceneChoiceDetails(state,person,option){
   const type=state.scene?.type||'',id=option.id;
   let skill=option.skill,difficulty=option.difficulty,description=id,opposed=false,reason=null,bonus=0;
+  if(voyageRules(state)&&(id.startsWith('travel-')||id.startsWith('story-')))return {skill,difficulty,descriptionKey:`sceneGuide.choice.${id}`,reasonKey:null,opposed:false,bonus:0};
   if(['hold','leave','pay','surrender','yield','aim','accept','dismiss-informant'].includes(id))skill=null;
-  if(id==='repair'){skill='Engineering';difficulty=-2;reason=(type==='breakdown'?state.ship.systems[state.scene.system]>=3:!damagedSystems(state))?'intact':null;}
+  if(id==='repair'){bonus=repairBonus(state)+(state.ship.partsUntil>=state.clock.week?2:0);skill='Engineering';difficulty=-2;reason=(type==='breakdown'?state.ship.systems[state.scene.system]>=3:!damagedSystems(state))?'intact':null;}
   if(id==='heal')reason=!injuredCrew(state)?'healthy':null;
   if(id==='reassure')reason=!lowMorale(state)?'highMorale':null;
   if(id==='lead'&&type==='travel'){description='travelLead';reason=!lowMorale(state)?'highMorale':null;}
@@ -40,8 +43,10 @@ export function sceneChoiceDetails(state,person,option){
     if(id==='guard'){skill=null;description='guardInspection';reason='guardInspection';}
     if(id==='bribe')description='inspectBribe';
   }
-  if(type==='breakdown'&&id==='assist'){description='lateAssist';reason='lateAssist';}
+  if(type==='breakdown'&&id==='assist'){description=voyageRules(state)?'earlyAssist':'lateAssist';reason=voyageRules(state)?null:'lateAssist';}
   if(type==='drift'&&id==='ration')reason='ration';
+  if(type==='drift'&&voyageRules(state)&&id==='distress')description='v4Distress';
+  if(type==='drift'&&voyageRules(state)&&id==='improvise')description='v4Improvise';
   if(type==='trader'&&id==='assist')description='traderAssist';
   if(type==='trader'&&id==='negotiate')description='traderTalk';
   if(type==='patron'&&['accept','paperwork','negotiate'].includes(id))description='patron';
@@ -53,6 +58,12 @@ export function sceneChoiceDetails(state,person,option){
 export function sceneDefaults(state){
   const type=state.scene?.type;
   const preferred={pirate:['evade','repair','aim','heal','negotiate'],repo:['hold','repair','aim','heal','negotiate'],patrol:['comply','hold','hold','hold','paperwork'],customs:['comply','hide','hold','hold','paperwork'],breakdown:['stabilize','repair','hold','heal','reassure'],drift:['hold','improvise','hold','heal','reassure'],derelict:['scan','salvage','board','rescue','hold'],trader:['hold','assist','hold','heal','negotiate'],travel:['lead','repair','cards','heal','reassure'],patron:['accept','hold','hold','hold','hold']};
+  if(voyageRules(state)){
+    preferred.breakdown[2]='assist';
+    preferred.customs[1]='hold';
+    const {event}=voyageContext(state);
+    preferred.travel=['hold',['fire','leak'].includes(event)?'travel-contain':'repair','hold',event==='illness'?'travel-treat':'heal','reassure'];
+  }
   return Object.fromEntries(state.crew.map(person=>{
     const options=sceneOptions(state.scene,state,person.station);
     const candidate=preferred[type]?.[person.station-1]||(type?.startsWith('mission-')?(person.station===1?'deliver':person.station===5?'paperwork':'hold'):'hold');
@@ -78,7 +89,7 @@ function selectedDetails(state,person,option){
   const attribute=TASK_CHARACTERISTICS[details.skill]||'INT';
   const value=person.characteristics?.[attribute]??7;
   return `<div class="scene-order-detail" id="scene-order-${person.station}">
-    <p class="${details.reasonKey?'scene-order-caution':''}">${esc(t(details.reasonKey||details.descriptionKey))}</p>
+    <p class="${details.reasonKey?'scene-order-caution':''}">${esc(t(details.reasonKey||details.descriptionKey,{fuel:fuelCapacity(state)}))}</p>
     ${details.skill?`<details class="scene-roll-detail"><summary>${esc(aptitude(person,details))} · ${esc(t(`difficulty.${details.difficulty}`))}${details.opposed?` · ${esc(t('sceneGuide.opposed'))}`:''}${details.bonus?` · ${esc(t('sceneGuide.situation',{modifier:signed(details.bonus)}))}`:''}</summary><p>${esc(t('sceneGuide.rollDetail',{attribute,value,modifier:signed(characteristicDM(value))}))}</p>${person.wounded?`<p class="red">${esc(t('sceneGuide.wounded'))}</p>`:''}${person.mood<0?`<p class="red">${esc(t('crew.moodbad'))}</p>`:''}</details>`:''}
   </div>`;
 }
@@ -111,19 +122,35 @@ export function sceneWarnings(state,choices){
 
 function objective(state){
   const scene=state.scene,type=scene.type;
-  const key=inspection(type)?'inspection':type.startsWith('mission-')?'mission':type==='repo-sighting'?'sighting':type;
+  const event=voyageRules(state)&&type==='travel'?voyageContext(state).event:null;
+  const key=event&&['fire','leak'].includes(event)?'travelHazard':event==='illness'?'travelIllness':inspection(type)?'inspection':type.startsWith('mission-')?'mission':type==='repo-sighting'?'sighting':type;
   const contract=type.startsWith('mission-')?state.contracts.find(contract=>contract.id===scene.contractId):null;
   return `<section class="scene-objective"><h3>${esc(t('sceneGuide.objective'))}</h3><p>${esc(t(`sceneGuide.goal.${key}`,{system:t(`system.${scene.system||'jump'}`)}))}</p>${contract?`<p class="scene-contract">${esc(t('sceneGuide.contract',{amount:money(contract.pay),week:contract.deadline}))}</p>${state.clock.week>contract.deadline?`<p class="red">${esc(t('sceneGuide.contractLate'))}</p>`:''}`:''}</section>`;
 }
 
-export function renderScene(state,choices){
+function inspectionCompact(state){
+  const orders=inspectionProcedure(state);
+  return `<section class="inspection-compact"><h3>${esc(t('voyage.inspection.title'))}</h3><p>${esc(t('voyage.inspection.explain'))}</p><ul>${state.crew.filter(p=>orders[p.station]!=='hold').map(p=>`<li><strong>${esc(p.name)}</strong> · ${esc(t(`choice.${orders[p.station]}`))}</li>`).join('')}</ul><p class="scene-order-caution">${esc(t('voyage.inspection.risk'))}</p><div class="actions"><button class="primary" data-action="inspection-procedure">${esc(t('voyage.inspection.proceed'))}</button><button data-action="inspection-details">${esc(t('voyage.inspection.details'))}</button></div></section>`;
+}
+
+function voyageIntroduction(state){
+  const {event,person,story}=voyageContext(state),name=person?.name||'—';
+  return `<section class="voyage-event"><span class="eyebrow">${esc(t('voyage.eventLabel'))}</span><h3>${esc(t(`voyage.title.${event}`))}</h3><p>${esc(t(`voyage.event.${event}`,{name}))}</p>${story?`<aside class="voyage-followup"><strong>${esc(t(`voyage.story.${story.type}.title`))}</strong><p>${esc(t(`voyage.story.${story.type}.text`,{name:story.name}))}</p></aside>`:''}</section>`;
+}
+
+export function renderScene(state,choices,{inspectionDetailed=false}={}){
   const scene=state.scene;
+  const ordinaryOrders={1:'comply',2:'hold',3:'hold',4:'hold',5:'paperwork'};
+  const compactAvailable=voyageRules(state)&&inspection(scene.type)&&Object.entries(scene.choices).every(([station,choice])=>choice==='hold'||choice===ordinaryOrders[station]);
   const art={travel:'jumpspace',patron:'bar',breakdown:'sickbay',trader:'port-c','repo-sighting':'repo'}[scene.type]||(scene.type.startsWith('mission-')?'customs':scene.type);
-  return `<div class="scene-banner" data-scene="${esc(art)}">${assetMarkup(`scenes/${art}`,t(`scene.${scene.type}`))}<div class="scene-label"><div class="eyebrow">${esc(t('common.week'))} ${state.clock.week} / ${esc(t('common.round'))} ${scene.round}</div><h2>${esc(t(`scene.${scene.type}`))}</h2></div></div>
-    <p class="scene-copy">${esc(t(`scene.${scene.type}.text`))}</p>
+  const intro=`<div class="scene-banner" data-scene="${esc(art)}">${assetMarkup(`scenes/${art}`,t(`scene.${scene.type}`))}<div class="scene-label"><div class="eyebrow">${esc(t('common.week'))} ${state.clock.week} / ${esc(t('common.round'))} ${scene.round}</div><h2>${esc(t(`scene.${scene.type}`))}</h2></div></div>
+    ${voyageRules(state)&&scene.type==='travel'?voyageIntroduction(state):`<p class="scene-copy">${esc(t(`scene.${scene.type}.text`))}</p>`}`;
+  if(compactAvailable&&!inspectionDetailed)return intro+inspectionCompact(state);
+  return `${intro}
+    ${compactAvailable?`<button class="quiet small" data-action="inspection-summary">${esc(t('voyage.inspection.summary'))}</button>`:''}
     ${objective(state)}
     ${scene.enemy?`<div class="row between scene-enemy-status">${assetMarkup(`ships/${scene.type==='repo'?'diligence':'corsair'}`,t(`scene.${scene.type}`),'enemy-ship')}<div><span>${esc(t('scene.enemy'))}: <strong class="mono brass">${scene.enemy.hull} / ${scene.enemy.maxHull}</strong></span><small>${esc(t('sceneGuide.enemyStructure',{points:scene.enemy.structure}))}</small></div><div><span>${esc(t('sceneGuide.combatLimit',{round:scene.round,limit:scene.type==='repo'&&scene.enemy.hostile?12:6}))}</span>${scene.flags.escape?`<small>${esc(t('sceneGuide.fleeProgress',{count:Math.min(2,scene.flags.escape)}))}</small>`:''}</div></div>`:''}
     <div class="scene-plan-intro"><h3>${esc(t('sceneGuide.plan'))}</h3><p>${esc(t('sceneGuide.planHint'))}</p></div>
     <section class="scene-choices">${state.crew.map((person,index)=>stationChoices(state,person,index,choices)).join('')}</section>
-    <div class="scene-resolution">${sceneWarnings(state,choices).map(key=>`<p class="scene-plan-warning">${esc(t(key))}</p>`).join('')}<p>${esc(t('sceneGuide.resolveHint'))}</p><button class="primary scene-resolve" data-action="resolve">${esc(t('sceneGuide.resolve'))} →</button></div>`;
+    <div class="scene-resolution">${sceneWarnings(state,choices).map(key=>`<p class="scene-plan-warning">${esc(t(key))}</p>`).join('')}<p>${esc(t(voyageRules(state)&&scene.type==='breakdown'?'sceneGuide.resolvePrepared':'sceneGuide.resolveHint'))}</p><button class="primary scene-resolve" data-action="resolve">${esc(t('sceneGuide.resolve'))} →</button></div>`;
 }

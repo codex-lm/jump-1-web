@@ -594,3 +594,42 @@ dialog .crew-sheet .character-modal .asset.portrait{width:112px;height:112px;bac
 @media(max-width:650px){.report-rolls{grid-template-columns:1fr}.report-roll{padding:6px 8px}.report-roll-values{gap:8px;margin-top:4px}}
 @media(prefers-reduced-motion:reduce){.motion-new.action-report,.motion-new .report-die,.motion-new .result-gain,.motion-new .result-loss,.motion-new .jump-route-ship{animation:none}}
 .reduce-motion .motion-new.action-report,.reduce-motion .motion-new .report-die,.reduce-motion .motion-new .result-gain,.reduce-motion .motion-new .result-loss,.reduce-motion .motion-new .jump-route-ship{animation:none}
+
+/* Ship fittings use the same capacities as booking, refuelling and departure. */
+.cutaway-capacity{font:7px PlexMono,monospace;fill:#f1d79c;pointer-events:none}
+.ship-system-capacity{font:24px PlexMono,monospace;fill:#f1d79c;paint-order:stroke;stroke:#102334;stroke-width:4px;pointer-events:none}
+.ship-refits{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
+.ship-refits h3{margin:0}.ship-refits>.section-intro{margin:10px 0 14px}
+.refit-bays{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.refit-bay{display:grid;gap:5px;padding:12px;border:1px dashed var(--line);border-radius:5px;color:var(--muted);font-size:.85rem}
+.refit-bay-filled{border-style:solid;border-color:#78beb777;background:#78beb70b;color:var(--ivory)}
+.refit-capacities{font-size:.83rem;line-height:1.6;margin:12px 0;color:var(--brass)}
+.refit-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:10px}
+.refit-option{padding:14px;border:1px solid var(--line);border-radius:5px;background:#102334}
+.refit-option-installed{border-color:#78beb777}.refit-option header{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:6px}
+.refit-option h4{font-size:1.05rem;margin:0}.refit-option header>.mono{font-size:.78rem;color:var(--brass)}
+.refit-option p{font-size:.83rem;line-height:1.6;margin:10px 0 12px}.refit-option button{min-height:40px}
+.refit-unavailable{display:block;margin-top:8px;font-size:.76rem;line-height:1.5;color:var(--muted)}
+.refit-conditions{font-size:.78rem;line-height:1.6;color:var(--muted);margin:14px 0 0}
+@media(max-width:420px){.refit-bays{gap:7px}.refit-bay{padding:9px}.refit-bay strong{overflow-wrap:anywhere}.refit-options{grid-template-columns:1fr}}
+
+.voyage-event,.inspection-compact{padding:16px 18px;margin:14px 0;border:1px solid var(--line);border-left:3px solid #78beb7;border-radius:6px;background:#102732}
+.voyage-event h3,.inspection-compact h3{font-size:1.16rem;margin:5px 0 8px}
+.voyage-event p,.inspection-compact p,.inspection-compact li{font-size:.92rem;line-height:1.6;overflow-wrap:anywhere}
+.voyage-event p{margin:6px 0}.inspection-compact ul{padding-left:20px;margin:10px 0}
+.inspection-compact .actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:15px}
+.voyage-followup{margin-top:14px;padding:11px 13px;border-radius:4px;background:#c8a66a15;border:1px solid #c8a66a44}
+.voyage-followup strong{font-size:.9rem;color:#ddc28e}.voyage-followup p{font-size:.86rem}
+@media(max-width:650px){.voyage-event,.inspection-compact{padding:12px}.inspection-compact .actions>*{width:100%;white-space:normal}.voyage-followup{padding:10px}}
+
+.trade-demands{margin:22px 0;padding:16px;border:1px solid #78beb745;border-radius:6px;background:#132d3680}
+.trade-demands h3{font-size:1.05rem;margin:0 0 8px}
+.trade-demands>p{font-size:max(.75rem,12px);color:var(--muted);line-height:1.5;margin-bottom:14px}
+.trade-demand-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.trade-demand{min-width:0;display:grid;gap:5px;padding:10px;border:1px solid var(--line);border-radius:4px}
+.trade-demand .destination-link{width:fit-content;text-align:left;padding:2px 0;min-height:32px}
+.trade-demand strong{font-size:max(.8125rem,13px);font-weight:500;overflow-wrap:anywhere}
+.trade-demand>span{font-size:max(.75rem,12px);color:var(--muted);line-height:1.5}
+.trade-demand-filled{opacity:.65}
+.trade-sale-bonus{font-size:max(.75rem,12px);color:#9ddbd1;margin:6px 0 10px;line-height:1.5}
+@media(max-width:600px){.trade-demand-list{grid-template-columns:1fr}.trade-demands{padding:12px}}

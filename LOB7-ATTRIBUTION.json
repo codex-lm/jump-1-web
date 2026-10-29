@@ -11,7 +11,7 @@
       "name": "Nilo / Codex",
       "kind": "agent",
       "status": "included",
-      "summary": "Implemented the engine, interface, audio and integrations under Cédric Bernadac’s direction. Refreshed crew, port, commerce and journal layouts in 0.2.0; refined native Blender faces and integrated the canonical ship. Added destination briefings, departure confirmation, scene guidance, action reports and responsive visual feedback in 0.3.0, preserving deterministic rules and saves.",
+      "summary": "Implemented the engine, interface, audio and integrations under Cédric Bernadac’s direction. Refreshed layouts and native Blender faces in 0.2; added destination briefings, scene guidance, reports and motion in 0.3. Added contextual voyages, crew assistance, compact inspections, branching starts, ship fittings, market requests and linked stories in 0.4, preserving legacy saves.",
       "profileUrl": "https://lob7.com/profiles/usr_7rherfe7"
     },
     {

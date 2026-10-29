@@ -17,6 +17,43 @@ export function quoteSale(state,lot,hex=state.ship.hex) {
   // The source SRD uses 2d6 and a 2..16 table, unlike the draft specification's approximate 3d6 example.
   return Math.round(good.basePrice*priceMultiplier(roll(rng,2,6)+bestDM(good,world?.codes||[],'sellDM')+effect,'sell'));
 }
+
+/** Public buying requests last six weeks. Their prices are fixed premiums on
+ * imported goods, not predictions of the destination's future market roll. */
+export function activeDemand(state,hex=state.ship.hex){
+  if(state.meta.config.rulesEdition!==4)return null;
+  const world=currentWorld(state,hex);if(!world||world.population<1)return null;
+  const suppliers=state.subsector.worlds.filter(w=>distance(hex,w.hex)===1);
+  const candidates=GOODS.filter(g=>g.basePrice<=75000&&!isIllegal(g,world)&&!g.illegal&&suppliers.some(w=>!g.available?.length||g.available.some(code=>w.codes.includes(code))));
+  if(!candidates.length)return null;
+  const preferred=candidates.filter(g=>bestDM(g,world.codes,'sellDM')>0),period=Math.floor((state.clock.week-1)/6);
+  const rng=derive(state.meta.seed,'demand-v4',hex,period),good=rng.pick(preferred.length?preferred:candidates);
+  const id=`demand-${hex}-${period}`,volume=rng.int(2,5)*5,delivered=Math.max(0,Math.min(volume,state.demandDeliveries?.[id]||0));
+  return {id,hex,goodId:good.id,nameKey:good.nameKey,volume,delivered,remaining:volume-delivered,fromWeek:period*6+1,untilWeek:Math.min(52,(period+1)*6),bonusPerTon:Math.max(250,Math.min(5000,Math.round(good.basePrice*.15)))};
+}
+
+export function demandBonus(state,lot,tons=lot.tons,hex=state.ship.hex){
+  if(state.phase!=='port'||lot.kind!=='speculative'||!lot.origin||lot.origin===hex||!Number.isInteger(tons)||tons<=0)return null;
+  const demand=activeDemand(state,hex);
+  if(!demand||demand.goodId!==lot.goodId||!demand.remaining)return null;
+  const amountTons=Math.min(tons,lot.tons,demand.remaining);
+  if(amountTons<=0)return null;
+  return {demandId:demand.id,tons:amountTons,amount:amountTons*demand.bonusPerTon};
+}
+
+/** Call once inside an accepted SELL, before reducing the lot quantity. */
+export function recordDemandDelivery(state,lot,tons=lot.tons,hex=state.ship.hex){
+  const bonus=demandBonus(state,lot,tons,hex);if(!bonus)return null;
+  state.demandDeliveries||={};state.demandDeliveries[bonus.demandId]=(state.demandDeliveries[bonus.demandId]||0)+bonus.tons;
+  return bonus;
+}
+
+export function quoteSaleTotal(state,lot,tons=lot.tons,hex=state.ship.hex){
+  const unitPrice=state.phase==='payment'?Math.round((lot.basePrice||0)*.5):quoteSale(state,lot,hex);
+  const bonus=unitPrice>0?demandBonus(state,lot,tons,hex):null,base=unitPrice*tons;
+  return {unitPrice,base,bonus:bonus?.amount||0,total:base+(bonus?.amount||0),bonusTons:bonus?.tons||0};
+}
+
 export function market(state,hex=state.ship.hex) {
   const world=currentWorld(state,hex); if(!world) return {goods:[],freight:[],passengers:[],contracts:[]};
   const rng=derive(state.meta.seed,'market',hex,state.clock.week); const adjacent=state.subsector.worlds.filter(w=>distance(hex,w.hex)===1);

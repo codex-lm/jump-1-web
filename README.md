@@ -1,25 +1,26 @@
-# Jump-1 · Nilo / Codex 0.3.0
+# Jump-1 · Nilo / Codex 0.4.0
 
 A single-player, turn-based space-trading roguelite. Command a five-person crew
 aboard a 200-ton ship bought on credit, trade through the Lantern Reach, and try
 to repay the bank over 52 weeks. English is the default; French is available.
 Cooperative play is not available in this edition.
 
-This is the published **0.3.0 edition of the existing Nilo / Codex variant**,
-built on its exact [0.2.0 release](https://lob7.com/player/br_s_95eca657-d8e9-40d2-926a-2c6263c33e04).
+This is the prepared **0.4.0 edition of the existing Nilo / Codex variant**,
+built on its exact [0.3.0 release](https://lob7.com/player/br_s_e6f241d3-9f5b-4ff5-942a-6be20426bdf6).
 It retains the original setting, game systems, inherited contributions,
-licences, and the portraits and scene artwork refined in 0.2.0. Published on 29 October 2026 at 17:49:39 UTC with all four LOB7 checks passed.
-[Play edition 0.3.0](https://lob7.com/player/br_s_e6f241d3-9f5b-4ff5-942a-6be20426bdf6).
-The hosted smoke test covered a jump, two encounters, recorded dice, save/resume
-and 320/390 px layouts; see QA.md for the exact scope and limitations.
+licences, and the portraits and scene artwork refined in 0.2.0. Publication and
+hosted acceptance are recorded separately by LOB7; this source export alone
+does not establish either result.
 
-This edition adds destination information and departure confirmation with
-nominal travel time, fuel consumption and port fees. Scene orders explain their
-purpose, skills and consequences. Action feedback and round/week reports show
-actual journal events and resource changes, with a link to the journal. The port
-suggests a next step from the ship's condition and accepted deliveries. See the
-QA document for recorded checks and their limits, and the media provenance for
-the actual production process.
+New voyages in this edition use rules edition 4: opening routes offer onward
+choices, public trade requests reward limited deliveries, and two fitting bays
+let captains choose fuel reserve, repair workshop or passenger cabins in exchange
+for cargo space. Voyage events add decisions and later consequences. Existing
+saves retain their original rules and deterministic replay; starting a new voyage
+opts into the new rules. Navigation briefings, recorded dice, responsive feedback
+and reduced-motion settings from 0.3.0 remain available. See the QA document for
+recorded checks and their limits, and the media provenance for the actual
+production process.
 
 ## Run locally
 
@@ -42,9 +43,9 @@ export/import for backup and transfer between edition origins.
 
 ## Source and branch identity
 
-- Development snapshot: `aec92cc95af394e61b93ccc69426558142f52e52`.
+- Development snapshot: `c3e48c4ce9506f3daecea56bc8892271fce810ab`.
 - Existing LOB7 variant: `bv_s_3b846f49-e849-4413-8999-3bccbf2a7d5c`.
-- Exact parent LOB7 release: `br_s_95eca657-d8e9-40d2-926a-2c6263c33e04`.
+- Exact parent LOB7 release: `br_s_e6f241d3-9f5b-4ff5-942a-6be20426bdf6`.
 - Playable branch: [`codex/visual-refresh`](https://github.com/codex-lm/jump-1-web/tree/codex/visual-refresh).
 - Source and tests: [`codex/visual-refresh-source`](https://github.com/codex-lm/jump-1-web/tree/codex/visual-refresh-source).
 
@@ -62,7 +63,7 @@ gameplay acceptance.
 ## Credits and rights
 
 - **Cédric Bernadac**: Created the game design and original Lantern Reach setting; directed the production of Jump-1.
-- **Nilo / Codex**: Implemented the engine, interface, audio and integrations under Cédric Bernadac’s direction. Refreshed crew, port, commerce and journal layouts in 0.2.0; refined native Blender faces and integrated the canonical ship. Added destination briefings, departure confirmation, scene guidance, action reports and responsive visual feedback in 0.3.0, preserving deterministic rules and saves.
+- **Nilo / Codex**: Implemented the engine, interface, audio and integrations under Cédric Bernadac’s direction. Refreshed layouts and native Blender faces in 0.2; added destination briefings, scene guidance, reports and motion in 0.3. Added contextual voyages, crew assistance, compact inspections, branching starts, ship fittings, market requests and linked stories in 0.4, preserving legacy saves.
 - **Kimi K3.1**: Created original Blender models, materials and image renders, including the native HD ship cutaway, under Cédric Bernadac's direction. Refined the 16 crew portraits and four inhabited port/bar scenes for the 0.2.0 visual refresh.
 - **Claude Opus 5.5**: Added the first-voyage guide, the crew and port explanations, and the draggable star chart in 0.1.2, under Cédric Bernadac's direction.
 - **Suno**: source service for the inherited music and sound effects; see the audio provenance.

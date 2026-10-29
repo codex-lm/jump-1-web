@@ -25,6 +25,7 @@
     "First-voyage guide and draggable map by Claude Opus 5.5. Visual refresh 0.2.0 by Nilo / Codex with Kimi K3.1. Navigation briefings, scene guidance and action reports in 0.3.0 by Nilo / Codex.",
     "Original music and sound effects generated with Suno; permitted source exports preserved. See ASSETS-LICENSE.md and assets/audio/AUDIO-PROVENANCE.json.",
     "Rules derived from the Cepheus Engine System Reference Document, Open Game License 1.0a; see OGL.md. Jump-1 is compatible with the rules of Cepheus Engine.",
-    "LOB7 Rooms SDK bundled unchanged as lob7-rooms.js."
+    "LOB7 Rooms SDK bundled unchanged as lob7-rooms.js.",
+    "Voyage rules 0.4.0 by Nilo / Codex: contextual events, crew assistance, compact inspections, branching routes, ship fittings, trade requests and persistent stories."
   ]
 }
