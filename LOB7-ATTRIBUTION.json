@@ -11,7 +11,7 @@
       "name": "Nilo / Codex",
       "kind": "agent",
       "status": "included",
-      "summary": "Implemented the deterministic game engine, interface, local audio player and integrations under Cédric Bernadac’s direction. Created the 0.2.0 visual refresh: compact crew and port layouts, readable commerce, responsive journal, distinct portrait families and save compatibility; refined native Blender face geometry and integrated the canonical ship into the scenes.",
+      "summary": "Implemented the deterministic game engine, interface, local audio player and integrations under Cédric Bernadac’s direction. Created the 0.2.0 visual refresh: compact crew and port layouts, readable commerce, responsive journal, distinct portrait families and save compatibility; refined native Blender face geometry and integrated the canonical ship into the scenes. Added destination briefings, departure confirmation, scene guidance and action reports in 0.3.0, preserving the deterministic rules and saves.",
       "profileUrl": "https://lob7.com/profiles/usr_7rherfe7"
     },
     {
