@@ -5,12 +5,12 @@ aboard a 200-ton ship bought on credit, trade through the Lantern Reach, and try
 to repay the bank over 52 weeks. English is the default; French is available.
 Cooperative play is not available in this edition.
 
-This is the prepared **0.4.0 edition of the existing Nilo / Codex variant**,
+This is the published **0.4.0 edition of the existing Nilo / Codex variant**,
 built on its exact [0.3.0 release](https://lob7.com/player/br_s_e6f241d3-9f5b-4ff5-942a-6be20426bdf6).
 It retains the original setting, game systems, inherited contributions,
-licences, and the portraits and scene artwork refined in 0.2.0. Publication and
-hosted acceptance are recorded separately by LOB7; this source export alone
-does not establish either result.
+licences, and the portraits and scene artwork refined in 0.2.0. Published on 29 October 2026 at 18:23:42 UTC with all four LOB7 checks passed.
+[Play this edition](https://lob7.com/player/br_s_b16740f7-8bc5-4dd2-aeec-174d21b2d8b5). Hosted browser checks confirmed the new voyage,
+fuel reserve, birthday promise and save reload; see QA.md for scope and limits.
 
 New voyages in this edition use rules edition 4: opening routes offer onward
 choices, public trade requests reward limited deliveries, and two fitting bays

@@ -13,10 +13,16 @@
 
 Les essais ciblés ne constituent pas douze campagnes jouées manuellement ni une nouvelle campagne navigateur complète de 52 semaines. Pas de nouvel asset sonore, d’écoute perceptive, de test tactile physique ou de validation coop. Les preuves locales sont sous `.local/v04-simulation`, `.local/v04-tests-final.txt` et `C:/dev/jump-1/.local/voyage-0.4.0`.
 
-État : code en validation finale, publication 0.4.0 pas encore effectuée.
+### Publication et recette hébergée 0.4.0
+
+Publié le 29 octobre 2026 à 18:23:42 UTC : [br_s_b16740f7-8bc5-4dd2-aeec-174d21b2d8b5](https://lob7.com/player/br_s_b16740f7-8bc5-4dd2-aeec-174d21b2d8b5), commit `8f739d6e2e977de3a6a442dee3b2a5d3bb446121`, même variante, parent exact 0.3.0. Les quatre contrôles LOB7 (`malware`, `policy`, `runtime`, `staticAnalysis`) sont réussis. Le paquet contient 182 fichiers et 23 484 455 octets avant normalisation Git des fins de ligne des preuves ; les 165 fichiers de code/médias/manifeste contrôlés sont identiques au commit privé `c3e48c4ce9506f3daecea56bc8892271fce810ab`.
+
+Le lecteur intégré rend le jeu. L’automatisation des clics dans son iframe reste indisponible ; les actions ont donc été testées dans le document exact servi par LOB7, après établissement de sa session de lecture. Nouvelle partie `v04-scene-8`, réserve achetée pour 25 000 Cr puis plein de 20 t pour 10 000 Cr, deux directions initiales visibles, demande locale affichée. Trajet Istriane → Pelivo : anniversaire présenté avant décision, promesse créée et rappelée au port. Rechargement/reprise : semaine 3, 308 300 Cr, 25/50 t de carburant et promesse préservés. Aménagements vérifiés en FR/EN, port à 390 px et aménagements à 320 px sans débordement. Aucun média visible manquant, aucune erreur ni alerte console. Le lecteur rechargé propose « Reprendre le voyage ».
+
+Captures : `C:/dev/jump-1/.local/voyage-0.4.0/lob7-evenement.png` et `lob7-player-publie.png`. Les reçus publics et la preuve de recette sont conservés sous `.local/lob7-v040-*` et `.local/v04-qa-evidence.json`.
 
 Ce document distingue les preuves du jeu solo, les tests de transport, la
-production artistique et le lot sonore livré. Les publications LOB7 0.3.0 et 0.2.0 et leur
+production artistique et le lot sonore livré. Les publications LOB7 0.4.0, 0.3.0 et 0.2.0 et leur
 recette hébergée sont consignées ci-dessous. Les preuves de travail sous `.local/` sont locales et
 exclues du paquet publié ; leurs chemins sont des références de livraison au
 propriétaire, pas des ressources chargées par le jeu.
