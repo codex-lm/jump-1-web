@@ -1,14 +1,14 @@
 # Jump-1 — vérifications et limites de livraison
 
 Ce document distingue les preuves du jeu solo, les tests de transport, la
-production artistique et le lot sonore livré. La publication LOB7 0.2.0 et sa
+production artistique et le lot sonore livré. Les publications LOB7 0.3.0 et 0.2.0 et leur
 recette hébergée sont consignées ci-dessous. Les preuves de travail sous `.local/` sont locales et
 exclues du paquet publié ; leurs chemins sont des références de livraison au
 propriétaire, pas des ressources chargées par le jeu.
 
 ## Version 0.3.0 — point de contrôle local du 29 octobre 2026
 
-**Version validée localement ; préparation de la publication LOB7 en cours.** La 0.2.0 reste l’édition publiée ; ses références et sa recette hébergée sont conservées dans la section suivante. Les contrôles 0.3.0 ci-dessous concernent le jeu local et ne valent pas une recette hébergée de cette nouvelle version.
+**Version 0.3.0 publiée le 29 octobre 2026 à 17:49:39 UTC.** [Lecteur LOB7](https://lob7.com/player/br_s_e6f241d3-9f5b-4ff5-942a-6be20426bdf6). Commit `65158bc701dbeac9f5c726eb3089b9d2f68677bc` ; les quatre contrôles sont `passed`. La variante et le parent 0.2.0 sont vérifiés dans la fiche publique. Les contrôles locaux et hébergés sont séparés ci-dessous.
 
 La fiche de destination explique trajet, coordonnées, services, coûts, frais mensuels, risques et livraisons. Le départ passe par une confirmation, y compris au clavier ; les liens du commerce ouvrent la destination correspondante. Le bilan d’action rapproche résultat, dépenses et journal. Les prochaines étapes au port et les options de carburant disponibles rendent la suite du voyage explicite. Les scènes décrivent leurs enjeux et leurs choix à partir du résolveur réel, affichent les compétences utilisées et distinguent préparation et résolution, sans calcul de probabilité approximatif ni lecture des résultats aléatoires.
 
@@ -34,7 +34,7 @@ La graine `audit-visuel-2026` a été jouée en français par les contrôles de 
 
 Les vues de destination, la fenêtre de confirmation et son annulation ont été contrôlées à **390 et 320 px CSS**. L’annulation à 390 px conserve la semaine 6 et la destination sélectionnée. Après correction de la largeur minimale du `body`, le parcours à 320 px revient au port sans débordement horizontal : `clientWidth = scrollWidth = 305 px`, les 15 px restants correspondant à la barre de défilement verticale. Les finitions mobiles de ce parcours sont terminées.
 
-Cette recette française ne refait pas une campagne entière de 52 semaines. La fiche de destination a également été vérifiée en anglais ; la partie complète a été jouée en français. Aucun contrôle sur appareil tactile physique, aucune écoute perceptive de l’audio et aucune recette multijoueur réelle ne sont ajoutés par ce parcours. Aucune publication 0.3.0 n’est attestée ici.
+Cette recette française ne refait pas une campagne entière de 52 semaines. La fiche de destination a également été vérifiée en anglais ; la partie complète a été jouée en français. Aucun contrôle sur appareil tactile physique, aucune écoute perceptive de l’audio et aucune recette multijoueur réelle ne sont ajoutés par ce parcours. La recette hébergée ci-dessous complète ces contrôles locaux.
 
 ### Animations et prolongement de la recette locale
 
@@ -43,6 +43,12 @@ Après la demande complémentaire, les trajets se tracent en 720 ms et les bilan
 La même partie a été prolongée jusqu’à la semaine 10 : vidange/remplissage à Oster pour 15 000 Cr, quatrième saut vers Haldveld avec dégâts au moteur, échéance manquée et charges, puis semaine standard avec réparation et travail à l’hôpital. Le solde final est 62 920 Cr. À 320 px, les trois cartes de dés restent lisibles et `clientWidth = scrollWidth = 305 px`. Aucun avertissement ni erreur console. Les 88 tests passent ; deux nouveaux contrôles vérifient les jets enregistrés et l’absence de trajet affiché si une facture bloque réellement le saut.
 
 Le CLI générique `check-local --recipe static-web-v1` vise les contributions HTML autonomes et refuse les liens locaux du jeu modulaire ; son échec n’est pas compté comme un succès. Les vérifications de modules, ressources, archive et limites du paquet navigateur sont faites par les tests locaux et l’exporteur, puis par la préparation LOB7 du jeu navigateur.
+
+### Recette hébergée 0.3.0
+
+Création française `audit-visuel-2026`, sélection d’Oster depuis Haldveld : origine/destination, services, durée, frais et risques visibles. Annulation de confirmation sans avancer la semaine 1. Départ réel jusqu’en semaine 3 : 700 Cr, 25 t de carburant et dés enregistrés affichés dans le bilan. Patrouille puis douane résolues, arrivée à Oster pour 100 Cr, trésorerie 228 200 Cr et carburant 5 t. Rechargement et reprise retrouvent la même trésorerie. Destination et bilans testés à 320/390 px sans débordement ; zéro erreur/avertissement console. Capture : `C:\dev\jump-1\.local\navigation-0.3.0\lob7-v030.png`.
+
+Le lecteur intégré rend le jeu. Ses clics dans l’iframe ne sont pas accessibles à l’automatisation ; les interactions ont donc utilisé exactement son URL de jeu hébergé. Ce parcours hébergé couvre un saut et deux rencontres, pas toute la campagne.
 
 ## Révision visuelle 0.2.0 — contrôle du 29 octobre 2026
 
