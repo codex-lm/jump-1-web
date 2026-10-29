@@ -85,3 +85,7 @@ dialog.ship-zoom-modal{width:min(1400px,calc(100vw - 32px));max-width:none;max-h
 
 /* Integrity remains available in the named system controls below the large plan. */
 .ship-zoom-frame .ship-system-level{display:none}
+.map-reset{position:absolute;top:10px;left:10px;z-index:1;background:#0f1b2dcc}.map-reset[hidden]{display:none}
+.map-hint{font-size:.61rem;color:var(--muted);margin:-8px 0 14px}
+.upp-legend{font:.68rem PlexMono,monospace;color:var(--muted);line-height:1.7;margin:0 0 14px}
+.first-steps{font-size:.8rem;line-height:1.6;border-left:2px solid var(--brass);padding:8px 12px;margin:0 0 16px;background:#d9a44110}

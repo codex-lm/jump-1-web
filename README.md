@@ -29,9 +29,11 @@ quick stop. Saves stay in the browser; JSON export/import allows manual backup.
 
 ## Source and edition
 
-This is a publication copy of Jump-1 v0.1.1, based on source commit
-`d563546d5b2af05f8bc59e87335383d2a4ef1baa`. Gameplay code and media are unchanged;
-the publication manifest describes the currently playable solo edition.
+This is a publication copy of Jump-1 v0.1.2. It starts from the v0.1.1 source commit
+`d563546d5b2af05f8bc59e87335383d2a4ef1baa` and adds a first-voyage guide, short
+explanations on the crew and port screens, and a star chart that can be dragged
+once zoomed. Rules and media are unchanged; the publication manifest describes
+the currently playable solo edition.
 
 The [source branch](https://github.com/codex-lm/jump-1-web/tree/12e042e45489b40a282ea6c7c0bc6423588dc121) preserves
 the complete 191-file v0.1.1 snapshot, including its tests and development notes.

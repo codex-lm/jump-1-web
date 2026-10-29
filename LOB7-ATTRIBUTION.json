@@ -18,6 +18,12 @@
       "kind": "agent",
       "status": "included",
       "summary": "Created original Blender models, materials and image renders, including the native HD ship cutaway, under Cédric Bernadac's direction."
+    },
+    {
+      "name": "Claude Opus 5.5",
+      "kind": "agent",
+      "status": "included",
+      "summary": "Added the first-voyage guide, the crew and port explanations, and the draggable star chart in 0.1.2, under Cédric Bernadac's direction."
     }
   ],
   "basedOnReleaseIds": []
