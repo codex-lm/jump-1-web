@@ -1,6 +1,6 @@
 import { CAREER_NAMES } from '../data/careers.js';
 /** The sole public action vocabulary. Payload validation is deliberately independent of UI. */
-export const ACTION_TYPES = Object.freeze(['NEW_RUN','CHARGEN_ROLL','CHARGEN_PICK','CHARGEN_EXPRESS','CHARGEN_DONE','PORT_ACTION','BUY','SELL','BOOK_FREIGHT','BOOK_PASSENGER','ACCEPT_CONTRACT','RECRUIT','REFUEL','REPAIR','STAY','DEPART','QUICK_STOP','SCENE_CHOICE','END_WEEK','PAY','SKIP_PAY','OBJECT','MUTINY_VOTE','ABANDON']);
+export const ACTION_TYPES = Object.freeze(['NEW_RUN','CHARGEN_ROLL','CHARGEN_PICK','CHARGEN_EXPRESS','CHARGEN_DONE','PORT_ACTION','BUY','SELL','BOOK_FREIGHT','BOOK_PASSENGER','ACCEPT_CONTRACT','RECRUIT','REFUEL','REFIT','REPAIR','STAY','DEPART','QUICK_STOP','SCENE_CHOICE','END_WEEK','PAY','SKIP_PAY','OBJECT','MUTINY_VOTE','ABANDON']);
 export const PORT_CHOICES = Object.freeze({1:['patron','flightplan','rest'],2:['maintenance','parts','refuel'],3:['guard','train','escort'],4:['heal','hospital','supplies'],5:['market','freight','passengers','bank']});
 export const DEFAULT_ROUTINES = Object.freeze({1:'flightplan',2:'maintenance',3:'guard',4:'hospital',5:'market'});
 const finite = value => typeof value === 'number' && Number.isFinite(value);
@@ -31,8 +31,9 @@ export function validateAction(action) {
       if (action.type != null && !['refined','raw','skim'].includes(action.type)) return 'INVALID_FUEL';
       if(action.purge!=null&&typeof action.purge!=='boolean')return 'INVALID_FUEL';
       if(action.purge&&action.type!=='refined')return 'INVALID_FUEL';
-      if (action.tons != null && (!finite(action.tons) || action.tons <= 0 || action.tons > 30 || action.purge&&action.tons!==30)) return 'INVALID_QUANTITY';
+      if (action.tons != null && (!finite(action.tons) || action.tons <= 0 || action.tons > 50)) return 'INVALID_QUANTITY';
       break;
+    case 'REFIT': if(!['reserve','workshop','cabins'].includes(action.id)||action.remove!=null&&typeof action.remove!=='boolean')return 'INVALID_REFIT';break;
     case 'REPAIR': if (action.system != null && !['all','hull','structure','jump','maneuver','power','turret','sensors','sickbay','cargo','quarters'].includes(action.system)) return 'INVALID_SYSTEM'; break;
     case 'PAY': if (action.amount != null && (!finite(action.amount) || action.amount <= 0 || action.amount % 1)) return 'INVALID_QUANTITY'; break;
   }

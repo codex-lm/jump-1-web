@@ -2,7 +2,7 @@ import {t,esc,money,number,worldName,logText,portrait} from './common.js';
 import {assetMarkup} from './assets.js';
 import {getLanguage} from './i18n.js';
 export function chronicleEntries(state){
- const important=(state.milestones?.length?state.milestones:state.log).filter(e=>['log.runStarted','log.jump','log.sell','log.scene','log.payment','log.missedPayment','log.secret','log.contractDelivered','log.destroyed','log.bank.4','log.misjump','log.collectorPaid','log.negotiated','log.informantTurned','log.informantDismissed'].includes(e.key));
+ const important=(state.milestones?.length?state.milestones:state.log).filter(e=>['log.voyage.friend','log.voyage.friendCredits','log.voyage.friendParts','log.voyage.promise','log.voyage.promiseKept','log.voyage.promiseBroken','log.refitInstalled','log.demandBonus','log.runStarted','log.jump','log.sell','log.scene','log.payment','log.missedPayment','log.secret','log.contractDelivered','log.destroyed','log.bank.4','log.misjump','log.collectorPaid','log.negotiated','log.informantTurned','log.informantDismissed'].includes(e.key));
  if(important.length<=18)return important;
  const chosen=new Set();
  for(const key of ['log.runStarted','log.jump','log.sell','log.misjump']){const index=important.findIndex(e=>e.key===key);if(index>=0)chosen.add(index);}

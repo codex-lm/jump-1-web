@@ -3,6 +3,8 @@ import {createInitialState,assertState} from './core/state.js';
 import {reduce} from './core/reducer.js';
 import {hash} from './core/rng.js';
 import {distance} from './rules/subsector.js';
+import {fuelCapacity} from './rules/ship.js';
+import {inspectionProcedure} from './rules/scenes/index.js';
 import {upp} from './rules/characteristics.js';
 import {t,getLanguage,setLanguage,hasTranslation,money} from './ui/i18n.js';
 import {esc,icon} from './ui/html.js';
@@ -38,6 +40,7 @@ function audioControl(compact=true){return `<button class="${compact?'icon-butto
 function screenAudioContext(){if(screen==='title'||!state||state.phase==='chargen')return 'title';if(state.ending)return state.ending.type==='victory'?'victory':'defeat';if(['pirate','repo','customs','patrol'].includes(state.scene?.type)||(state.collector?.pressure||0)>=2||state.phase==='payment')return 'threat';if(panel==='map'||['travel','drift','breakdown'].includes(state.scene?.type))return 'travel';return 'port';}
 let transport=null,state=null,screen='title',titleForm=false,detailed=false,panel='port',journalTab='log',marketTab='goods',mobile='central',selectedHex=null,sceneKey='',choices={},unmountMap=null,toastTimer=0,saveWarning=false,journalOpen=false;
 let lastReport=null,shownReport=null,renderedState=null,pendingMapMotion=false,pendingStationMotion=null;
+let inspectionDetailed=false;
 const motionPreference=matchMedia('(prefers-reduced-motion: reduce)');
 let settings={reduceMotion:motionPreference.matches,font:16};
 try{settings={...settings,...JSON.parse(localStorage.getItem('jump1.settings')||'{}')};}catch{}
@@ -61,13 +64,13 @@ function send(action,{quiet=false}={}){
  if(!quiet&&(['DEPART','QUICK_STOP','END_WEEK','STAY','PAY','SKIP_PAY'].includes(action.t)||(action.t==='REFUEL'&&state.clock.week!==previous.clock.week)))lastReport=actionReport(previous,state,action.t);
  if(!quiet)render();
  if(result?.saved===false&&!saveWarning){saveWarning=true;toast(t('save.failed'));}
- else if(!quiet&&['BUY','SELL','BOOK_FREIGHT','BOOK_PASSENGER','ACCEPT_CONTRACT','REFUEL','REPAIR','PORT_ACTION'].includes(action.t)){
+ else if(!quiet&&['BUY','SELL','BOOK_FREIGHT','BOOK_PASSENGER','ACCEPT_CONTRACT','REFUEL','REPAIR','REFIT','PORT_ACTION'].includes(action.t)){
   const report=actionReport(previous,state,action.t),entry=report?.entries.filter(e=>!e.roll).at(-1)||report?.entries.at(-1);
   if(entry)toast(entry.roll?t(entry.roll.success?'feedback.checkSucceeded':'feedback.checkFailed',{name:entry.params.name,skill:t(`skill.${entry.params.skill}`)}):logEntryText(entry));
  }
  return true;
 }
-function startRun(seed,config){connectLocal(seed,{...config,portraitEdition:2});send({t:'CHARGEN_EXPRESS'});}
+function startRun(seed,config,{replay=false}={}){connectLocal(seed,replay?config:{...config,portraitEdition:2,rulesEdition:4});send({t:'CHARGEN_EXPRESS'});}
 function topbar(){const e=state.economy;return `<header class="topbar"><div class="brand-block"><div class="world-label">${esc(state.subsector.name)}</div><h1 class="ship-name">${esc(state.ship.name)}</h1></div><div class="top-stats"><div class="top-stat" data-hud="week"><span>${esc(t('hud.week',{week:state.clock.week}))}</span><strong>${esc(t('hud.month',{month:state.clock.month}))}</strong></div><div class="top-stat" data-hud="cash"><span>${esc(t('hud.cash'))}</span><strong class="${e.credits<e.nextPayment?'red':'brass'}">${money(e.credits)} Cr</strong></div><div class="top-stat"><span>${esc(t('hud.due'))} · ${esc(t('hud.inweeks',{weeks:Math.max(0,e.nextPaymentWeek-state.clock.week)}))}</span><strong>${money(e.nextPayment)} Cr</strong></div><div class="top-stat"><span>${esc(t('hud.arrears'))}</span><strong class="${e.arrears?'red':''}">${money(e.arrears)}</strong></div><div class="top-stat pressure-stat"><span>${esc(t('hud.pressure'))} · ${state.collector.pressure}</span><div class="pressure" aria-label="${esc(t('hud.pressure'))}: ${state.collector.pressure}">${[1,2,3,4,5].map(i=>`<i class="${state.collector.pressure>=i?'on':''}"></i>`).join('')}</div></div></div><div class="actions">${audioControl()}<button class="small" data-action="language">${getLanguage()==='fr'?'EN':'FR'}</button><button class="icon-button" data-action="menu" aria-label="${esc(t('nav.menu'))}">${icon('settings')}</button></div></header>`;}
 function gameScreen(){
  if(state.phase==='chargen')return chargenScreen(state,detailed);
@@ -75,8 +78,8 @@ function gameScreen(){
  let central;
  if(state.phase==='scene'){
   const key=`${state.meta.actionCount-Object.keys(state.scene.choices).length}:${state.scene.type}:${state.scene.round}`;
-  if(sceneKey!==key){choices=sceneDefaults(state);sceneKey=key;}
-  central=renderScene(state,choices);
+  if(sceneKey!==key){choices=sceneDefaults(state);sceneKey=key;inspectionDetailed=false;}
+  central=renderScene(state,choices,{inspectionDetailed});
  }else if(state.phase==='payment')central=paymentPanel(state);
  else if(panel==='map')central=renderMap(state,selectedHex);
  else if(panel==='market')central=renderMarket(state,marketTab);
@@ -116,7 +119,7 @@ function render(){
  if(state?.ending&&screen==='game')document.fonts.ready.then(()=>drawRunCard(state));
  window.scrollTo({top:scroll,behavior:'auto'});audio.setContext(screenAudioContext());if(audioStatus)updateAudioControls(audioStatus);
 }
-function showMenu(){showModal(t('menu.title'),`<p class="section-intro">${esc(t('menu.saved'))}</p><div class="stack">${audioControl(false)}<label>${esc(t('audio.music'))}<span class="row"><input type="range" min="0" max="100" data-audio-volume="music" aria-label="${esc(t('audio.music'))}"><output data-audio-level="music"></output></span></label><label>${esc(t('audio.effects'))}<span class="row"><input type="range" min="0" max="100" data-audio-volume="sfx" aria-label="${esc(t('audio.effects'))}"><output data-audio-level="sfx"></output></span></label>${state?`<button data-action="export">${esc(t('menu.export'))}</button>`:''}<button data-action="load-save">${esc(t('menu.import'))}</button><button data-action="about">${esc(t('title.about'))}</button><label class="row"><input id="setting-motion" type="checkbox" ${motionReduced()?'checked':''} ${motionPreference.matches?'disabled':''}>${esc(t('menu.reduce'))}</label>${motionPreference.matches?`<small class="muted">${esc(t('motion.system'))}</small>`:''}<label>${esc(t('menu.font'))}<input id="setting-font" type="range" min="12" max="18" value="${settings.font}"></label><button data-action="home">${esc(t('menu.titleback'))}</button>${state&&!state.ending?`<button class="danger" data-action="abandon-prompt">${esc(t('menu.abandon'))}</button>`:''}</div>`);if(audioStatus)updateAudioControls(audioStatus);}
+function showMenu(){showModal(t('menu.title'),`<p class="section-intro">${esc(t('menu.saved'))}</p>${state&&state.meta.config.rulesEdition!==4?`<p class="navigation-note">${esc(t('voyage.legacy'))}</p>`:''}<div class="stack">${audioControl(false)}<label>${esc(t('audio.music'))}<span class="row"><input type="range" min="0" max="100" data-audio-volume="music" aria-label="${esc(t('audio.music'))}"><output data-audio-level="music"></output></span></label><label>${esc(t('audio.effects'))}<span class="row"><input type="range" min="0" max="100" data-audio-volume="sfx" aria-label="${esc(t('audio.effects'))}"><output data-audio-level="sfx"></output></span></label>${state?`<button data-action="export">${esc(t('menu.export'))}</button>`:''}<button data-action="load-save">${esc(t('menu.import'))}</button><button data-action="about">${esc(t('title.about'))}</button><label class="row"><input id="setting-motion" type="checkbox" ${motionReduced()?'checked':''} ${motionPreference.matches?'disabled':''}>${esc(t('menu.reduce'))}</label>${motionPreference.matches?`<small class="muted">${esc(t('motion.system'))}</small>`:''}<label>${esc(t('menu.font'))}<input id="setting-font" type="range" min="12" max="18" value="${settings.font}"></label><button data-action="home">${esc(t('menu.titleback'))}</button>${state&&!state.ending?`<button class="danger" data-action="abandon-prompt">${esc(t('menu.abandon'))}</button>`:''}</div>`);if(audioStatus)updateAudioControls(audioStatus);}
 async function showAbout(licences=false){showModal(t('about.title'),`<div class="tabs"><button data-action="about" class="${!licences?'active':''}">${esc(t('about.game'))}</button><button data-action="licences" class="${licences?'active':''}">${esc(t('about.licences'))}</button></div>${licences?'<pre id="licence-text"></pre>':`<p>${esc(t('about.description'))}</p><p>${esc(t('about.compatible'))}</p><small class="muted">${esc(t('about.version'))}</small>`}`);if(licences){try{const result=await fetch(new URL('../OGL.md', import.meta.url));if(!result.ok)throw new Error();const text=await result.text();const target=document.getElementById('licence-text');if(target)target.textContent=text;}catch{const target=document.getElementById('licence-text');if(target)target.textContent=t('common.unavailable');}}}
 function showCrew(index){const p=state.crew[index];if(p)showModal(p.name,characterSheet(p,state.meta.config));}
 function download(blob,name){const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
@@ -126,7 +129,7 @@ function selectDestination(hex){pendingMapMotion=hex!==selectedHex;selectedHex=h
 function depart(hex,quick=false){
  if(!hex||state.phase!=='port')return;
  const preview=departurePreview(state,hex,{quick});
- showModal(t('map.confirm',{world:worldName(state,hex)}),`<p class="destination-route">${esc(t('navigation.fromTo',{origin:`${worldName(state,state.ship.hex)} (${state.ship.hex})`,destination:`${worldName(state,hex)} (${hex})`}))}</p>${renderDepartureSummary(state,hex,{quick})}<div class="actions departure-confirm"><button data-action="close">${esc(t('common.cancel'))}</button><button class="primary" data-action="confirm-depart" data-hex="${esc(hex)}" data-quick="${quick?'1':'0'}" ${preview.canDepart?'':'disabled'}>${esc(t(quick?'feedback.confirmQuick':'feedback.confirmDepart'))}</button></div>`);
+ showModal(t('map.confirm',{world:worldName(state,hex)}),`<p class="destination-route">${esc(t('navigation.fromTo',{origin:preview.origin?`${preview.origin.name} (${state.ship.hex})`:state.ship.hex,destination:`${worldName(state,hex)} (${hex})`}))}</p>${renderDepartureSummary(state,hex,{quick})}<div class="actions departure-confirm"><button data-action="close">${esc(t('common.cancel'))}</button><button class="primary" data-action="confirm-depart" data-hex="${esc(hex)}" data-quick="${quick?'1':'0'}" ${preview.canDepart?'':'disabled'}>${esc(t(quick?'feedback.confirmQuick':'feedback.confirmDepart'))}</button></div>`);
 }
 function executeDeparture(hex,quick){
  modal.close();
@@ -134,15 +137,25 @@ function executeDeparture(hex,quick){
  if(send({t:quick?'QUICK_STOP':'DEPART',hex}))window.scrollTo(0,0);
 }
 function showFuelOptions(){
- const world=state.subsector.worlds.find(w=>w.hex===state.ship.hex),tons=30-state.ship.fuel;
+ const world=state.subsector.worlds.find(w=>w.hex===state.ship.hex),capacity=fuelCapacity(state),tons=capacity-state.ship.fuel;
  const sells=['A','B','C','D'].includes(world?.starport),refined=['A','B'].includes(world?.starport),cost=Math.ceil(tons*(refined?500:100));
- showModal(t('feedback.fuelOptions'),`<p>${esc(t('feedback.fuelLevel',{fuel:state.ship.fuel}))}</p>${sells?`<p>${esc(t('feedback.buyFuel',{tons,amount:money(cost),type:t(refined?'fuel.refined':'fuel.raw')}))}</p><button class="primary" data-action="refuel" ${tons<=0||cost>state.economy.credits?'disabled':''}>${esc(t('ship.refuel'))}</button>`:`<p>${esc(t('navigation.noFuel'))}</p>`}${refined&&state.ship.fuelType==='raw'&&state.ship.fuel>0?`<p class="navigation-warning">${esc(t('feedback.mixedFuel'))}</p><button data-action="purge" ${state.economy.credits<15000?'disabled':''}>${esc(t('ship.purge'))}</button>`:''}${world?.gasGiant?`<hr class="rule"><p>${esc(t('feedback.skimWarning'))}</p><button data-action="confirm-skim" ${tons<=0?'disabled':''}>${esc(t('ship.skim'))}</button>`:''}`);
+ showModal(t('feedback.fuelOptions'),`<p>${esc(t('feedback.fuelLevel',{fuel:state.ship.fuel,capacity}))}</p>${sells?`<p>${esc(t('feedback.buyFuel',{tons,amount:money(cost),type:t(refined?'fuel.refined':'fuel.raw')}))}</p><button class="primary" data-action="refuel" ${tons<=0||cost>state.economy.credits?'disabled':''}>${esc(t('ship.refuel'))}</button>`:`<p>${esc(t('navigation.noFuel'))}</p>`}${refined&&state.ship.fuelType==='raw'&&state.ship.fuel>0?`<p class="navigation-warning">${esc(t('feedback.mixedFuel'))}</p><button data-action="purge" ${state.economy.credits<capacity*500?'disabled':''}>${esc(t('ship.purge',{amount:money(capacity*500)}))}</button>`:''}${world?.gasGiant?`<hr class="rule"><p>${esc(t('feedback.skimWarning'))}</p><button data-action="confirm-skim" ${tons<=0?'disabled':''}>${esc(t('ship.skim'))}</button>`:''}`);
 }
 function standardWeek(){
  if(state?.phase!=='port')return;
  const previous=state,orders=[...document.querySelectorAll('[id^="order-"]')].filter(e=>!e.disabled).map(e=>({station:Number(e.id.split('-')[1]),choice:e.value}));
  for(const order of orders)send({t:'PORT_ACTION',by:order.station,...order},{quiet:true});
  send({t:'END_WEEK',routines:orders.length===0},{quiet:true});lastReport=actionReport(previous,state,'END_WEEK');render();window.scrollTo(0,0);
+}
+function resolveRound(){
+ if(state?.phase!=='scene')return;
+ const previous=state,type=state.scene.type,round=state.scene.round,selected={...choices};
+ for(let station=1;station<=5;station++){
+  if(state.phase!=='scene'||state.scene.type!==type||state.scene.round!==round)break;
+  if(state.scene.choices[station]||!state.crew[station-1]?.alive||state.crew[station-1]?.active===false)continue;
+  if(!send({t:'SCENE_CHOICE',by:station,station,choice:selected[station]||'hold'},{quiet:true}))break;
+ }
+ sceneKey='';lastReport=actionReport(previous,state,'RESOLVE');render();window.scrollTo(0,0);
 }
 async function handleAction(button){const action=button.dataset.action;if(button.disabled)return;if(['close','language','new','how','menu','about','licences','home','panel','mobile','journal-tab','map','market','market-tab','cargo','crew','system','ship-zoom','records'].includes(action))audio.onAction(null,null,{t:'UI_CLICK'});switch(action){
  case 'close':modal.close();break;
@@ -191,6 +204,7 @@ async function handleAction(button){const action=button.dataset.action;if(button
  case 'confirm-skim':modal.close();send({t:'REFUEL',type:'skim'});break;
  case 'purge':if(send({t:'REFUEL',type:'refined',purge:true}))modal.close();break;
  case 'repair':send({t:'REPAIR',system:button.dataset.system||'all'});if(modal.open)modal.close();break;
+ case 'refit':send({t:'REFIT',id:button.dataset.refit,remove:button.dataset.remove==='1'});break;
  case 'buy':send({t:'BUY',goodId:button.dataset.good,tons:Number(document.getElementById(`qty-${button.dataset.id}`).value)});break;
  case 'sell':{const lot=state.cargo.find(l=>l.id===button.dataset.id);send({t:'SELL',cargoId:lot.id,tons:lot.tons});break;}
  case 'freight':send({t:'BOOK_FREIGHT',id:button.dataset.id});break;
@@ -200,12 +214,15 @@ async function handleAction(button){const action=button.dataset.action;if(button
  case 'depart':depart(button.dataset.hex);break;
  case 'quick':depart(button.dataset.hex,true);break;
  case 'scene-choice':pendingStationMotion=button.dataset.station;choices[button.dataset.station]=button.dataset.choice;render();break;
- case 'resolve':{const previous=state;const type=state.scene.type,round=state.scene.round;const selected={...choices};for(let station=1;station<=5;station++){if(state.phase!=='scene'||state.scene.type!==type||state.scene.round!==round)break;if(state.scene.choices[station]||!state.crew[station-1]?.alive||state.crew[station-1]?.active===false)continue;send({t:'SCENE_CHOICE',by:station,station,choice:selected[station]||'hold'},{quiet:true});}sceneKey='';lastReport=actionReport(previous,state,'RESOLVE');render();window.scrollTo(0,0);break;}
+ case 'resolve':resolveRound();break;
+ case 'inspection-procedure':choices=inspectionProcedure(state);resolveRound();break;
+ case 'inspection-details':inspectionDetailed=true;render();break;
+ case 'inspection-summary':inspectionDetailed=false;render();break;
  case 'pay':send({t:'PAY'});break;
  case 'partpay':send({t:'PAY',amount:Math.max(1,Math.floor(state.economy.credits))});break;
  case 'skippay':send({t:'SKIP_PAY'});break;
  case 'arrears':send({t:'PAY',amount:state.economy.arrears});break;
- case 'replay':startRun(state.meta.seed,state.meta.config);window.scrollTo(0,0);break;
+ case 'replay':startRun(state.meta.seed,state.meta.config,{replay:true});window.scrollTo(0,0);break;
  case 'copy-seed':await copyText(state.meta.seed);break;
  case 'download-card':{const c=document.getElementById('run-card');c?.toBlob(blob=>blob&&download(blob,`jump-1-${state.meta.seed}.png`),'image/png');break;}
  case 'copy-card':{try{const c=document.getElementById('run-card');const blob=await new Promise(resolve=>c.toBlob(resolve,'image/png'));await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);toast(t('common.copied'));}catch{toast(t('common.unavailable'));}break;}

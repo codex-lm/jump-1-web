@@ -1,6 +1,7 @@
+import {fuelCapacity} from '../rules/ship.js';
 import {distance} from '../rules/subsector.js';
 import {berthingCost,monthlyCosts,COSTS} from '../rules/economy.js';
-import {isIllegal} from '../rules/trade.js';
+import {isIllegal,activeDemand} from '../rules/trade.js';
 import {GOODS} from '../data/goods.js';
 import {assetMarkup,worldAsset} from './assets.js';
 import {t,esc,money,number,badge} from './common.js';
@@ -22,7 +23,7 @@ export function departurePreview(state,hex,{quick=false}={}){
   const minimumFuel=quick?22.5:state.portWeekComplete?20:22.5;
   const sourceServices=destinationServices(origin);
   const automaticRefuel=quick&&state.ship.fuel<22.5&&sourceServices.raw;
-  const refuelTons=automaticRefuel?30-state.ship.fuel:0;
+  const refuelTons=automaticRefuel?fuelCapacity(state)-state.ship.fuel:0;
   const refuelType=sourceServices.refined?'refined':'raw';
   const refuelCost=Math.ceil(refuelTons*(refuelType==='refined'?COSTS.fuelRefined:COSTS.fuelRaw));
   const fuelType=automaticRefuel&&(state.ship.fuel===0||refuelType==='raw')?refuelType:state.ship.fuelType;
@@ -96,6 +97,7 @@ function renderDeliveries(p){
 export function renderDestination(state,hex){
   const p=departurePreview(state,hex),world=p.destination;
   if(!world)return '';
+  const demand=activeDemand(state,hex);
   const population=world.population===0?'none':world.population<=3?'sparse':world.population<=6?'settled':world.population<=8?'busy':'dense';
   const art=worldAsset(world),type=t(`world.${world.archetype||art.split('/')[1]}`),quick=departurePreview(state,hex,{quick:true});
   const fuelSummary=t(p.services.refined?'navigation.fuelBoth':p.services.raw?'navigation.fuelRawOnly':'navigation.noFuel');
@@ -105,10 +107,11 @@ export function renderDestination(state,hex){
   if(state.ship.systems.jump<3)risks.push(t('navigation.driveRisk'));
   if(['E','X'].includes(world.starport))risks.push(t('navigation.approachRisk'));
   if(world.law>=1&&p.goods.some(g=>g.restricted))risks.push(t('navigation.customsRisk'));
-  return `<article class="map-destination" aria-labelledby="destination-name"><header class="destination-heading">${assetMarkup(art,type,'destination-planet')}<div><div class="eyebrow">${esc(t(p.range===0?'navigation.current':'navigation.selected'))}</div><h3 id="destination-name">${esc(world.name)}</h3><p class="destination-route mono">${esc(t('navigation.fromTo',{origin:`${p.origin?.name||state.ship.hex} (${state.ship.hex})`,destination:`${world.name} (${world.hex})`}))}</p></div></header>
+  return `<article class="map-destination" aria-labelledby="destination-name"><header class="destination-heading">${assetMarkup(art,type,'destination-planet')}<div><div class="eyebrow">${esc(t(p.range===0?'navigation.current':'navigation.selected'))}</div><h3 id="destination-name">${esc(world.name)}</h3><p class="destination-route mono">${esc(t('navigation.fromTo',{origin:p.origin?`${p.origin.name} (${state.ship.hex})`:state.ship.hex,destination:`${world.name} (${world.hex})`}))}</p></div></header>
     <p class="destination-description">${esc(t('navigation.description',{type,population:t(`navigation.population.${population}`)}))}</p>
     <p class="navigation-note">${esc(t('port.profile',{port:world.starport,tech:world.tech,law:world.law}))} · ${esc(p.range===0?t('map.here'):t('map.distance',{distance:p.range}))}</p>
     <div class="destination-services-preview"><p>${esc(fuelSummary)}${p.services.skim?` · ${esc(t('navigation.gasGiant'))}`:''}</p><p>${esc(repairSummary)}</p></div>
+    ${demand?.remaining?`<div class="trade-demand destination-demand"><span>${esc(t('navigation.demandTitle'))}</span><strong>${esc(t(demand.nameKey))}</strong><span>${esc(t('trade.demandTerms',{remaining:demand.remaining,volume:demand.volume,bonus:money(demand.bonusPerTon),week:demand.untilWeek}))}</span>${p.range===1&&p.arrivalWeek>demand.untilWeek?`<p class="navigation-warning destination-demand-expiring">${esc(t('navigation.demandExpires',{week:p.arrivalWeek}))}</p>`:''}</div>`:''}
     ${world.zone==='Amber'?`<p class="navigation-zone">${esc(t('navigation.amber'))}</p>`:''}
     <div class="destination-codes">${world.codes.map(c=>badge(`${c} · ${t(`code.${c}`)}`)).join('')}</div>
     ${p.range===1?renderDepartureSummary(state,hex):`<p class="${p.range===0?'navigation-note':'navigation-warning'}">${esc(p.range===0?t('navigation.choose'):blockedText(p))}</p>`}

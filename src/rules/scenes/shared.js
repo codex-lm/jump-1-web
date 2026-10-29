@@ -4,7 +4,7 @@ import { systemDM } from '../ship.js';
 export function addLog(state,key,params={},roll=null) {
   const entry={week:state.clock.week,key,params};if(roll)entry.roll=roll;state.log.push(entry);if(state.log.length>400)state.log.splice(0,state.log.length-400);
   const essential=['log.runStarted','log.missedPayment','log.secret','log.ending','log.jump'];
-  const memorable=[...essential,'log.payment','log.misjump','log.scene','log.collectorPaid','log.negotiated','log.informantTurned','log.informantDismissed','log.contractDelivered','log.enemyDefeated'];
+  const memorable=[...essential,'log.voyage.friend','log.voyage.friendCredits','log.voyage.friendParts','log.voyage.promise','log.voyage.promiseKept','log.voyage.promiseBroken','log.refitInstalled','log.demandBonus','log.payment','log.misjump','log.scene','log.collectorPaid','log.negotiated','log.informantTurned','log.informantDismissed','log.contractDelivered','log.enemyDefeated'];
   state.milestones ||= [];
   const firstJump=key==='log.jump'&&!state.milestones.some(e=>e.key==='log.jump');
   const largeSale=key==='log.sell'&&params.profit>=50000&&params.profit>(state.meta.bestTradeProfit||0);
