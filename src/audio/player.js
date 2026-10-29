@@ -195,7 +195,7 @@ export function createAudioPlayer({onStatus}={}){
     loading=true;notify();
     manifestPromise=(async()=>{
       try{
-        const response=await fetch('./assets/audio/manifest.json',{cache:'no-cache'});
+        const response=await fetch(new URL('../../assets/audio/manifest.json', import.meta.url),{cache:'no-cache'});
         entries=response.ok?entriesFromManifest(await response.json()):new Map();
         for(const [key,entry]of entries)if(key.startsWith('music.'))musicFiles.add(entry.src);
       }catch{entries=new Map();}

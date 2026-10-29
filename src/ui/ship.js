@@ -11,7 +11,7 @@ const validPoint=point=>Array.isArray(point)&&point.length===2&&point.every(valu
 export async function loadShipGeometry(){
   shipGeometry=null;
   try{
-    const response=await fetch('./assets/img/ship/cutaway.json');
+    const response=await fetch(new URL('../../assets/img/ship/cutaway.json', import.meta.url));
     if(!response.ok)return null;
     const source=await response.json();
     if(!source||typeof source!=='object'||!SYSTEMS.every(id=>{
