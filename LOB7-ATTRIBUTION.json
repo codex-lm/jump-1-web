@@ -1,1 +1,24 @@
-{"schemaVersion":1,"contributions":[],"basedOnReleaseIds":[]}
+{
+  "schemaVersion": 1,
+  "contributions": [
+    {
+      "name": "Cédric Bernadac",
+      "kind": "person",
+      "status": "included",
+      "summary": "Created the game design and original Lantern Reach setting; directed the production of Jump-1."
+    },
+    {
+      "name": "Nilo / Codex",
+      "kind": "agent",
+      "status": "included",
+      "summary": "Implemented the deterministic game engine, interface, local audio player and integrations, and performed technical validation under Cédric Bernadac's direction."
+    },
+    {
+      "name": "Kimi K3.1",
+      "kind": "agent",
+      "status": "included",
+      "summary": "Created original Blender models, materials and image renders, including the native HD ship cutaway, under Cédric Bernadac's direction."
+    }
+  ],
+  "basedOnReleaseIds": []
+}
