@@ -3,19 +3,23 @@ import {market,quoteSaleTotal,activeDemand} from '../rules/trade.js';
 import {cargoUsed,cabinsUsed,lowUsed,cargoCapacity,cabinCapacity} from '../rules/ship.js';
 import {distance} from '../rules/subsector.js';
 import {rulesAtLeast} from '../core/state.js';
+import {billView,signedMoney} from './decision.js';
 
 function marketLink(tab,label){
   return `<button class="small" data-action="market" data-tab="${tab}">${esc(t(label))}</button>`;
 }
 
+/** One manifest entry. Speculative lots show what was paid and the result of selling them here now. */
+export function cargoLot(state,l){
+    const delivery=l.kind==='mission'?state.contracts.find(c=>c.id===l.contractId):l;
+    const saleQuote=quoteSaleTotal(state,l),salePrice=saleQuote.unitPrice,result=saleQuote.total-(l.buyPrice||0)*l.tons;
+    const canSell=['port','payment'].includes(state.phase)&&(state.phase==='payment'||salePrice>0);
+    return `<article class="cargo-item"><div class="cargo-item-title"><strong>${esc(l.kind==='freight'?t('cargo.freight',{world:worldName(state,l.destination)}):l.nameKey?t(l.nameKey):t('contract.smuggle'))}</strong><span class="mono">${number(l.tons)} t</span></div>${l.kind==='speculative'?`<div class="cargo-item-detail">${esc(t('cargo.origin',{world:worldName(state,l.origin),week:l.boughtWeek}))}</div>${Number.isFinite(l.buyPrice)?`<div class="cargo-item-detail cargo-bought">${esc(t('cargo.bought',{price:money(l.buyPrice)}))}</div>`:''}${salePrice>0?`<div class="cargo-sale"><span>${esc(t('cargo.value',{price:money(salePrice)}))}</span><strong>${money(saleQuote.total)} Cr</strong></div>${Number.isFinite(l.buyPrice)?`<div class="cargo-result ${result>=0?'trade-gain':'trade-loss'}">${esc(t('cargo.result',{amount:signedMoney(result)}))}</div>`:''}`:''}${saleQuote.bonus?`<p class="trade-sale-bonus">${esc(t('trade.saleBonus',{amount:money(saleQuote.bonus),tons:saleQuote.bonusTons}))}</p>`:''}${!canSell&&state.phase==='port'?`<p class="cargo-sale-note">${esc(t('cargo.nosale'))}</p>`:''}<div class="actions"><button class="small" data-action="sell" data-id="${esc(l.id)}" ${canSell?'':'disabled'}>${esc(t('market.sell'))} · ${number(l.tons)} t</button>${l.illegal?badge(t('market.illegal'),'red'):''}</div>`:`<div class="cargo-item-detail">${delivery?`${l.kind==='mission'?`→ ${esc(worldName(state,delivery.destination))}<br>`:''}${esc(t('market.deadline',{week:delivery.deadline}))} · <span class="mono">${money(delivery.pay)} Cr</span>`:esc(t('common.none'))}</div>`}</article>`;
+}
+
 export function cargoManifest(state,full=false){
   const used=cargoUsed(state),capacity=cargoCapacity(state),canTrade=state.phase==='port';
-  const lots=state.cargo.map(l=>{
-    const delivery=l.kind==='mission'?state.contracts.find(c=>c.id===l.contractId):l;
-    const saleQuote=quoteSaleTotal(state,l),salePrice=saleQuote.unitPrice;
-    const canSell=['port','payment'].includes(state.phase)&&(state.phase==='payment'||salePrice>0);
-    return `<article class="cargo-item"><div class="cargo-item-title"><strong>${esc(l.kind==='freight'?t('cargo.freight',{world:worldName(state,l.destination)}):l.nameKey?t(l.nameKey):t('contract.smuggle'))}</strong><span class="mono">${number(l.tons)} t</span></div>${l.kind==='speculative'?`<div class="cargo-item-detail">${esc(t('cargo.origin',{world:worldName(state,l.origin),week:l.boughtWeek}))}</div>${salePrice>0?`<div class="cargo-sale"><span>${esc(t('cargo.value',{price:money(salePrice)}))}</span><strong>${money(saleQuote.total)} Cr</strong></div>`:''}${saleQuote.bonus?`<p class="trade-sale-bonus">${esc(t('trade.saleBonus',{amount:money(saleQuote.bonus),tons:saleQuote.bonusTons}))}</p>`:''}${!canSell&&state.phase==='port'?`<p class="cargo-sale-note">${esc(t('cargo.nosale'))}</p>`:''}<div class="actions"><button class="small" data-action="sell" data-id="${esc(l.id)}" ${canSell?'':'disabled'}>${esc(t('market.sell'))} · ${number(l.tons)} t</button>${l.illegal?badge(t('market.illegal'),'red'):''}</div>`:`<div class="cargo-item-detail">${delivery?`${l.kind==='mission'?`→ ${esc(worldName(state,delivery.destination))}<br>`:''}${esc(t('market.deadline',{week:delivery.deadline}))} · <span class="mono">${money(delivery.pay)} Cr</span>`:esc(t('common.none'))}</div>`}</article>`;
-  }).join('');
+  const lots=state.cargo.map(l=>cargoLot(state,l)).join('');
   return `<section class="cargo-manifest ${full?'cargo-manifest-full':'cargo-manifest-compact'}"><div class="cargo-heading"><h3>${esc(t('cargo.manifest'))}</h3><span class="mono brass">${number(used)} / ${number(capacity)} t</span></div><div class="cargo-grid" role="meter" aria-label="${esc(t('cargo.manifest'))}" aria-valuemin="0" aria-valuemax="${capacity}" aria-valuenow="${used}">${state.cargo.map(l=>`<div class="cargo-block ${l.kind==='freight'?'freight':''} ${l.illegal?'illegal':''}" style="width:${l.tons/capacity*100}%" title="${l.tons} t"></div>`).join('')}</div>${lots||`<div class="cargo-empty"><p>${esc(t(full?'cargo.empty':'cargo.emptyshort'))}</p>${full&&canTrade?marketLink('goods','cargo.browse'):''}</div>`}<div class="cargo-passengers"><h3>${esc(t('cargo.passengers'))}</h3><div class="cargo-berths"><span>${esc(t('cargo.cabins'))} <strong>${number(cabinsUsed(state),1)} / ${number(cabinCapacity(state))}</strong></span><span>${esc(t('cargo.lowberths'))} <strong>${number(lowUsed(state))} / 20</strong></span></div>${state.passengers.length?state.passengers.map(p=>`<article class="cargo-item"><div class="cargo-item-title"><strong>${number(p.count)} × ${esc(t(`market.${p.class.toLowerCase()}`))}</strong><span class="mono">${money(p.pay)} Cr</span></div><div class="cargo-item-detail">→ ${esc(worldName(state,p.destination))}</div></article>`).join(''):`<div class="cargo-empty"><p>${esc(t('common.none'))}</p>${full&&canTrade?marketLink('passengers','market.passengers'):''}</div>`}</div></section>`;
 }
 
@@ -25,10 +29,14 @@ function priceContext(good){
   return `<span class="price-context price-${kind}">${esc(t(kind==='below'?'market.belowbase':kind==='above'?'market.abovebase':'market.atbase',{percent:number(difference)}))}</span>`;
 }
 
-function orderControl({id,unitPrice,max,quantity,action,label,quantityLabel,goodId='',totalLabel='market.total'}){
+/** Treasury left after a purchase, against the next month-end bill. The warning appears once the bill is no longer covered. */
+function cashAfterText(cash,total){const left=cash.credits-total;return {text:t('market.cashAfter',{cash:money(left),bill:money(cash.bill),weeks:cash.weeks}),warning:left<cash.bill};}
+function cashAfter(cash,total,id){const view=cashAfterText(cash,total);return `<p class="market-cash-after ${view.warning?'market-cash-warning':''}" data-market-cash data-market-credits="${cash.credits}" data-market-bill="${cash.bill}" data-market-weeks="${cash.weeks}" aria-live="polite" id="${esc(id)}-cash">${esc(view.text)}</p>`;}
+
+function orderControl({id,unitPrice,max,quantity,action,label,quantityLabel,goodId='',totalLabel='market.total',cash=null}){
   const available=max>=1;
   const amount=available?Math.max(1,Math.min(quantity,max)):0;
-  return `<div class="market-order"><div class="market-order-controls"><label class="market-quantity"><span>${esc(quantityLabel)}</span><input id="${esc(id)}" aria-label="${esc(quantityLabel)}" type="number" inputmode="numeric" min="1" max="${Math.max(1,max)}" step="1" value="${amount}" data-market-unit-price="${unitPrice}" data-market-available="${available}" ${available?'':'disabled'}></label><button data-action="${action}" data-id="${esc(id.replace(/^(qty-|paxcount-)/,''))}" ${goodId?`data-good="${esc(goodId)}"`:''} ${available?'':'disabled'}>${esc(t(label))}</button></div><div class="market-order-total"><span>${esc(t(totalLabel))}</span><output for="${esc(id)}" data-market-total aria-live="polite">${money(unitPrice*amount)} Cr</output></div></div>`;
+  return `<div class="market-order"><div class="market-order-controls"><label class="market-quantity"><span>${esc(quantityLabel)}</span><input id="${esc(id)}" aria-label="${esc(quantityLabel)}" type="number" inputmode="numeric" min="1" max="${Math.max(1,max)}" step="1" value="${amount}" data-market-unit-price="${unitPrice}" data-market-available="${available}" ${available?'':'disabled'}></label><button data-action="${action}" data-id="${esc(id.replace(/^(qty-|paxcount-)/,''))}" ${goodId?`data-good="${esc(goodId)}"`:''} ${available?'':'disabled'}>${esc(t(label))}</button></div><div class="market-order-total"><span>${esc(t(totalLabel))}</span><output for="${esc(id)}" data-market-total aria-live="polite">${money(unitPrice*amount)} Cr</output></div>${cash?cashAfter(cash,unitPrice*amount,id):''}</div>`;
 }
 
 // Update the displayed quote only. The reducer still validates every submitted order.
@@ -42,13 +50,28 @@ export function updateMarketTotal(input){
   const valid=available&&Number.isInteger(amount)&&amount>=1&&amount<=Number(input.max)&&Number.isFinite(unitPrice);
   if(output)output.textContent=valid?`${money(unitPrice*amount)} Cr`:available?t('market.selectquantity'):'—';
   if(button)button.disabled=!valid;
+  const cash=order.querySelector('[data-market-cash]');
+  if(cash?.dataset?.marketCredits!=null){const view=cashAfterText({credits:Number(cash.dataset.marketCredits),bill:Number(cash.dataset.marketBill),weeks:Number(cash.dataset.marketWeeks)},valid?unitPrice*amount:0);cash.textContent=view.text;cash.classList?.toggle('market-cash-warning',view.warning);}
   input.setAttribute('aria-invalid',String(available&&!valid));
   return true;
 }
 
-function goodsRow(state,g){
-  const max=Math.min(g.tons,cargoCapacity(state)-cargoUsed(state),Math.floor(state.economy.credits/g.buyPrice));
-  return `<tr><td class="market-identity"><strong>${esc(t(g.nameKey))}</strong>${g.illegal?badge(t('market.illegal'),'red'):''}<div class="good-detail">${esc(t('market.base',{price:money(g.basePrice)}))}</div>${priceContext(g)}${g.favorable.length?`<div class="market-destinations">${esc(t('market.favorable',{worlds:g.favorable.map(h=>worldName(state,h)).join(', ')}))}</div>`:''}</td><td class="market-number" data-label="${esc(t('market.stock'))}">${number(g.tons)} t</td><td class="price market-number" data-label="${esc(t('market.buyprice'))}">${money(g.buyPrice)}</td><td class="market-action">${orderControl({id:`qty-${g.id}`,unitPrice:g.buyPrice,max,quantity:Math.min(10,max),action:'buy',label:'market.buy',quantityLabel:t('market.quantity'),goodId:g.goodId})}</td></tr>`;
+/** Best sale price the broker recorded elsewhere for this good during the last four weeks (past prices, not a forecast). */
+export function bestSeen(state,goodId){
+  let best=null;
+  for(const [hex,known]of Object.entries(state.knownMarkets||{})){if(hex===state.ship.hex||!(known.week>=state.clock.week-4))continue;const good=known.goods?.find(g=>g.goodId===goodId);if(good?.sellPrice>0&&(!best||good.sellPrice>best.sellPrice))best={hex,week:known.week,sellPrice:good.sellPrice};}
+  return best;
+}
+
+/** Speculative lots aboard, sold from the exchange with the same entries as the manifest. */
+function holdSection(state){
+  const lots=state.cargo.filter(l=>l.kind==='speculative');
+  return lots.length?`<section class="market-hold" aria-labelledby="market-hold-title"><h3 id="market-hold-title">${esc(t('market.hold'))}</h3><p class="section-intro">${esc(t('market.holdIntro'))}</p>${lots.map(l=>cargoLot(state,l)).join('')}</section>`:'';
+}
+
+function goodsRow(state,g,cash){
+  const seen=bestSeen(state,g.goodId),max=Math.min(g.tons,cargoCapacity(state)-cargoUsed(state),Math.floor(state.economy.credits/g.buyPrice));
+  return `<tr><td class="market-identity"><strong>${esc(t(g.nameKey))}</strong>${g.illegal?badge(t('market.illegal'),'red'):''}<div class="good-detail">${esc(t('market.base',{price:money(g.basePrice)}))}</div>${priceContext(g)}${g.favorable.length?`<div class="market-destinations">${esc(t('market.favorable',{worlds:g.favorable.map(h=>worldName(state,h)).join(', ')}))}</div>`:''}${seen?`<div class="market-destinations market-seen">${esc(t('market.bestSeen',{price:money(seen.sellPrice),world:worldName(state,seen.hex),week:seen.week}))}</div>`:''}</td><td class="market-number" data-label="${esc(t('market.stock'))}">${number(g.tons)} t</td><td class="price market-number" data-label="${esc(t('market.buyprice'))}">${money(g.buyPrice)}</td><td class="market-action">${orderControl({id:`qty-${g.id}`,unitPrice:g.buyPrice,max,quantity:Math.min(10,max),action:'buy',label:'market.buy',quantityLabel:t('market.quantity'),goodId:g.goodId,cash})}</td></tr>`;
 }
 
 function offerRow(state,o,tab){
@@ -68,6 +91,6 @@ function renderDemands(state){
 
 export function renderMarket(state,tab='goods'){
   if(!['goods','freight','passengers','contracts'].includes(tab))tab='goods';
-  const offers=market(state),goods=tab==='goods',passengers=tab==='passengers';
-  return `<section class="market-view"><header class="market-header"><div class="eyebrow">${esc(worldName(state,state.ship.hex))} · ${esc(t('trade.capacity',{used:cargoUsed(state),capacity:cargoCapacity(state)}))}</div><h2>${esc(t('market.title'))}</h2><p class="section-intro">${esc(t('market.description'))}</p></header><div class="market-tabs" aria-label="${esc(t('market.title'))}">${['goods','freight','passengers','contracts'].map(k=>`<button class="${tab===k?'active':''}" data-action="market-tab" data-tab="${k}" aria-pressed="${tab===k}">${esc(t(`market.${k}`))}</button>`).join('')}</div>${offers[tab].length?`<table class="market-table"><thead><tr><th scope="col">${esc(t(goods?'market.good':'market.destination'))}</th><th scope="col" class="market-number">${esc(t(goods?'market.stock':passengers?'market.passengers':'market.quantity'))}</th><th scope="col" class="market-number">${esc(t(goods?'market.buyprice':passengers?'market.unitpassenger':'market.pay'))}</th><th scope="col" class="market-action">${esc(t('market.order'))}</th></tr></thead><tbody>${goods?offers.goods.map(g=>goodsRow(state,g)).join(''):offers[tab].map(o=>offerRow(state,o,tab)).join('')}</tbody></table>`:`<p class="market-empty">${esc(t('market.empty'))}</p>`}${goods?renderDemands(state):''}<footer class="port-footer"><button data-action="cargo">${esc(t('cargo.manifest'))}</button><button class="primary" data-action="map">${esc(t('port.depart'))} →</button></footer></section>`;
+  const offers=market(state),goods=tab==='goods',passengers=tab==='passengers',bill=billView(state),cash={credits:state.economy.credits,bill:bill.total,weeks:bill.weeks};
+  return `<section class="market-view"><header class="market-header"><div class="eyebrow">${esc(worldName(state,state.ship.hex))} · ${esc(t('trade.capacity',{used:cargoUsed(state),capacity:cargoCapacity(state)}))}</div><h2>${esc(t('market.title'))}</h2><p class="section-intro">${esc(t('market.description'))}</p></header><div class="market-tabs" aria-label="${esc(t('market.title'))}">${['goods','freight','passengers','contracts'].map(k=>`<button class="${tab===k?'active':''}" data-action="market-tab" data-tab="${k}" aria-pressed="${tab===k}">${esc(t(`market.${k}`))}</button>`).join('')}</div>${goods?holdSection(state):''}${offers[tab].length?`<table class="market-table"><thead><tr><th scope="col">${esc(t(goods?'market.good':'market.destination'))}</th><th scope="col" class="market-number">${esc(t(goods?'market.stock':passengers?'market.passengers':'market.quantity'))}</th><th scope="col" class="market-number">${esc(t(goods?'market.buyprice':passengers?'market.unitpassenger':'market.pay'))}</th><th scope="col" class="market-action">${esc(t('market.order'))}</th></tr></thead><tbody>${goods?offers.goods.map(g=>goodsRow(state,g,cash)).join(''):offers[tab].map(o=>offerRow(state,o,tab)).join('')}</tbody></table>`:`<p class="market-empty">${esc(t('market.empty'))}</p>`}${goods?renderDemands(state):''}<footer class="port-footer"><button data-action="cargo">${esc(t('cargo.manifest'))}</button><button class="primary" data-action="map">${esc(t('port.depart'))} →</button></footer></section>`;
 }

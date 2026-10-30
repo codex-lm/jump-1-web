@@ -2,6 +2,11 @@ import {t,esc,portrait,money} from './common.js';
 import {CAREER_NAMES} from '../data/careers.js';
 import {upp} from '../rules/characteristics.js';
 import {rankedSkills,skillList,careerHistory} from './character.js';
+import {rulesAtLeast} from '../core/state.js';
+import {WORKING_CAPITAL_FLOOR} from '../rules/economy.js';
+
+/** Edition 5: what the Trust will lend at boarding (CHARGEN_DONE tops the treasury up to the floor). */
+export function boardingAdvance(state){return rulesAtLeast(state,5)?Math.max(0,WORKING_CAPITAL_FLOOR-(20000+state.crew.reduce((sum,p)=>sum+(p.cash||0),0))):0;}
 
 function careerEditor(person,index){
   return `<div class="career-editor">
@@ -35,5 +40,5 @@ export function chargenScreen(state,detailed=false){
     <main class="chargen-screen"><header class="chargen-header"><div class="eyebrow">${esc(t('chargen.kicker'))}</div><h1>${esc(t('chargen.title'))}</h1><p class="section-intro">${esc(t('chargen.description'))}</p><details class="chargen-guide"><summary>${esc(t('title.how'))}</summary><p class="section-intro">${esc(t('chargen.next'))}</p><p class="upp-legend">${esc(t('chargen.upp'))}</p></details><div class="actions"><button class="${!detailed?'active':''}" data-action="express" aria-pressed="${!detailed}">${esc(t('chargen.express'))}</button><button class="${detailed?'active':''}" data-action="detailed" aria-pressed="${detailed}">${esc(t('chargen.detailed'))}</button></div></header>
     <section class="chargen-cards ${detailed?'chargen-cards--detailed':''}">${state.crew.map((p,index)=>characterCard(p,index,state,detailed)).join('')}</section>
     ${bonds.length?`<details class="bonds-preview"><summary>${esc(t('chargen.bonds'))}</summary><ul>${bonds.map(b=>`<li>${esc(state.crew.find(c=>c.id===b.a)?.name)} &amp; ${esc(state.crew.find(c=>c.id===b.b)?.name)} — ${esc(t(`bond.${b.type}`))}</li>`).join('')}</ul></details>`:''}
-    <footer class="chargen-bottom"><div><div class="section-label">${esc(t('chargen.cash'))}</div><div class="mono brass chargen-cash">${money(20000+state.crew.reduce((sum,p)=>sum+p.cash,0))} Cr</div></div><div class="actions"><button data-action="how">${esc(t('title.how'))}</button><button class="primary" data-action="board">${esc(t('chargen.begin'))} →</button></div></footer></main>`;
+    <footer class="chargen-bottom"><div><div class="section-label">${esc(t('chargen.cash'))}</div><div class="mono brass chargen-cash">${money(20000+state.crew.reduce((sum,p)=>sum+p.cash,0))} Cr</div>${boardingAdvance(state)?`<p class="chargen-advance">${esc(t('chargen.advance',{amount:money(boardingAdvance(state))}))}<br><small>${esc(t('chargen.advanceNote',{floor:money(WORKING_CAPITAL_FLOOR)}))}</small></p>`:''}</div><div class="actions"><button data-action="how">${esc(t('title.how'))}</button><button class="primary" data-action="board">${esc(t('chargen.begin'))} →</button></div></footer></main>`;
 }

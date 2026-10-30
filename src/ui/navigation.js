@@ -1,7 +1,7 @@
 import {fuelCapacity} from '../rules/ship.js';
 import {distance} from '../rules/subsector.js';
 import {berthingCost,monthlyCosts,upcomingBill,COSTS} from '../rules/economy.js';
-import {isIllegal,activeDemand} from '../rules/trade.js';
+import {isIllegal,activeDemand,market,activePatronOffer} from '../rules/trade.js';
 import {GOODS} from '../data/goods.js';
 import {assetMarkup,worldAsset} from './assets.js';
 import {t,esc,money,number,badge} from './common.js';
@@ -92,6 +92,27 @@ function renderDeliveries(p){
   return `<section><h4>${esc(t('navigation.carrying'))}</h4>${entries.length?`<ul>${entries.join('')}</ul><p class="navigation-note">${esc(t('navigation.deliveryCaveat'))}</p>`:`<p class="navigation-note">${esc(t('navigation.noneDue'))}</p>`}</section>`;
 }
 
+/** Offers on this port's board that pay for a trip to the selected neighbour (read-only; the market is pure). */
+export function destinationBusiness(state,hex){
+  const offers=market(state),patron=activePatronOffer(state),mine=list=>list.filter(o=>o.destination===hex);
+  const freight=mine(offers.freight),passengers=mine(offers.passengers),contracts=mine(offers.contracts).map(c=>patron?.id===c.id?patron:c);
+  const sum=(list,key)=>list.reduce((n,o)=>n+(o[key]||0),0);
+  return {freight:{count:freight.length,tons:sum(freight,'tons'),pay:sum(freight,'pay')},passengers:{count:sum(passengers,'count'),pay:sum(passengers,'pay')},contracts:{count:contracts.length,types:contracts.map(c=>c.type),pay:sum(contracts,'pay')},total:sum(freight,'pay')+sum(passengers,'pay')+sum(contracts,'pay')};
+}
+function renderBusiness(state,world){
+  const b=destinationBusiness(state,world.hex),items=[];
+  if(b.freight.count)items.push(t('navigation.businessFreight',{count:number(b.freight.count),tons:number(b.freight.tons),pay:money(b.freight.pay)}));
+  if(b.passengers.count)items.push(t('navigation.businessPassengers',{count:number(b.passengers.count),pay:money(b.passengers.pay)}));
+  if(b.contracts.count)items.push(t('navigation.businessContracts',{names:b.contracts.types.map(type=>t(`contract.${type}`)).join(', '),pay:money(b.contracts.pay)}));
+  return `<section class="destination-business"><h4>${esc(t('navigation.business',{world:world.name}))}</h4>${items.length?`<ul>${items.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><button class="small" data-action="market" data-tab="${b.freight.count?'freight':b.passengers.count?'passengers':'contracts'}">${esc(t('navigation.businessOpen'))} →</button>`:`<p class="navigation-note">${esc(t('navigation.businessNone',{world:world.name}))}</p>`}</section>`;
+}
+/** Prices the broker recorded at that world, clearly dated: past prices, never a forecast. */
+function renderKnownPrices(state,hex){
+  const known=state.knownMarkets?.[hex];
+  if(!known?.goods?.length)return '';
+  return `<details class="destination-known-prices"><summary>${esc(t('navigation.knownPrices',{week:known.week}))}</summary><ul>${known.goods.map(g=>`<li>${esc(t('navigation.knownPriceRow',{good:t(GOODS.find(item=>item.id===g.goodId)?.nameKey||g.goodId),buy:money(g.buyPrice),sell:money(g.sellPrice)}))}</li>`).join('')}</ul><p class="navigation-note">${esc(t('navigation.knownPricesNote'))}</p></details>`;
+}
+
 export function renderDestination(state,hex){
   const p=departurePreview(state,hex),world=p.destination;
   if(!world)return '';
@@ -114,7 +135,9 @@ export function renderDestination(state,hex){
     <div class="destination-codes">${world.codes.map(c=>badge(`${c} · ${t(`code.${c}`)}`)).join('')}</div>
     ${p.range===1?renderDepartureSummary(state,hex):`<p class="${p.range===0?'navigation-note':'navigation-warning'}">${esc(p.range===0?t('navigation.choose'):blockedText(p))}</p>`}
     <div class="destination-actions"><button class="primary" data-action="depart" data-hex="${esc(world.hex)}" ${p.canDepart?'':'disabled'}>${esc(t('map.depart',{world:world.name}))}</button>${p.range===1?`<button data-action="quick" data-hex="${esc(world.hex)}" ${quick.canDepart?'':'disabled'}>${esc(t('port.quick'))}</button>`:''}</div>
+    ${p.range===1&&state.phase==='port'?renderBusiness(state,world):''}
     ${p.freight.length||p.passengers.length||p.contracts.length?renderDeliveries(p):''}
+    ${renderKnownPrices(state,hex)}
     <details class="destination-details"><summary>${esc(t('navigation.details'))}</summary><div class="destination-details-grid">${renderServices(p)}${p.freight.length||p.passengers.length||p.contracts.length?'':renderDeliveries(p)}
     ${p.goods.length?`<section><h4>${esc(t('navigation.cargo'))}</h4><ul>${p.goods.map(g=>`<li>${esc(t('navigation.cargoLot',{name:t(g.nameKey||GOODS.find(item=>item.id===g.goodId)?.nameKey||g.goodId),tons:number(g.tons)}))}${g.restricted?`<small class="red">${esc(t('navigation.restricted'))}</small>`:g.favorable?`<small class="teal">${esc(t('navigation.favorable'))}</small>`:''}</li>`).join('')}</ul><p class="navigation-note">${esc(t('navigation.noPrices'))}</p></section>`:''}
     <section><h4>${esc(t('navigation.risks'))}</h4><ul>${risks.map(r=>`<li>${esc(r)}</li>`).join('')}</ul></section></div><p class="mono navigation-note">${esc(world.hex)} · ${esc(world.uwp)}</p></details></article>`;

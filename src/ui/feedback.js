@@ -1,6 +1,10 @@
 import {t,esc,money,number,worldName,logText,icon} from './common.js';
 import {hasTranslation} from './i18n.js';
 import {cargoUsed} from '../rules/ship.js';
+import {rulesAtLeast} from '../core/state.js';
+import {berthingCost,WORKING_CAPITAL_FLOOR} from '../rules/economy.js';
+import {quoteSaleTotal,currentWorld} from '../rules/trade.js';
+import {billView,forcedSaleValue,settlementOffer,signedMoney} from './decision.js';
 
 // The journal is capped at 400 entries. Match its retained suffix rather than
 // subtracting array lengths, so a late-game report cannot silently go empty.
@@ -52,11 +56,30 @@ export function renderActionReport(report){
  return `<section class="action-report" aria-label="${esc(t('feedback.title'))}"><header><div><span class="eyebrow">${esc(t('feedback.title'))} · ${esc(t('common.week'))} ${report.week}</span><h3>${esc(title)}</h3></div><button class="icon-button" data-action="dismiss-report" aria-label="${esc(t('feedback.dismiss'))}">${icon('close')}</button></header>${route}<div class="result-metrics">${metric('credits',' Cr')}${metric('fuel',' t')}${metric('cargo',' t')}${metric('hull')}${report.weeks?`<span class="result-metric">${esc(t('feedback.elapsed',{count:report.weeks}))}</span>`:''}</div>${shown.length?`<ul>${shown.map(e=>`<li>${esc(logText(e))}</li>`).join('')}</ul>`:''}${checks}${report.expenses?.length?`<p class="result-expenses">${esc(t('feedback.expenses'))} ${report.expenses.map(e=>`${esc(t(`feedback.cost.${e.category}`))} ${money(e.amount)} Cr`).join(' · ')}</p>`:''}<button class="quiet small" data-action="report-log">${esc(t('feedback.details'))} →</button></section>`;
 }
 
-export function renderPortObjective(state){
+/** The most valuable speculative lot that this port would buy now (never at its own origin). */
+export function bestSale(state){
+ return state.cargo.filter(l=>l.kind==='speculative'&&l.origin!==state.ship.hex).map(lot=>{const quote=quoteSaleTotal(state,lot);return {lot,...quote,result:quote.total-(lot.buyPrice||0)*lot.tons};}).filter(s=>s.unitPrice>0).sort((a,b)=>b.total-a.total)[0]||null;
+}
+
+function objectiveNotes(state,drafts){
+ const notes=[],e=state.economy,world=currentWorld(state),note=(text,kind='navigation-note',button='')=>`<li class="${kind}"><span>${esc(text)}</span>${button}</li>`;
+ const settle=settlementOffer(state);
+ if(settle?.available)notes.push(note(t('feedback.settle',{amount:money(settle.amount),weeks:settle.weeks}),'objective-settle',`<button class="small" data-action="settle-prompt">${esc(t('feedback.settleButton'))}</button>`));
+ const bill=billView(state),berthing=berthingCost(world,7),short=bill.total+berthing-e.credits;
+ if(short>0){const cargo=forcedSaleValue(state);notes.push(note([t('feedback.bill',{week:bill.week,total:money(bill.total),credits:money(e.credits),short:money(short)}),berthing?t('feedback.billBerthing',{amount:money(berthing)}):'',cargo?t('feedback.billCargo',{amount:money(cargo)}):''].filter(Boolean).join(' '),bill.weeks<=1?'navigation-warning':'navigation-note'));}
+ const medic=state.crew.find(p=>p.station===4&&p.alive&&p.active!==false&&!p.unconscious),wounded=state.crew.filter(p=>p.alive&&p.active!==false&&(p.wounded||p.unconscious));
+ if(medic&&wounded.length&&!state.portActions[4]&&(drafts[4]||state.routines[4])!=='heal')notes.push(note(t('feedback.wounded',{names:wounded.map(p=>p.name).join(', ')}),'navigation-warning',`<button class="small" data-action="draft-order" data-station="4" data-choice="heal">${esc(t('feedback.woundedButton'))}</button>`));
+ if(rulesAtLeast(state,5)&&e.advance>0&&state.clock.week===1&&!state.stats.jumps)notes.push(note(t('port.advance',{amount:money(e.advance),floor:money(WORKING_CAPITAL_FLOOR),balloon:money(e.balloon)})));
+ return notes;
+}
+
+export function renderPortObjective(state,{drafts={}}={}){
  const deliveries=[...state.cargo.filter(l=>l.kind==='freight'),...state.passengers,...state.contracts];
  const targets=[...new Set(deliveries.map(l=>l.destination).filter(Boolean))];
  const fuelNeeded=state.portWeekComplete?20:22.5;
  const fuelLow=state.ship.fuel<fuelNeeded;
  const broken=state.ship.systems.jump===0;
- return `<section class="port-objective"><div><span class="eyebrow">${esc(t('feedback.next'))}</span><p>${esc(t(broken?'feedback.fix':fuelLow?'feedback.fuelLow':targets.length?'feedback.deliver':'feedback.findWork',{fuel:number(fuelNeeded,1)}))}</p></div><div class="actions">${broken?`<button class="small" data-action="repair" data-system="jump">${esc(t('ship.repair'))}</button>`:fuelLow?`<button class="small" data-action="fuel-options">${esc(t('feedback.fuelOptions'))}</button>`:targets.length?targets.slice(0,3).map(hex=>`<button class="small" data-action="destination" data-hex="${esc(hex)}">${esc(worldName(state,hex))} →</button>`).join(''):`<button class="small" data-action="market" data-tab="freight">${esc(t('market.freight'))} →</button>`}</div></section>`;
+ const sale=!broken&&!fuelLow?bestSale(state):null,notes=objectiveNotes(state,drafts);
+ const message=broken?t('feedback.fix'):fuelLow?t('feedback.fuelLow',{fuel:number(fuelNeeded,1)}):sale?t(sale.result>=0?'feedback.sellHere':'feedback.sellHereLoss',{tons:number(sale.lot.tons),good:t(sale.lot.nameKey),total:money(sale.total),result:signedMoney(sale.result),loss:money(-sale.result)}):t(targets.length?'feedback.deliver':'feedback.findWork');
+ return `<section class="port-objective"><div><span class="eyebrow">${esc(t('feedback.next'))}</span><p>${esc(message)}</p></div><div class="actions">${broken?`<button class="small" data-action="repair-options" data-system="jump">${esc(t('ship.repair'))}</button>`:fuelLow?`<button class="small" data-action="fuel-options">${esc(t('feedback.fuelOptions'))}</button>`:sale?`<button class="small" data-action="market" data-tab="goods">${esc(t('feedback.sellButton'))} →</button>`:targets.length?targets.slice(0,3).map(hex=>`<button class="small" data-action="destination" data-hex="${esc(hex)}">${esc(worldName(state,hex))} →</button>`).join(''):`<button class="small" data-action="market" data-tab="freight">${esc(t('market.freight'))} →</button>`}</div>${notes.length?`<ul class="objective-notes">${notes.join('')}</ul>`:''}</section>`;
 }
