@@ -66,9 +66,9 @@ gameplay acceptance.
 ## Credits and rights
 
 - **Cédric Bernadac**: Created the game design and original Lantern Reach setting; directed the production of Jump-1.
-- **Nilo / Codex**: Implemented the engine, interface, audio and integrations under Cédric Bernadac’s direction. Refreshed layouts and native Blender faces in 0.2; added destination briefings, scene guidance, reports and motion in 0.3. Added contextual voyages, crew assistance, compact inspections, branching starts, ship fittings, market requests and linked stories in 0.4, preserving legacy saves. Added early loan settlement, a working-capital advance, priced repair and standard-week confirmations, port-order effects and accessibility fixes in 0.5, preserving 0.3 and 0.4 saves.
+- **Nilo / Codex**: Implemented the engine, interface, audio and integrations under Cédric Bernadac’s direction. Refreshed layouts and native Blender faces in 0.2; added destination briefings, scene guidance, reports and motion in 0.3. Added contextual voyages, crew assistance, compact inspections, branching starts, ship fittings, market requests and linked stories in 0.4, preserving legacy saves.
 - **Kimi K3.1**: Created original Blender models, materials and image renders, including the native HD ship cutaway, under Cédric Bernadac's direction. Refined the 16 crew portraits and four inhabited port/bar scenes for the 0.2.0 visual refresh.
-- **Claude Opus 5.5**: Added the first-voyage guide, the crew and port explanations, and the draggable star chart in 0.1.2, under Cédric Bernadac's direction.
+- **Claude Opus 5.5**: Added the first-voyage guide, the crew and port explanations, and the draggable star chart in 0.1.2, under Cédric Bernadac's direction. Added rules edition 5 in 0.5.0: economy fixes, early loan settlement, a working-capital advance, working port orders, bill, payment and repair previews, a French text pass and accessibility fixes, preserving 0.3 and 0.4 saves.
 - **Suno**: source service for the inherited music and sound effects; see the audio provenance.
 
 Code is MIT licensed. Other content has the scopes specified in its own notices:

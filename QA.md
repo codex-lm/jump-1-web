@@ -1,5 +1,14 @@
 # Jump-1 — vérifications et limites de livraison
 
+## Recette locale 0.5.0 — 30 octobre 2026
+
+- Édition de règles 5 pour les nouveaux voyages ; toutes les nouvelles règles passent par `rulesAtLeast(state,5)`. Les sauvegardes legacy et édition 4 conservent leurs règles.
+- `node tests/run.mjs` : 180/180 tests (parité FR/EN, anciens rejeux, nouvelles règles, contrastes, focus).
+- Compatibilité : 468 campagnes éditions 3 et 4 enregistrées sur la 0.4.0 (81 569 actions tentées) rejouées sur la 0.5.0 sans aucune différence d'état ni de code de refus. Un export 0.4.0 importé redonne le même hash. 204 campagnes édition 5 sont déterministes d'un processus à l'autre.
+- Contrôles fonctionnels : facture à venir contre débit réel (4 509 cas), issues du panneau de paiement contre PAY/SKIP_PAY (1 742), remboursement anticipé (885), devis de vente contre SELL (8 383), avance de trésorerie (50 graines).
+- Simulation 60 graines, difficulté normale : taux de victoire inchangé (48 %), premier impayé médian repoussé de la semaine 8 à la semaine 12.
+- Limite : les images ne sont pas recompressées (le canal de publication texte n'accepte pas les binaires) ; seul leur chargement est optimisé.
+
 ## Recette locale 0.4.0 — 29 octobre 2026
 
 - `node tests/run.mjs` : 117/117 tests. Parité FR/EN, références locales, budgets, anciens rejeux et nouvelles règles inclus. Les 20 anciens événements et la panne conservent exactement leur comportement hors édition 4.
