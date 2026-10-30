@@ -18,7 +18,8 @@ import {renderPort,standardWeekSummary} from './ui/port.js';
 import {hudStats,plannedOrders,settlementOffer} from './ui/decision.js';
 import {renderMap,mountMap} from './ui/map.js';
 import {departurePreview,renderDepartureSummary} from './ui/navigation.js';
-import {actionReport,renderActionReport} from './ui/feedback.js';
+import {actionReport,renderActionReport,reportSummary} from './ui/feedback.js';
+import {focusKey,findFocusTarget,regionHeading,focusElement} from './ui/focus.js';
 import {renderMarket,cargoManifest,updateMarketTotal} from './ui/cargo.js';
 import {renderScene,sceneDefaults} from './ui/scene.js';
 import {renderJournal,paymentPanel,contractsPanel,bankPanel,settlementDialog} from './ui/journal.js';
@@ -26,6 +27,8 @@ import {endScreen,drawRunCard} from './ui/end.js';
 import {createAudioPlayer} from './audio/player.js';
 
 const app=document.getElementById('app'),modal=document.getElementById('modal');
+// A modal closed after a render would leave focus on <body>: move it to the pending report heading or back to the control that opened the modal.
+modal.addEventListener('close',()=>{if(modal.open)return;const job=pendingFocus,back=modalReturn;pendingFocus=null;modalReturn=null;if(job?.message)toast(job.message);const lost=!document.activeElement||document.activeElement===document.body||!document.activeElement.isConnected;const el=job?.target?.isConnected?job.target:lost?(findFocusTarget(app,back)||(back?regionHeading(app,back.region):null)):null;if(el)focusElement(el);});
 let audioStatus=null;
 function updateAudioControls(status){
  for(const button of document.querySelectorAll('[data-action="audio-toggle"]')){
@@ -42,6 +45,8 @@ function screenAudioContext(){if(screen==='title'||!state||state.phase==='charge
 let transport=null,state=null,screen='title',titleForm=false,detailed=false,panel='port',journalTab='log',marketTab='goods',mobile='central',selectedHex=null,sceneKey='',choices={},unmountMap=null,toastTimer=0,saveWarning=false,journalOpen=false;
 let lastReport=null,shownReport=null,renderedState=null,pendingMapMotion=false,pendingStationMotion=null;
 let inspectionDetailed=false;
+// Focus management (UI only): the screen last rendered, the control that opened the modal, and a focus move waiting for the modal to close.
+let lastView=null,modalReturn=null,pendingFocus=null;
 setWorldLookup(hex=>state?.subsector?.worlds?.find(w=>w.hex===hex)?.name);
 // Unapplied station orders (UI only). They survive re-renders and are dropped when the week, the hex or the voyage changes.
 let draftOrders={},draftKey='';
@@ -53,7 +58,7 @@ function motionReduced(){return !!settings.reduceMotion||motionPreference.matche
 function applySettings(){document.body.classList.toggle('reduce-motion',motionReduced());document.documentElement.style.setProperty('--font-size',`${Math.max(12,Math.min(18,Number(settings.font)||16))}px`);try{localStorage.setItem('jump1.settings',JSON.stringify(settings));}catch{}}
 motionPreference.addEventListener('change',applySettings);
 function toast(message){const el=document.getElementById('toast');clearTimeout(toastTimer);el.textContent=message;el.classList.add('visible');toastTimer=setTimeout(()=>el.classList.remove('visible'),4200);}
-function showModal(title,html,{wide=false}={}){if(modal.open)modal.close();modal.classList.toggle('ship-zoom-modal',wide);modal.innerHTML=`<div class="modal-head"><h2 id="modal-title">${esc(title)}</h2><button class="icon-button" data-action="close" aria-label="${esc(t('common.close'))}">${icon('close')}</button></div><div class="modal-body">${html}</div>`;modal.showModal();attachAssetFallbacks(modal);}
+function showModal(title,html,{wide=false}={}){if(!modal.open)modalReturn=app.contains(document.activeElement)?focusKey(document.activeElement,app):null;if(modal.open)modal.close();modal.classList.toggle('ship-zoom-modal',wide);modal.innerHTML=`<div class="modal-head"><h2 id="modal-title">${esc(title)}</h2><button class="icon-button" data-action="close" aria-label="${esc(t('common.close'))}">${icon('close')}</button></div><div class="modal-body">${html}</div>`;modal.showModal();attachAssetFallbacks(modal);}
 const GUIDE_KEY='jump1.guide.v1';let guideShown=false;function guideSeen(){if(guideShown)return true;try{return localStorage.getItem(GUIDE_KEY)==='1';}catch{return false;}}function markGuideSeen(){guideShown=true;try{localStorage.setItem(GUIDE_KEY,'1');}catch{}}
 function showHelp(){showModal(t('help.title'),`<div class="help-grid">${[1,2,3].map(i=>`<article class="help-step"><span class="number">0${i}</span><h3>${esc(t(`help.${i}title`))}</h3><p>${esc(t(`help.${i}`))}</p></article>`).join('')}</div><p class="mono muted" style="font-size:.7rem;margin:25px 0 0">${esc(t('help.shortcuts'))}</p>`);}
 function showCentral(){mobile='central';if(matchMedia('(max-width:1199px)').matches)journalOpen=false;}
@@ -100,11 +105,11 @@ function gameScreen(){
 }
 function render(){
  unmountMap?.();unmountMap=null;
- const scroll=window.scrollY,previous=renderedState;
+ const scroll=window.scrollY,previous=renderedState,active=document.activeElement,typing=!!active?.matches?.('input,select,textarea'),key=app.contains(active)&&active!==app?focusKey(active,app):null,oldView=lastView;
  const oldMeters=new Map([...app.querySelectorAll('[role="meter"]')].map(el=>[el.getAttribute('aria-label'),Number(el.getAttribute('aria-valuenow'))]));
  app.innerHTML=screen==='title'?titleScreen({form:titleForm,saved:!!readSave(),audioEnabled:audio.isEnabled()}):gameScreen();
  attachAssetFallbacks(app);
- const animate=!motionReduced(),report=app.querySelector('.action-report');
+ const animate=!motionReduced(),report=app.querySelector('.action-report'),newReport=!!report&&lastReport!==shownReport;
  if(screen==='game'&&state?.phase==='port'&&panel==='map')unmountMap=mountMap(state,selectedHex,hex=>selectDestination(hex),{animateRoute:animate&&pendingMapMotion});
  if(animate){
   if(pendingMapMotion)app.querySelector('.destination-heading')?.classList.add('motion-reveal');
@@ -122,7 +127,23 @@ function render(){
  pendingMapMotion=false;pendingStationMotion=null;renderedState=screen==='game'?state:null;
  if(screen==='game'&&state?.phase==='port'&&!state.stats?.jumps&&!modal.open&&!guideSeen()){markGuideSeen();showHelp();}
  if(state?.ending&&screen==='game')document.fonts.ready.then(()=>drawRunCard(state));
+ lastView=viewKey();settleFocus({key,typing,newReport,newView:oldView!==null&&lastView!==oldView,report:newReport?lastReport:null});
  window.scrollTo({top:scroll,behavior:'auto'});audio.setContext(screenAudioContext());if(audioStatus)updateAudioControls(audioStatus);
+}
+function viewKey(){if(screen==='title')return 'title';if(!state)return '';if(state.ending)return 'end';return state.phase==='scene'?`scene:${state.scene.type}`:state.phase;}
+function viewHeading(){if(screen!=='game'||state.ending||state.phase==='chargen')return app.querySelector('main h1');if(state.phase==='scene')return app.querySelector('.scene-banner h2');return regionHeading(app);}
+/** After a render: a new turn report or a new screen takes focus on its heading and is announced in #toast; otherwise the focused control is found again. Never while a modal is open (deferred to its closing) or while the player is in a form field. */
+function settleFocus({key,typing,newReport,newView,report}){
+ let target=null,message='';
+ if(newReport||newView){
+  const heading=newReport?app.querySelector('.action-report h3'):viewHeading();
+  message=[report?reportSummary(report):'',newView&&state?.phase==='scene'&&screen==='game'&&!state.ending?t('feedback.sceneStarted',{scene:t(`scene.${state.scene.type}`)}):newView&&!report&&screen==='game'?heading?.textContent.trim():''].filter(Boolean).join(' · ');
+  if(!typing)target=heading;
+ }
+ const restore=()=>target||findFocusTarget(app,key)||(key?regionHeading(app,key.region):null);
+ if(modal.open){if(target||message)pendingFocus={target,message};return;}
+ if(message)toast(message);
+ const el=restore();if(el&&el!==document.activeElement)focusElement(el);
 }
 function showMenu(){showModal(t('menu.title'),`<p class="section-intro">${esc(t('menu.saved'))}</p>${state&&!rulesAtLeast(state,4)?`<p class="navigation-note">${esc(t('voyage.legacy'))}</p>`:''}<div class="stack">${audioControl(false)}<label>${esc(t('audio.music'))}<span class="row"><input type="range" min="0" max="100" data-audio-volume="music" aria-label="${esc(t('audio.music'))}"><output data-audio-level="music"></output></span></label><label>${esc(t('audio.effects'))}<span class="row"><input type="range" min="0" max="100" data-audio-volume="sfx" aria-label="${esc(t('audio.effects'))}"><output data-audio-level="sfx"></output></span></label>${state?`<button data-action="export">${esc(t('menu.export'))}</button>`:''}<button data-action="load-save">${esc(t('menu.import'))}</button><button data-action="about">${esc(t('title.about'))}</button><label class="row"><input id="setting-motion" type="checkbox" ${motionReduced()?'checked':''} ${motionPreference.matches?'disabled':''}>${esc(t('menu.reduce'))}</label>${motionPreference.matches?`<small class="muted">${esc(t('motion.system'))}</small>`:''}<label>${esc(t('menu.font'))}<input id="setting-font" type="range" min="12" max="18" value="${settings.font}"></label><button data-action="home">${esc(t('menu.titleback'))}</button>${state&&!state.ending?`<button class="danger" data-action="abandon-prompt">${esc(t('menu.abandon'))}</button>`:''}</div>`);if(audioStatus)updateAudioControls(audioStatus);}
 async function showAbout(licences=false){showModal(t('about.title'),`<div class="tabs"><button data-action="about" class="${!licences?'active':''}">${esc(t('about.game'))}</button><button data-action="licences" class="${licences?'active':''}">${esc(t('about.licences'))}</button></div>${licences?'<pre id="licence-text"></pre>':`<p>${esc(t('about.description'))}</p><p>${esc(t('about.compatible'))}</p><small class="muted">${esc(t('about.version'))}</small>`}`);if(licences){try{const result=await fetch(new URL('../OGL.md', import.meta.url));if(!result.ok)throw new Error();const text=await result.text();const target=document.getElementById('licence-text');if(target)target.textContent=text;}catch{const target=document.getElementById('licence-text');if(target)target.textContent=t('common.unavailable');}}}
@@ -252,6 +273,6 @@ document.addEventListener('change',event=>{if(/^order-[1-5]$/.test(event.target.
 document.getElementById('import-file').addEventListener('change',async event=>{const file=event.target.files[0];event.target.value='';if(!file)return;try{if(file.size>2000000)throw new Error();const save=JSON.parse(await file.text());if(!validateSave(save))throw new Error();let checked=createInitialState(save.seed,save.config);for(const action of save.actions){checked=reduce(checked,action);if(checked.lastError)throw new Error();}assertState(checked);modal.close();connectLocal(save.seed,save.config,save.actions);transport.save();toast(t('save.imported'));}catch{toast(t('save.invalid'));}});
 document.addEventListener('keydown',event=>{if(event.ctrlKey||event.metaKey||event.altKey||event.target.matches('input,select,textarea'))return;if(modal.open)return;if(screen==='title'){if(['ArrowRight','ArrowLeft'].includes(event.key)){event.preventDefault();const buttons=[...app.querySelectorAll('.title-actions button')];if(buttons.length){const index=buttons.indexOf(document.activeElement);buttons[(index+(event.key==='ArrowRight'?1:-1)+buttons.length)%buttons.length].focus();}}else if(event.code==='Space'&&document.activeElement.tagName!=='BUTTON'){event.preventDefault();app.querySelector('[data-action=new]')?.focus();}return;}if(event.key==='Escape'){panel='port';showCentral();render();return;}if(/^[1-5]$/.test(event.key)){showCrew(Number(event.key)-1);return;}if(event.key.toLowerCase()==='m'){panel='map';showCentral();render();return;}if(event.key.toLowerCase()==='s'){panel='ship';showCentral();render();return;}if(event.key.toLowerCase()==='l'){mobile='journal';journalOpen=true;journalTab='log';render();return;}if(event.key.toLowerCase()==='r'&&state.phase==='port'){confirmStandardWeek();return;}if(event.key.toLowerCase()==='q'&&state.phase==='port'&&selectedHex&&distance(state.ship.hex,selectedHex)===1){depart(selectedHex,true);return;}if(panel==='map'&&state.phase==='port'&&event.key.startsWith('Arrow')){event.preventDefault();const worlds=[...state.subsector.worlds].sort((a,b)=>a.hex.localeCompare(b.hex));let i=worlds.findIndex(w=>w.hex===selectedHex);i=(i+(['ArrowRight','ArrowDown'].includes(event.key)?1:-1)+worlds.length)%worlds.length;selectDestination(worlds[i].hex);document.getElementById('star-chart')?.focus({preventScroll:true});}else if(panel==='map'&&state.phase==='port'&&['Enter',' '].includes(event.key)&&event.target.id==='star-chart'){event.preventDefault();if(distance(state.ship.hex,selectedHex)===1)depart(selectedHex);}else if(event.target.matches('[role=button][data-action]')&&['Enter',' '].includes(event.key)){event.preventDefault();handleAction(event.target);}});
 let resizeTimer;window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{if(panel==='map'&&screen==='game')render();},180);});
-applySettings();setLanguage(getLanguage());await loadAssets();await loadShipGeometry();
+applySettings();setLanguage(getLanguage());await Promise.all([loadAssets(),loadShipGeometry()]);
 for(const [key,variable]of [['map/backdrop','--map-art'],['map/paper','--paper-art']]){const asset=getAsset(key);if(asset)document.documentElement.style.setProperty(variable,`url("./${asset.src}")`);}
 render();

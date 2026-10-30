@@ -32,7 +32,7 @@ test('Blender cutaway uses local image, eight normalized hit regions and active 
     const state=createInitialState('ship-art');state.crew[1].active=false;state.crew[1].discharged=true;state.ship.fuelType='raw';
     const html=shipPanel(state),detail=shipDetail(state),zoom=shipZoom(state);
     assert.match(html,/src="\.\/assets\/img\/ship\/cutaway.webp"/);
-    assert.match(detail,/src="\.\/assets\/img\/ship\/cutaway-hd.webp"/);
+    assert.match(detail,/src="\.\/assets\/img\/ship\/cutaway.webp"/);assert.match(detail,/viewBox="0 0 2000 900"/);
     assert.match(zoom,/src="\.\/assets\/img\/ship\/cutaway-hd.webp"/);
     assert.match(zoom,/viewBox="0 0 2000 900"/);
     assert.match(html,/viewBox="0 0 2000 900"/);
