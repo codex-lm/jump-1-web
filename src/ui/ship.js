@@ -1,6 +1,7 @@
 import {t,meter,portrait,esc,icon,money} from './common.js';
 import {getAsset} from './assets.js';
 import {rulesAtLeast} from '../core/state.js';
+import {repairCost} from './decision.js';
 import {cargoUsed,cabinsUsed,fuelCapacity,cargoCapacity,cabinCapacity,SHIP_REFITS,installedRefits,refitPreview,SYSTEMS} from '../rules/ship.js';
 
 const slots=[['jump',36,46,43,47,2],['power',82,46,36,47,2],['cargo',121,46,76,47,5],['sickbay',200,46,35,47,4],['quarters',121,96,76,30,5],['maneuver',12,59,21,45,1],['turret',148,22,37,21,3],['sensors',238,52,24,39,1]];
@@ -85,7 +86,22 @@ export function renderRefits(state){
   }).join('')}</div><p class="refit-conditions">${esc(t('shipOutfit.conditions'))}</p></section>`;
 }
 
+/** Repair buttons open a priced estimate; nothing is charged until it is confirmed. */
+function repairButton(state,system,compact=false){
+  const cost=repairCost(state,system),label=system==='all'?(cost.total?t('ship.repairAll',{amount:money(cost.total)}):t('ship.repair')):t('ship.repairSystem',{system:t(`system.${system}`),amount:money(cost.total)});
+  return `<button class="${compact?'small':''}" data-action="repair-options" data-system="${system}" ${compact?`aria-label="${esc(label)}" title="${esc(label)}"`:''} ${cost.total&&state.phase==='port'?'':'disabled'}>${icon('wrench')}${compact?'':` ${esc(label)}`}</button>`;
+}
+/** Priced confirmation for REPAIR, mirroring the reducer's costs. */
+export function repairEstimate(state,system='all'){
+  const cost=repairCost(state,system),lines=[];
+  if(cost.hull.points)lines.push(t('repair.hull',{points:cost.hull.points,amount:money(cost.hull.amount)}));
+  if(cost.structure.points)lines.push(t('repair.structure',{points:cost.structure.points,amount:money(cost.structure.amount)}));
+  for(const item of cost.systems)lines.push(t('repair.system',{system:t(`system.${item.id}`),points:item.points,amount:money(item.amount)}));
+  const ok=cost.total>0&&cost.available&&cost.affordable&&state.phase==='port';
+  return `${lines.length?`<ul class="repair-lines">${lines.map(line=>`<li>${esc(line)}</li>`).join('')}</ul>`:''}<p class="mono brass">${esc(t('repair.total',{amount:money(cost.total),cash:money(state.economy.credits-cost.total)}))}</p>${!cost.available?`<p class="navigation-warning">${esc(t('repair.unavailable'))}</p>`:cost.partsRisk?`<p class="navigation-note">${esc(t('repair.parts'))}</p>`:''}${cost.available&&!cost.affordable?`<p class="navigation-warning">${esc(t('repair.short'))}</p>`:''}<div class="actions"><button data-action="close">${esc(t('common.cancel'))}</button><button class="primary" data-action="repair" data-system="${esc(system)}" ${ok?'':'disabled'}>${esc(t('repair.confirm',{amount:money(cost.total)}))}</button></div>`;
+}
+
 export function shipDetail(state){
   const world=state.subsector.worlds.find(w=>w.hex===state.ship.hex);
-  return `<div class="eyebrow">${esc(t('ship.class'))}</div><h2 style="margin:10px 0 20px">${esc(state.ship.name)}</h2>${shipPanel(state,'detail')}${renderRefits(state)}<hr class="rule"><p class="section-intro">${esc(t('ship.repaircost'))}</p><div class="actions"><button class="primary" data-action="refuel">${icon('fuel')} ${esc(t('ship.refuel'))}</button>${state.ship.fuelType==='raw'&&['A','B'].includes(world?.starport)?`<button data-action="purge">${esc(t('ship.purge',{amount:money(fuelCapacity(state)*500)}))}</button>`:''}<button data-action="repair" data-system="all">${icon('wrench')} ${esc(t('ship.repair'))}</button>${world?.gasGiant?`<button data-action="skim">${esc(t('ship.skim'))}</button>`:''}</div><div class="stack" style="margin-top:20px">${Object.entries(state.ship.systems).map(([id,value])=>`<div class="row between"><span>${esc(t(`system.${id}`))}</span><span class="mono ${value===0?'red':value<3?'brass':'teal'}">${value} / 3</span><button class="small" data-action="repair" data-system="${id}">${icon('wrench')}</button></div>`).join('')}</div>`;
+  return `<div class="eyebrow">${esc(t('ship.class'))}</div><h2 style="margin:10px 0 20px">${esc(state.ship.name)}</h2>${shipPanel(state,'detail')}${renderRefits(state)}<hr class="rule"><p class="section-intro">${esc(t('ship.repaircost'))}</p><div class="actions"><button class="primary" data-action="fuel-options" ${state.phase==='port'?'':'disabled'}>${icon('fuel')} ${esc(t('ship.refuel'))}</button>${state.ship.fuelType==='raw'&&['A','B'].includes(world?.starport)?`<button data-action="purge">${esc(t('ship.purge',{amount:money(fuelCapacity(state)*500)}))}</button>`:''}${repairButton(state,'all')}${world?.gasGiant?`<button data-action="skim">${esc(t('ship.skim'))}</button>`:''}</div><div class="stack" style="margin-top:20px">${Object.entries(state.ship.systems).map(([id,value])=>`<div class="row between"><span>${esc(t(`system.${id}`))}</span><span class="mono ${value===0?'red':value<3?'brass':'teal'}">${value} / 3</span>${repairButton(state,id,true)}</div>`).join('')}</div>`;
 }

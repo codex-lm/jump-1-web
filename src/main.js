@@ -13,14 +13,15 @@ import {portrait,worldName,badge,logEntry,logText as logEntryText} from './ui/co
 import {titleScreen} from './ui/title.js';
 import {chargenScreen} from './ui/chargen.js';
 import {characterSheet} from './ui/character.js';
-import {shipPanel,shipDetail,shipZoom,loadShipGeometry} from './ui/ship.js';
-import {renderPort} from './ui/port.js';
+import {shipPanel,shipDetail,shipZoom,loadShipGeometry,repairEstimate} from './ui/ship.js';
+import {renderPort,standardWeekSummary} from './ui/port.js';
+import {hudStats,plannedOrders,settlementOffer} from './ui/decision.js';
 import {renderMap,mountMap} from './ui/map.js';
 import {departurePreview,renderDepartureSummary} from './ui/navigation.js';
 import {actionReport,renderActionReport} from './ui/feedback.js';
 import {renderMarket,cargoManifest,updateMarketTotal} from './ui/cargo.js';
 import {renderScene,sceneDefaults} from './ui/scene.js';
-import {renderJournal,paymentPanel,contractsPanel,bankPanel} from './ui/journal.js';
+import {renderJournal,paymentPanel,contractsPanel,bankPanel,settlementDialog} from './ui/journal.js';
 import {endScreen,drawRunCard} from './ui/end.js';
 import {createAudioPlayer} from './audio/player.js';
 
@@ -41,6 +42,9 @@ function screenAudioContext(){if(screen==='title'||!state||state.phase==='charge
 let transport=null,state=null,screen='title',titleForm=false,detailed=false,panel='port',journalTab='log',marketTab='goods',mobile='central',selectedHex=null,sceneKey='',choices={},unmountMap=null,toastTimer=0,saveWarning=false,journalOpen=false;
 let lastReport=null,shownReport=null,renderedState=null,pendingMapMotion=false,pendingStationMotion=null;
 let inspectionDetailed=false;
+// Unapplied station orders (UI only). They survive re-renders and are dropped when the week, the hex or the voyage changes.
+let draftOrders={},draftKey='';
+function syncDrafts(){const key=state?`${state.meta.seed}|${state.meta.config.rulesEdition||3}|${state.clock.week}|${state.ship.hex}`:'';if(key!==draftKey){draftKey=key;draftOrders={};}}
 const motionPreference=matchMedia('(prefers-reduced-motion: reduce)');
 let settings={reduceMotion:motionPreference.matches,font:16};
 try{settings={...settings,...JSON.parse(localStorage.getItem('jump1.settings')||'{}')};}catch{}
@@ -52,7 +56,7 @@ function showModal(title,html,{wide=false}={}){if(modal.open)modal.close();modal
 const GUIDE_KEY='jump1.guide.v1';let guideShown=false;function guideSeen(){if(guideShown)return true;try{return localStorage.getItem(GUIDE_KEY)==='1';}catch{return false;}}function markGuideSeen(){guideShown=true;try{localStorage.setItem(GUIDE_KEY,'1');}catch{}}
 function showHelp(){showModal(t('help.title'),`<div class="help-grid">${[1,2,3].map(i=>`<article class="help-step"><span class="number">0${i}</span><h3>${esc(t(`help.${i}title`))}</h3><p>${esc(t(`help.${i}`))}</p></article>`).join('')}</div><p class="mono muted" style="font-size:.7rem;margin:25px 0 0">${esc(t('help.shortcuts'))}</p>`);}
 function showCentral(){mobile='central';if(matchMedia('(max-width:1199px)').matches)journalOpen=false;}
-function connectLocal(seed,config,actions=[]){transport?.close();transport=createLocal(seed,config,actions);state=transport.getState();screen='game';panel='port';mobile='central';journalOpen=false;selectedHex=state.ship.hex;sceneKey='';lastReport=null;shownReport=null;renderedState=null;pendingMapMotion=false;pendingStationMotion=null;render();window.scrollTo(0,0);}
+function connectLocal(seed,config,actions=[]){transport?.close();transport=createLocal(seed,config,actions);state=transport.getState();screen='game';panel='port';mobile='central';journalOpen=false;selectedHex=state.ship.hex;sceneKey='';draftOrders={};draftKey='';lastReport=null;shownReport=null;renderedState=null;pendingMapMotion=false;pendingStationMotion=null;render();window.scrollTo(0,0);}
 function send(action,{quiet=false}={}){
  if(!transport)return false;
  const previous=state,result=transport.send({by:'captain',...action});
@@ -71,7 +75,7 @@ function send(action,{quiet=false}={}){
  return true;
 }
 function startRun(seed,config,{replay=false}={}){connectLocal(seed,replay?config:{...config,portraitEdition:2,rulesEdition:CURRENT_RULES_EDITION});send({t:'CHARGEN_EXPRESS'});}
-function topbar(){const e=state.economy;return `<header class="topbar"><div class="brand-block"><div class="world-label">${esc(state.subsector.name)}</div><h1 class="ship-name">${esc(state.ship.name)}</h1></div><div class="top-stats"><div class="top-stat" data-hud="week"><span>${esc(t('hud.week',{week:state.clock.week}))}</span><strong>${esc(t('hud.month',{month:state.clock.month}))}</strong></div><div class="top-stat" data-hud="cash"><span>${esc(t('hud.cash'))}</span><strong class="${e.credits<e.nextPayment?'red':'brass'}">${money(e.credits)} Cr</strong></div><div class="top-stat"><span>${esc(t('hud.due'))} · ${esc(t('hud.inweeks',{weeks:Math.max(0,e.nextPaymentWeek-state.clock.week)}))}</span><strong>${money(e.nextPayment)} Cr</strong></div><div class="top-stat"><span>${esc(t('hud.arrears'))}</span><strong class="${e.arrears?'red':''}">${money(e.arrears)}</strong></div><div class="top-stat pressure-stat"><span>${esc(t('hud.pressure'))} · ${state.collector.pressure}</span><div class="pressure" aria-label="${esc(t('hud.pressure'))}: ${state.collector.pressure}">${[1,2,3,4,5].map(i=>`<i class="${state.collector.pressure>=i?'on':''}"></i>`).join('')}</div></div></div><div class="actions">${audioControl()}<button class="small" data-action="language">${getLanguage()==='fr'?'EN':'FR'}</button><button class="icon-button" data-action="menu" aria-label="${esc(t('nav.menu'))}">${icon('settings')}</button></div></header>`;}
+function topbar(){const e=state.economy;return `<header class="topbar"><div class="brand-block"><div class="world-label">${esc(state.subsector.name)}</div><h1 class="ship-name">${esc(state.ship.name)}</h1></div><div class="top-stats"><div class="top-stat" data-hud="week"><span>${esc(t('hud.week',{week:state.clock.week}))}</span><strong>${esc(t('hud.month',{month:state.clock.month}))}</strong></div>${hudStats(state)}<div class="top-stat"><span>${esc(t('hud.arrears'))}</span><strong class="${e.arrears?'red':''}">${money(e.arrears)}</strong></div><div class="top-stat pressure-stat"><span>${esc(t('hud.pressure'))} · ${state.collector.pressure}</span><div class="pressure" aria-label="${esc(t('hud.pressure'))}: ${state.collector.pressure}">${[1,2,3,4,5].map(i=>`<i class="${state.collector.pressure>=i?'on':''}"></i>`).join('')}</div></div></div><div class="actions">${audioControl()}<button class="small" data-action="language">${getLanguage()==='fr'?'EN':'FR'}</button><button class="icon-button" data-action="menu" aria-label="${esc(t('nav.menu'))}">${icon('settings')}</button></div></header>`;}
 function gameScreen(){
  if(state.phase==='chargen')return chargenScreen(state,detailed);
  if(state.ending)return endScreen(state,{audioControls:audioControl()});
@@ -86,7 +90,7 @@ function gameScreen(){
  else if(panel==='ship')central=shipDetail(state);
  else if(panel==='cargo')central=cargoManifest(state,true);
  else if(panel==='contracts')central=contractsPanel(state);
- else central=renderPort(state);
+ else{syncDrafts();central=renderPort(state,{drafts:draftOrders});}
  return `<main class="game" data-mobile="${mobile}" data-journal="${journalOpen?'open':'closed'}">${topbar()}<div class="game-body">
  <aside class="ship-panel">${shipPanel(state)}</aside>
  <section class="central-panel"><nav class="central-nav" aria-label="${esc(t('nav.menu'))}">${['port','map','market','ship'].map(p=>`<button data-action="panel" data-panel="${p}" class="${panel===p?'active':''}" aria-pressed="${panel===p}">${esc(t(`nav.${p}`))}</button>`).join('')}<button class="journal-toggle" data-action="journal-toggle" aria-expanded="${journalOpen}" aria-controls="journal-panel" aria-label="${esc(t(journalOpen?'nav.closejournal':'nav.openjournal'))}">${icon('log')}<span>${esc(t('nav.journal'))}</span></button><button data-action="how" class="help-button" aria-label="${esc(t('title.how'))}">?</button></nav>${state.phase!=='port'||panel==='port'?renderActionReport(lastReport):''}${central}</section>
@@ -141,12 +145,15 @@ function showFuelOptions(){
  const sells=['A','B','C','D'].includes(world?.starport),refined=['A','B'].includes(world?.starport),cost=Math.ceil(tons*(refined?500:100));
  showModal(t('feedback.fuelOptions'),`<p>${esc(t('feedback.fuelLevel',{fuel:state.ship.fuel,capacity}))}</p>${sells?`<p>${esc(t('feedback.buyFuel',{tons,amount:money(cost),type:t(refined?'fuel.refined':'fuel.raw')}))}</p><button class="primary" data-action="refuel" ${tons<=0||cost>state.economy.credits?'disabled':''}>${esc(t('ship.refuel'))}</button>`:`<p>${esc(t('navigation.noFuel'))}</p>`}${refined&&state.ship.fuelType==='raw'&&state.ship.fuel>0?`<p class="navigation-warning">${esc(t('feedback.mixedFuel'))}</p><button data-action="purge" ${state.economy.credits<capacity*500?'disabled':''}>${esc(t('ship.purge',{amount:money(capacity*500)}))}</button>`:''}${world?.gasGiant?`<hr class="rule"><p>${esc(t('feedback.skimWarning'))}</p><button data-action="confirm-skim" ${tons<=0?'disabled':''}>${esc(t('ship.skim'))}</button>`:''}`);
 }
+/** Same result from every panel: changed drafts become orders, then the reducer applies the remaining routines with its own guards. */
 function standardWeek(){
  if(state?.phase!=='port')return;
- const previous=state,orders=[...document.querySelectorAll('[id^="order-"]')].filter(e=>!e.disabled).map(e=>({station:Number(e.id.split('-')[1]),choice:e.value}));
- for(const order of orders)send({t:'PORT_ACTION',by:order.station,...order},{quiet:true});
- send({t:'END_WEEK',routines:orders.length===0},{quiet:true});lastReport=actionReport(previous,state,'END_WEEK');render();window.scrollTo(0,0);
+ syncDrafts();
+ const previous=state;
+ for(const order of plannedOrders(state,draftOrders).filter(o=>o.send))send({t:'PORT_ACTION',by:order.station,station:order.station,choice:order.choice},{quiet:true});
+ send({t:'END_WEEK',routines:true},{quiet:true});panel='port';showCentral();lastReport=actionReport(previous,state,'END_WEEK');render();window.scrollTo(0,0);
 }
+function confirmStandardWeek(){if(state?.phase!=='port')return;syncDrafts();showModal(t('standard.title'),standardWeekSummary(state,draftOrders));}
 function resolveRound(){
  if(state?.phase!=='scene')return;
  const previous=state,type=state.scene.type,round=state.scene.round,selected={...choices};
@@ -194,9 +201,14 @@ async function handleAction(button){const action=button.dataset.action;if(button
  case 'cargo':panel='cargo';showCentral();render();break;
  case 'crew':showCrew(Number(button.dataset.index));break;
  case 'ship-zoom':showModal(state.ship.name,shipZoom(state),{wide:true});break;
- case 'system':{const id=button.dataset.system;showModal(t(`system.${id}`),`<p class="mono brass">${esc(t('ship.damage',{value:state.ship.systems[id]}))}</p><p>${esc(t('ship.repaircost'))}</p><button data-action="repair" data-system="${id}" ${state.phase!=='port'?'disabled':''}>${esc(t('ship.repair'))}</button>`);break;}
+ case 'system':{const id=button.dataset.system;showModal(t(`system.${id}`),`<p class="mono brass">${esc(t('ship.damage',{value:state.ship.systems[id]}))}</p><p>${esc(t('ship.repaircost'))}</p>${repairEstimate(state,id)}`);break;}
  case 'order':{const station=Number(button.dataset.station);send({t:'PORT_ACTION',by:station,station,choice:document.getElementById(`order-${station}`).value});break;}
  case 'standard':standardWeek();break;
+ case 'standard-confirm':modal.close();standardWeek();break;
+ case 'draft-order':{syncDrafts();const station=Number(button.dataset.station);draftOrders[station]=button.dataset.choice;render();document.getElementById(`order-${station}`)?.focus();break;}
+ case 'repair-options':showModal(t('repair.title'),repairEstimate(state,button.dataset.system||'all'));break;
+ case 'settle-prompt':if(settlementOffer(state)?.available)showModal(t('settle.title'),settlementDialog(state));break;
+ case 'settle':modal.close();send({t:'SETTLE_LOAN'});break;
  case 'stay':send({t:'STAY'});break;
  case 'fuel-options':showFuelOptions();break;
  case 'refuel':if(send({t:'REFUEL'}))modal.close();break;
@@ -235,9 +247,9 @@ document.addEventListener('input',event=>{if(event.target.matches('[data-market-
 window.addEventListener('pagehide',event=>{if(!event.persisted)audio.close();});
 document.addEventListener('click',event=>{const button=event.target.closest('[data-action]');if(button)Promise.resolve(handleAction(button)).catch(error=>{console.error(error);toast(t('common.error'));});});
 document.addEventListener('submit',event=>{if(event.target.id!=='new-run-form')return;event.preventDefault();const values=new FormData(event.target);const entered=String(values.get('seed')||'').trim();const seed=entered||`lantern-${new Date().toISOString().slice(0,19).replace(/\D/g,'')}`;startRun(seed,{shipName:String(values.get('shipName')||t('title.defaultship')),difficulty:String(values.get('difficulty')||'normal')});window.scrollTo(0,0);});
-document.addEventListener('change',event=>{if(event.target.id==='setting-motion'){settings.reduceMotion=event.target.checked;applySettings();}if(event.target.id==='setting-font'){settings.font=Number(event.target.value);applySettings();}});
+document.addEventListener('change',event=>{if(/^order-[1-5]$/.test(event.target.id)&&screen==='game'&&state?.phase==='port'){syncDrafts();const id=event.target.id;draftOrders[Number(id.split('-')[1])]=event.target.value;render();document.getElementById(id)?.focus();return;}if(event.target.id==='setting-motion'){settings.reduceMotion=event.target.checked;applySettings();}if(event.target.id==='setting-font'){settings.font=Number(event.target.value);applySettings();}});
 document.getElementById('import-file').addEventListener('change',async event=>{const file=event.target.files[0];event.target.value='';if(!file)return;try{if(file.size>2000000)throw new Error();const save=JSON.parse(await file.text());if(!validateSave(save))throw new Error();let checked=createInitialState(save.seed,save.config);for(const action of save.actions){checked=reduce(checked,action);if(checked.lastError)throw new Error();}assertState(checked);modal.close();connectLocal(save.seed,save.config,save.actions);transport.save();toast(t('save.imported'));}catch{toast(t('save.invalid'));}});
-document.addEventListener('keydown',event=>{if(event.ctrlKey||event.metaKey||event.altKey||event.target.matches('input,select,textarea'))return;if(modal.open)return;if(screen==='title'){if(['ArrowRight','ArrowLeft'].includes(event.key)){event.preventDefault();const buttons=[...app.querySelectorAll('.title-actions button')];if(buttons.length){const index=buttons.indexOf(document.activeElement);buttons[(index+(event.key==='ArrowRight'?1:-1)+buttons.length)%buttons.length].focus();}}else if(event.code==='Space'&&document.activeElement.tagName!=='BUTTON'){event.preventDefault();app.querySelector('[data-action=new]')?.focus();}return;}if(event.key==='Escape'){panel='port';showCentral();render();return;}if(/^[1-5]$/.test(event.key)){showCrew(Number(event.key)-1);return;}if(event.key.toLowerCase()==='m'){panel='map';showCentral();render();return;}if(event.key.toLowerCase()==='s'){panel='ship';showCentral();render();return;}if(event.key.toLowerCase()==='l'){mobile='journal';journalOpen=true;journalTab='log';render();return;}if(event.key.toLowerCase()==='r'&&state.phase==='port'){standardWeek();return;}if(event.key.toLowerCase()==='q'&&state.phase==='port'&&selectedHex&&distance(state.ship.hex,selectedHex)===1){depart(selectedHex,true);return;}if(panel==='map'&&state.phase==='port'&&event.key.startsWith('Arrow')){event.preventDefault();const worlds=[...state.subsector.worlds].sort((a,b)=>a.hex.localeCompare(b.hex));let i=worlds.findIndex(w=>w.hex===selectedHex);i=(i+(['ArrowRight','ArrowDown'].includes(event.key)?1:-1)+worlds.length)%worlds.length;selectDestination(worlds[i].hex);document.getElementById('star-chart')?.focus({preventScroll:true});}else if(panel==='map'&&state.phase==='port'&&['Enter',' '].includes(event.key)&&event.target.id==='star-chart'){event.preventDefault();if(distance(state.ship.hex,selectedHex)===1)depart(selectedHex);}else if(event.target.matches('[role=button][data-action]')&&['Enter',' '].includes(event.key)){event.preventDefault();handleAction(event.target);}});
+document.addEventListener('keydown',event=>{if(event.ctrlKey||event.metaKey||event.altKey||event.target.matches('input,select,textarea'))return;if(modal.open)return;if(screen==='title'){if(['ArrowRight','ArrowLeft'].includes(event.key)){event.preventDefault();const buttons=[...app.querySelectorAll('.title-actions button')];if(buttons.length){const index=buttons.indexOf(document.activeElement);buttons[(index+(event.key==='ArrowRight'?1:-1)+buttons.length)%buttons.length].focus();}}else if(event.code==='Space'&&document.activeElement.tagName!=='BUTTON'){event.preventDefault();app.querySelector('[data-action=new]')?.focus();}return;}if(event.key==='Escape'){panel='port';showCentral();render();return;}if(/^[1-5]$/.test(event.key)){showCrew(Number(event.key)-1);return;}if(event.key.toLowerCase()==='m'){panel='map';showCentral();render();return;}if(event.key.toLowerCase()==='s'){panel='ship';showCentral();render();return;}if(event.key.toLowerCase()==='l'){mobile='journal';journalOpen=true;journalTab='log';render();return;}if(event.key.toLowerCase()==='r'&&state.phase==='port'){confirmStandardWeek();return;}if(event.key.toLowerCase()==='q'&&state.phase==='port'&&selectedHex&&distance(state.ship.hex,selectedHex)===1){depart(selectedHex,true);return;}if(panel==='map'&&state.phase==='port'&&event.key.startsWith('Arrow')){event.preventDefault();const worlds=[...state.subsector.worlds].sort((a,b)=>a.hex.localeCompare(b.hex));let i=worlds.findIndex(w=>w.hex===selectedHex);i=(i+(['ArrowRight','ArrowDown'].includes(event.key)?1:-1)+worlds.length)%worlds.length;selectDestination(worlds[i].hex);document.getElementById('star-chart')?.focus({preventScroll:true});}else if(panel==='map'&&state.phase==='port'&&['Enter',' '].includes(event.key)&&event.target.id==='star-chart'){event.preventDefault();if(distance(state.ship.hex,selectedHex)===1)depart(selectedHex);}else if(event.target.matches('[role=button][data-action]')&&['Enter',' '].includes(event.key)){event.preventDefault();handleAction(event.target);}});
 let resizeTimer;window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{if(panel==='map'&&screen==='game')render();},180);});
 applySettings();setLanguage(getLanguage());await loadAssets();await loadShipGeometry();
 for(const [key,variable]of [['map/backdrop','--map-art'],['map/paper','--paper-art']]){const asset=getAsset(key);if(asset)document.documentElement.style.setProperty(variable,`url("./${asset.src}")`);}

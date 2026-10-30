@@ -633,3 +633,35 @@ dialog .crew-sheet .character-modal .asset.portrait{width:112px;height:112px;bac
 .trade-demand-filled{opacity:.65}
 .trade-sale-bonus{font-size:max(.75rem,12px);color:#9ddbd1;margin:6px 0 10px;line-height:1.5}
 @media(max-width:600px){.trade-demand-list{grid-template-columns:1fr}.trade-demands{padding:12px}}
+
+/* ===== 0.5.0: decision support (bills, payment outcomes, settlement, trading, port orders, repairs) ===== */
+.hud-bill{cursor:help}.hud-bill .hud-note{font-size:max(.6875rem,11px);color:#9ddbd1;line-height:1.3}
+.objective-notes{list-style:none;margin:0;padding:0;display:grid;gap:8px;width:100%}
+.objective-notes li{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 12px;margin:0;min-width:0}
+.objective-notes li>span{flex:1 1 240px;min-width:0;overflow-wrap:anywhere}
+.objective-notes .objective-settle{font-size:max(.8125rem,13px);line-height:1.5;color:#9ddbd1;border-left:2px solid #78beb7;padding:4px 0 4px 10px}
+.port-order{display:grid;gap:6px;min-width:0}
+.order-effect{font-size:max(.75rem,12px);line-height:1.45;color:var(--muted);margin:0;overflow-wrap:anywhere}
+.order-blocked{color:#ffd2a1;font-weight:500}
+.standard-week-orders{padding-left:18px;margin:10px 0}.standard-week-orders li{margin:4px 0;overflow-wrap:anywhere}
+.payment-outcomes{margin-top:20px;padding-top:14px;border-top:1px solid #aa864e66}
+.payment-outcomes h3{font-size:1rem;margin:0 0 8px}.payment-outcomes p,.payment-outcomes li{font-size:.8rem;line-height:1.55;overflow-wrap:anywhere}
+.payment-outcomes ul{padding-left:18px;margin:8px 0}.payment-outcomes .payment-negative{color:#9d342c}
+.bank-settle{margin:10px 0 4px;white-space:normal;text-align:left}
+dialog .sum{font:1.6rem PlexMono,monospace;margin:12px 0}
+.cargo-bought{color:var(--muted)}
+.cargo-result{font:500 max(.75rem,12px) PlexMono,monospace;margin:4px 0}
+.trade-gain{color:#9ddbd1}.trade-loss{color:#ffaaa0}
+.market-hold{margin:14px 0 18px;padding:12px 14px;border:1px solid var(--line);border-radius:5px;background:#142535}
+.market-hold h3{font-size:1rem;margin:0}.market-hold .section-intro{margin:4px 0 0;font-size:max(.75rem,12px)}
+.market-cash-after{flex-basis:100%;margin:0;font-size:max(.6875rem,11px);line-height:1.4;color:var(--muted);text-align:right;overflow-wrap:anywhere}
+.market-cash-warning{color:#ffd2a1}
+.market-seen{color:#9ddbd1}
+.destination-business{margin:14px 0;padding:10px 12px;border:1px solid #78beb745;border-radius:5px;background:#132d3680}
+.destination-business h4{margin:0 0 6px;font-size:.95rem}.destination-business ul{margin:6px 0 10px;padding-left:18px}
+.destination-business li{font-size:max(.8125rem,13px);line-height:1.5;overflow-wrap:anywhere}
+.destination-known-prices{margin:12px 0}.destination-known-prices summary{cursor:pointer;font-size:max(.8125rem,13px)}
+.destination-known-prices li{font-size:max(.75rem,12px);line-height:1.5;overflow-wrap:anywhere}
+.repair-lines{padding-left:18px;margin:8px 0}
+.chargen-advance{margin:6px 0 0;max-width:42ch;font-size:max(.75rem,12px);line-height:1.5;color:var(--muted)}
+@media(max-width:600px){.market-cash-after{text-align:left}.objective-notes li>span{flex-basis:100%}.objective-notes li .small{width:100%;white-space:normal}.bank-settle{width:100%}}

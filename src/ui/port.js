@@ -1,10 +1,13 @@
-import {t,esc,portrait,worldHeader,icon,number} from './common.js';
+import {t,esc,portrait,worldHeader,icon,number,money} from './common.js';
 import {assetMarkup} from './assets.js';
 import {renderPortObjective} from './feedback.js';
 import {PORT_CHOICES} from '../core/actions.js';
 import {distance} from '../rules/subsector.js';
 import {fuelCapacity} from '../rules/ship.js';
 import {rulesAtLeast} from '../core/state.js';
+import {portOrderEffect} from '../rules/orders.js';
+import {berthingCost} from '../rules/economy.js';
+import {orderBlock,plannedOrders,repairCost} from './decision.js';
 
 function voyageReminder(state){
  if(!rulesAtLeast(state,4))return '';
@@ -26,17 +29,34 @@ function renderOpenSpace(state){
  <p class="navigation-note">${esc(t('openSpace.waitHint'))}</p><div class="actions"><button class="primary" data-action="map">${icon('map')} ${esc(t('openSpace.map'))}</button><button data-action="stay">${icon('clock')} ${esc(t('openSpace.wait'))}</button></div></section>${voyageReminder(state)}`;
 }
 
-export function renderPort(state){
+const PERMANENT_BLOCKS=['portOrder.unavailable.train','portOrder.unavailable.bank'];
+/** One station's order select with the concrete effect of the selected order. Unapplied choices live in UI drafts until Assign. */
+function orderControl(state,p,drafts){
+ const station=p.station,acted=state.portActions[station],selected=acted||drafts[station]||state.routines[station],block=acted?null:orderBlock(state,station,selected),effect=portOrderEffect(state,selected);
+ const options=PORT_CHOICES[station].map(choice=>`<option value="${choice}" ${selected===choice?'selected':''} ${choice!==selected&&PERMANENT_BLOCKS.includes(orderBlock(state,station,choice))?'disabled':''}>${esc(t(`action.${choice}`))}</option>`).join('');
+ return `<div class="port-order"><div class="action-row"><select id="order-${station}" aria-label="${esc(t(`station.${station}`))}" aria-describedby="order-effect-${station}" ${acted?'disabled':''}>${options}</select><button data-action="order" data-station="${station}" ${acted||block?'disabled':''}>${acted?`${icon('check')} ${esc(t('port.ready'))}`:esc(t('common.apply'))}</button></div><p class="order-effect" id="order-effect-${station}">${effect?esc(t(effect.key)):''}${block?` <strong class="order-blocked">${esc(t(block))}</strong>`:''}</p></div>`;
+}
+function repairButton(state){
+ const cost=repairCost(state);
+ return `<button class="small" data-action="repair-options" data-system="all" ${cost.total&&cost.available?'':'disabled'}>${icon('wrench')} ${esc(cost.total?t('ship.repairAll',{amount:money(cost.total)}):t('ship.repair'))}</button>`;
+}
+/** Confirmation shown before a standard week started from the keyboard: what each station will do and what the week costs. */
+export function standardWeekSummary(state,drafts={}){
+ const world=state.subsector.worlds.find(w=>w.hex===state.ship.hex);
+ return `<p>${esc(t('standard.intro'))}</p><ul class="standard-week-orders">${plannedOrders(state,drafts).map(o=>`<li><strong>${esc(o.person.name)}</strong> · ${esc(t(`station.${o.station}`))} — ${esc(t(`action.${o.choice}`))}${o.acted?` <small>(${esc(t('standard.assigned'))})</small>`:o.skipped?` <small class="order-blocked">(${esc(t('standard.skipped'))})</small>`:''}</li>`).join('')}</ul><p class="navigation-note">${esc(t('standard.berthing',{amount:money(berthingCost(world,7))}))}</p><div class="actions"><button data-action="close">${esc(t('common.cancel'))}</button><button class="primary" data-action="standard-confirm" autofocus>${esc(t('standard.confirm'))}</button></div>`;
+}
+
+export function renderPort(state,{drafts={}}={}){
  const world=state.subsector.worlds.find(w=>w.hex===state.ship.hex);
  if(!world)return renderOpenSpace(state);
  const portArt=['A','B'].includes(world.starport)?'port-a':['C','D'].includes(world.starport)?'port-c':'port-e';
  const assigned=Object.keys(state.portActions).length;
  return `<header class="port-arrival">${worldHeader(world)}<div class="port-vignette" aria-hidden="true">${assetMarkup(`scenes/${portArt}`,'')}</div></header>
- ${renderPortObjective(state)}
+ ${renderPortObjective(state,{drafts})}
  ${voyageReminder(state)}
- <div class="port-orders-heading"><div><h3>${esc(t('port.actions'))}</h3><p>${esc(t('port.ordersProgress',{count:assigned}))}</p></div><div class="actions"><button class="small" data-action="fuel-options">${icon('fuel')} ${esc(t('feedback.fuelOptions'))}</button><button class="small" data-action="repair" data-system="all">${icon('wrench')} ${esc(t('ship.repair'))}</button></div></div>
+ <div class="port-orders-heading"><div><h3>${esc(t('port.actions'))}</h3><p>${esc(t('port.ordersProgress',{count:assigned}))}</p></div><div class="actions"><button class="small" data-action="fuel-options">${icon('fuel')} ${esc(t('feedback.fuelOptions'))}</button>${repairButton(state)}</div></div>
  <section class="port-cards">${state.crew.map((p,index)=>`<article class="port-card ${state.portActions[p.station]?'order-assigned':''}"><button class="port-identity" data-action="crew" data-index="${index}">${portrait(p)}<span><strong>${esc(p.name)}</strong><span class="role">${esc(t(`station.${p.station}`))}</span></span></button>
- ${p.alive&&p.active!==false?`<div class="action-row"><select id="order-${p.station}" aria-label="${esc(t(`station.${p.station}`))}" ${state.portActions[p.station]?'disabled':''}>${PORT_CHOICES[p.station].map(choice=>`<option value="${choice}" ${state.routines[p.station]===choice?'selected':''}>${esc(t(`action.${choice}`))}</option>`).join('')}</select><button data-action="order" data-station="${p.station}" ${state.portActions[p.station]?'disabled':''}>${state.portActions[p.station]?`${icon('check')} ${esc(t('port.ready'))}`:esc(t('common.apply'))}</button></div>`:`<button class="small" data-action="recruit" data-station="${p.station}">${esc(t('crew.recruit'))}</button>`}</article>`).join('')}</section>
+ ${p.alive&&p.active!==false?orderControl(state,p,drafts):`<button class="small" data-action="recruit" data-station="${p.station}">${esc(t('crew.recruit'))}</button>`}</article>`).join('')}</section>
  <div class="actions port-commerce"><button data-action="market" data-tab="freight">${icon('cargo')} ${esc(t('market.freight'))}</button><button data-action="market" data-tab="passengers">${icon('crew')} ${esc(t('market.passengers'))}</button><button data-action="market" data-tab="goods">${esc(t('market.goods'))}</button></div>
  <footer class="port-footer"><button data-action="standard" title="${esc(t('port.routineshint'))}">${icon('clock')} ${esc(t('port.routines'))}</button><button class="quiet" data-action="stay">${esc(t('port.stay'))}</button><button class="primary" data-action="map">${esc(t('port.depart'))} ${icon('arrow')}</button></footer>`;
 }
