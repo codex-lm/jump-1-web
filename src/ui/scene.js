@@ -143,7 +143,7 @@ export function renderScene(state,choices,{inspectionDetailed=false}={}){
   const ordinaryOrders={1:'comply',2:'hold',3:'hold',4:'hold',5:'paperwork'};
   const compactAvailable=voyageRules(state)&&inspection(scene.type)&&Object.entries(scene.choices).every(([station,choice])=>choice==='hold'||choice===ordinaryOrders[station]);
   const art={travel:'jumpspace',patron:'bar',breakdown:'sickbay',trader:'port-c','repo-sighting':'repo'}[scene.type]||(scene.type.startsWith('mission-')?'customs':scene.type);
-  const intro=`<div class="scene-banner" data-scene="${esc(art)}">${assetMarkup(`scenes/${art}`,t(`scene.${scene.type}`))}<div class="scene-label"><div class="eyebrow">${esc(t('common.week'))} ${state.clock.week} / ${esc(t('common.round'))} ${scene.round}</div><h2>${esc(t(`scene.${scene.type}`))}</h2></div></div>
+  const intro=`<div class="scene-banner" data-scene="${esc(art)}">${assetMarkup(`scenes/${art}`,t(`scene.${scene.type}`))}<div class="scene-label"><div class="eyebrow">${esc(t('common.week'))} ${state.clock.week} / ${esc(t('common.round'))} ${scene.round}</div><h2 tabindex="-1">${esc(t(`scene.${scene.type}`))}</h2></div></div>
     ${voyageRules(state)&&scene.type==='travel'?voyageIntroduction(state):`<p class="scene-copy">${esc(t(`scene.${scene.type}.text`))}</p>`}`;
   if(compactAvailable&&!inspectionDetailed)return intro+inspectionCompact(state);
   return `${intro}

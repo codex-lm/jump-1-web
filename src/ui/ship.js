@@ -51,8 +51,8 @@ function cutaway(state,scope){
   const classes=`cutaway ship-cutaway-plate ship-cutaway-${scope}`;
   const artwork=getAsset('ship/cutaway');
   if(!shipGeometry||!artwork)return `<div class="${classes}" style="--ship-plate-ratio:280 / 145">${proceduralCutaway(state)}</div>`;
-  // Large views use a fresh Blender render; retain the base coordinate space for controls.
-  const image=(scope==='side'?null:getAsset('ship/cutaway-hd'))||artwork;
+  // Only the zoom modal loads the 4000 px render; the panel views use the regular plate. The overlay keeps the manifest's logical size either way.
+  const image=(scope==='zoom'?getAsset('ship/cutaway-hd'):null)||artwork;
   const width=Number.isFinite(artwork.width)&&artwork.width>0?artwork.width:2000,height=Number.isFinite(artwork.height)&&artwork.height>0?artwork.height:900;
   return `<div class="${classes} asset ship-cutaway" style="--ship-plate-ratio:${width} / ${height}" data-asset="ship/cutaway"><div class="asset-fallback ship-cutaway-fallback">${proceduralCutaway(state)}</div><img src="./${esc(image.src)}" width="${width}" height="${height}" alt="${esc(t('ship.systems'))}" loading="lazy" decoding="async"><svg class="ship-cutaway-overlay" viewBox="0 0 ${width} ${height}" preserveAspectRatio="xMidYMid meet" aria-label="${esc(t('ship.systems'))}">${SYSTEMS.map(id=>{
     const region=shipGeometry[id],color=integrity(state.ship.systems[id]);

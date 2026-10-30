@@ -16,9 +16,10 @@ export function getAsset(key) {
   if (entry && typeof entry.src === 'string' && entry.src.startsWith('assets/')) return entry;
   return null;
 }
-export function assetMarkup(key, label = '', className = '') {
+/** Artwork is lazy by default; the title hero passes {lazy:false, priority:'high'} so it starts with the page. */
+export function assetMarkup(key, label = '', className = '', { lazy = true, priority = '' } = {}) {
   const entry = getAsset(key);
-  return `<figure class="asset ${escape(className)}" data-asset="${escape(key)}"><div class="asset-fallback" aria-hidden="true"><svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1"><circle cx="60" cy="60" r="34"/><ellipse cx="60" cy="60" rx="51" ry="15" transform="rotate(-25 60 60)"/><path d="M60 4v12m0 88v12M4 60h12m88 0h12"/></svg><span>${escape(label)}</span></div>${entry ? `<img src="./${escape(entry.src)}" alt="${escape(label)}" loading="lazy" decoding="async"${entry.width ? ` width="${entry.width}" height="${entry.height}"` : ''}>` : ''}</figure>`;
+  return `<figure class="asset ${escape(className)}" data-asset="${escape(key)}"><div class="asset-fallback" aria-hidden="true"><svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1"><circle cx="60" cy="60" r="34"/><ellipse cx="60" cy="60" rx="51" ry="15" transform="rotate(-25 60 60)"/><path d="M60 4v12m0 88v12M4 60h12m88 0h12"/></svg><span>${escape(label)}</span></div>${entry ? `<img src="./${escape(entry.src)}" alt="${escape(label)}" loading="${lazy ? 'lazy' : 'eager'}" decoding="async"${priority ? ` fetchpriority="${escape(priority)}"` : ''}${entry.width ? ` width="${entry.width}" height="${entry.height}"` : ''}>` : ''}</figure>`;
 }
 export function attachAssetFallbacks(root = document) {
   for (const img of root.querySelectorAll('[data-asset] img')) {
