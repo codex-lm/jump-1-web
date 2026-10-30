@@ -1,5 +1,7 @@
 /** Ship price and payment formula from the SRD; 52-week balloon is the original Jump-1 adaptation. */
 export const COSTS=Object.freeze({ship:37080000,mortgage:154500,maintenance:3090,lifeSupport:2000,lowSupport:100,fuelRefined:500,fuelRaw:100,hull:1000,structure:1500,system:5000,recruit:5000,parts:2000,supplies:1000,salaries:[6000,4000,1000,4000,2000]});
+/** Edition 5: CHARGEN_DONE tops the treasury up to this figure; the Trust adds the advance to the final payment. */
+export const WORKING_CAPITAL_FLOOR=150000;
 export const BALLOONS=Object.freeze({easy:800000,normal:1500000,hard:2500000});
 export function createEconomy(config={}) { const balloon=BALLOONS[config.difficulty]??BALLOONS.normal; return {credits:20000,debt:154500*12+balloon,arrears:0,arrearsMonths:0,nextPayment:154500,nextPaymentWeek:4,balloon,monthlyPayment:154500,paidMonths:0,billedMonths:0,pendingPayment:0,pendingKind:null,deferred:false,deferredBalance:0,maintenanceWaived:false,reputation:{},income:{freight:0,passengers:0,trade:0,patrons:0,hospital:0,salvage:0},expenses:{mortgage:0,balloon:0,fuel:0,repairs:0,support:0,salaries:0,maintenance:0,berthing:0,goods:0,fines:0,other:0}}; }
 export function updateDebt(state) { const e=state.economy; e.debt=Math.max(0,e.arrears+e.deferredBalance+(12-e.billedMonths)*e.monthlyPayment+(state.ending?.type==='victory'?0:e.balloon)); e.nextPayment=state.clock.week>=49?e.balloon:e.monthlyPayment; e.nextPaymentWeek=state.clock.week>=49?52:Math.ceil(state.clock.week/4)*4; }

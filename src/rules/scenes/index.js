@@ -8,9 +8,12 @@ import { recordTrace } from '../collector.js';
 import { currentWorld,isIllegal } from '../trade.js';
 import { GOODS } from '../../data/goods.js';
 import { distance,neighbors } from '../subsector.js';
+import { GUARD_INSPECTION_DM,GUARD_TOLL_FACTOR } from '../orders.js';
 import { TRAVEL_EVENTS } from '../encounters.js';
 
 export const voyageRules=state=>rulesAtLeast(state,4);
+/** Edition 5: the scene was queued on an arrival after the gunner guarded the hold (see rules/orders.js). */
+const guardWatch=(state,scene=state.scene)=>rulesAtLeast(state,5)&&scene?.guarded===true;
 const SOCIAL_EVENTS=['bond','birthday','homesick','rivalry','shared-past','music','good-meal'];
 const SIGNAL_EVENTS=['bank-letter','rumor','signals'];
 const INCIDENT_EVENTS=['fire','leak','illness'];
@@ -137,7 +140,7 @@ function reduceEnemy(scene,damage) { const h=Math.min(scene.enemy.hull,damage);s
 function opposed(state,station,skill,difficulty,rng,enemySkill=1,situation=0,label='opposed') { const result=check(state,station,skill,{difficulty,situation,label});const enemy=task({rng,skill:enemySkill,characteristic:7});return {success:result.effect>enemy.effect,result,enemy}; }
 function repairAction(state,station=2,bonus=0) { const checkResult=check(state,station,'Engineering',{difficulty:-2,situation:bonus+(state.ship.partsUntil>=state.clock.week?2:0)+(voyageRules(state)?repairBonus(state):0),label:'repair'});const system=state.scene?.system||SYSTEMS.reduce((a,b)=>state.ship.systems[a]<state.ship.systems[b]?a:b);if(checkResult.success) { state.ship.systems[system]=Math.min(3,state.ship.systems[system]+1);addLog(state,'log.repair',{system,points:1}); }else if(state.scene?.type==='breakdown')state.ship.systems[system]=Math.max(0,state.ship.systems[system]-1);return checkResult.success; }
 function doctorAction(state) { const result=check(state,4,'Medicine',{system:'sickbay',situation:state.ship.suppliesUntil>=state.clock.week?1:0,label:'heal'});const amount=healCrew(state,result.success?Math.max(1,result.effect):1);addLog(state,'log.heal',{points:amount});return result.success; }
-function confiscate(state,rng) { const world=currentWorld(state);let tons=0;state.cargo=state.cargo.filter(lot=>{if(lot.kind==='speculative'&&isIllegal(GOODS.find(g=>g.id===lot.goodId),world)){tons+=lot.tons;return false;}return true;});const fine=tons?d6(rng)*10000:0;if(fine)spend(state,fine,'fines',true);if(tons)reputation(state,state.ship.hex,-1);addLog(state,voyageRules(state)&&!tons?'log.voyage.inspectionClear':'log.confiscation',{tons,fine}); }
+function confiscate(state,rng) { const world=currentWorld(state);let tons=0;state.cargo=state.cargo.filter(lot=>{if(lot.kind==='speculative'&&isIllegal(GOODS.find(g=>g.id===lot.goodId),world,state)){tons+=lot.tons;return false;}return true;});const fine=tons?d6(rng)*10000:0;if(fine)spend(state,fine,'fines',true);if(tons)reputation(state,state.ship.hex,-1);addLog(state,voyageRules(state)&&!tons?'log.voyage.inspectionClear':'log.confiscation',{tons,fine}); }
 function shiftMorale(state,amount,personId=null){
   for(const p of state.crew.filter(p=>p.alive&&p.active!==false&&(!personId||p.id===personId)))p.mood=Math.max(-1,Math.min(1,p.mood+amount));
 }
@@ -193,7 +196,7 @@ export function resolveScene(state) {
   for(const station of preparationOrder) {
     const choice=chosen(station);if(choice==='hold'||!actor(state,station))continue;
     if(voyageRules(state)&&type==='travel'&&voyageAction(state,station,choice))continue;
-    if(choice==='surrender'||choice==='yield') { if(type==='repo'){state.ending={type:'repo',score:0};closed=true;break;}let loss=d6(rng)*10;let lost=0;for(const lot of state.cargo){const n=Math.min(loss,lot.tons);lot.tons-=n;loss-=n;lost+=n;}state.cargo=state.cargo.filter(l=>l.tons>0);done(state,'log.pirateToll',{tons:lost});return {closed:true,weeksLost:0}; }
+    if(choice==='surrender'||choice==='yield') { if(type==='repo'){state.ending={type:'repo',score:0};closed=true;break;}let loss=d6(rng)*10;const watched=guardWatch(state,scene);if(watched)loss=Math.ceil(loss*GUARD_TOLL_FACTOR);let lost=0;for(const lot of state.cargo){const n=Math.min(loss,lot.tons);lot.tons-=n;loss-=n;lost+=n;}state.cargo=state.cargo.filter(l=>l.tons>0);if(watched&&lost)addLog(state,'log.guardToll',{tons:lost});done(state,'log.pirateToll',{tons:lost});return {closed:true,weeksLost:0}; }
     if(choice==='pay'&&type==='repo') { const amount=state.economy.arrears+20000;if(spend(state,amount,'mortgage')){state.economy.arrears=0;state.economy.arrearsMonths=0;state.collector.pressure=0;state.collector.mode='docked';state.collector.hex=state.subsector.bankHex;done(state,'log.collectorPaid',{amount});return {closed:true,weeksLost:0};} }
     if(choice==='leave'){done(state,'log.sceneLeft');return {closed:true,weeksLost:0};}
     if(choice==='lead'&&type!=='travel'){const result=check(state,station,'Leadership',{label:'leadership'});scene.flags.leadership=result.success;continue;}
@@ -228,7 +231,7 @@ export function resolveScene(state) {
     } else if(type==='patrol'||type==='customs') {
       if(choice==='examine'){const deserter=state.crew.find(p=>p.alive&&p.active!==false&&p.secret==='deserter');if(deserter&&check(state,station,'Medicine',{label:'examine'}).success){deserter.revealed=true;addLog(state,'log.secret',{name:deserter.name,secret:deserter.secret});}}
       if(choice==='hide'){assisted=check(state,station,'Engineering',{difficulty:-2,label:'hide'}).success?2:0;}
-      if(['comply','paperwork','cover'].includes(choice)) {const deserter=state.crew.find(p=>p.alive&&p.active!==false&&p.secret==='deserter');const dm=deserter&&currentWorld(state)?.naval?-2:0;if(deserter&&dm)deserter.revealed=true;const result=opposed(state,station,choice==='comply'?'Comms':choice==='cover'?'Streetwise':'Admin',choice==='cover'?0:2,rng,type==='customs'?Math.floor((currentWorld(state)?.law||0)/2):1,assisted+dm,choice==='cover'?'cover':'inspection');inspectionSuccess=inspectionSuccess||result.success;}
+      if(['comply','paperwork','cover'].includes(choice)) {const deserter=state.crew.find(p=>p.alive&&p.active!==false&&p.secret==='deserter');const dm=deserter&&currentWorld(state)?.naval?-2:0;if(deserter&&dm)deserter.revealed=true;const result=opposed(state,station,choice==='comply'?'Comms':choice==='cover'?'Streetwise':'Admin',choice==='cover'?0:2,rng,type==='customs'?Math.floor((currentWorld(state)?.law||0)/2):1,assisted+dm+(guardWatch(state,scene)?GUARD_INSPECTION_DM:0),choice==='cover'?'cover':'inspection');inspectionSuccess=inspectionSuccess||result.success;}
       if(choice==='bribe'){const cost=d6(rng)*1000;spend(state,cost,'fines');inspectionSuccess=check(state,station,'Streetwise',{label:'inspection-bribe'}).success;}
     } else if(type==='breakdown') {
       if(choice==='stabilize'){assisted=check(state,station,'Pilot',{label:'stabilize'}).success?1:0;if(voyageRules(state)&&assisted&&chosen(2)==='repair'&&actor(state,2))addLog(state,'log.voyage.assist',{name:actor(state,station).name,recipient:actor(state,2).name,modifier:1});}

@@ -7,7 +7,14 @@ import { distance } from './subsector.js';
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 const bestDM=(goods,codes,kind)=>Math.max(0,...codes.map(code=>Number(goods[kind]?.[code]||0)));
 export function currentWorld(state,hex=state.ship.hex) { return state.subsector.worlds.find(w=>w.hex===hex)||null; }
-export function isIllegal(goods,world) { if(!goods||!world) return false;if(/luxury/i.test(goods.id))return false;const category=/weapon|military/i.test(goods.id)?'weapons':/drug|pharmaceutical|medical-research/i.test(goods.id)?'drugs':/advanced/i.test(goods.id)?'technology':typeof goods.illegal==='string'?goods.illegal:null;return (category==='weapons' && world.law>=5)||(category==='drugs' && world.law>=3)||(category==='technology' && world.law>=7 && world.tech<10); }
+/** Editions 3 and 4 classify contraband from the good id; kept verbatim so older voyages replay. */
+function legacyIsIllegal(goods,world) { if(!goods||!world) return false;if(/luxury/i.test(goods.id))return false;const category=/weapon|military/i.test(goods.id)?'weapons':/drug|pharmaceutical|medical-research/i.test(goods.id)?'drugs':/advanced/i.test(goods.id)?'technology':typeof goods.illegal==='string'?goods.illegal:null;return (category==='weapons' && world.law>=5)||(category==='drugs' && world.law>=3)||(category==='technology' && world.law>=7 && world.tech<10); }
+/** Edition 5: the minimum law level at which each contraband category is seized. */
+export const CONTRABAND_LAW=Object.freeze({weapons:5,drugs:3,luxury:6});
+/** Edition 5: only goods the data marks illegal are contraband; legal goods are legal everywhere. */
+export function contrabandCategory(goods) { if(goods?.illegal!==true&&typeof goods?.illegal!=='string')return null;if(typeof goods.illegal==='string')return goods.illegal;return /weapon|military/i.test(goods.id)?'weapons':/luxury/i.test(goods.id)?'luxury':'drugs'; }
+/** Pass the state (or config) so the voyage's rules edition decides; without it the legacy rule applies. */
+export function isIllegal(goods,world,state) { if(!rulesAtLeast(state,5))return legacyIsIllegal(goods,world);if(!goods||!world)return false;const category=contrabandCategory(goods);return !!category&&world.law>=(CONTRABAND_LAW[category]??Infinity); }
 export function brokerRoll(state,hex=state.ship.hex) { const p=state.crew.find(c=>c.station===5&&c.alive&&c.active!==false&&!c.unconscious); return task({rng:derive(state.meta.seed,'broker',hex,state.clock.week),skill:p?.skills.Broker,characteristic:Math.max(p?.characteristics.INT??7,p?.characteristics.SOC??7),situation:(state.economy.reputation[hex]||0)+(p?.mood<0?-1:0),joat:p?.skills['Jack-of-all-Trades']||0}); }
 export function priceMultiplier(value,kind='buy') { const table=kind==='buy'?PURCHASE_MULTIPLIERS:SALE_MULTIPLIERS; return table[clamp(Math.floor(value),2,16)]; }
 /** Edition 5: a lot resold at its own origin never fetches more than was paid per ton. */
@@ -29,7 +36,7 @@ export function activeDemand(state,hex=state.ship.hex){
   if(!rulesAtLeast(state,4))return null;
   const world=currentWorld(state,hex);if(!world||world.population<1)return null;
   const suppliers=state.subsector.worlds.filter(w=>distance(hex,w.hex)===1);
-  const candidates=GOODS.filter(g=>g.basePrice<=75000&&!isIllegal(g,world)&&!g.illegal&&suppliers.some(w=>!g.available?.length||g.available.some(code=>w.codes.includes(code))));
+  const candidates=GOODS.filter(g=>g.basePrice<=75000&&!isIllegal(g,world,state)&&!g.illegal&&suppliers.some(w=>!g.available?.length||g.available.some(code=>w.codes.includes(code))));
   if(!candidates.length)return null;
   const preferred=candidates.filter(g=>bestDM(g,world.codes,'sellDM')>0),period=Math.floor((state.clock.week-1)/6);
   const rng=derive(state.meta.seed,'demand-v4',hex,period),good=rng.pick(preferred.length?preferred:candidates);
@@ -74,7 +81,7 @@ export function market(state,hex=state.ship.hex) {
     const buyPrice=Math.round(g.basePrice*priceMultiplier(roll(rng,2,6)+bestDM(g,world.codes,'buyDM')+effect));
     const sellPrice=quoteSale(state,{goodId:g.id},hex);
     const favorable=adjacent.filter(w=>bestDM(g,w.codes,'sellDM')>0).map(w=>w.hex);
-    return {id,goodId:g.id,nameKey:g.nameKey,tons:Math.max(0,produced-taken),basePrice:g.basePrice,buyPrice,sellPrice,illegal:isIllegal(g,world),favorable};
+    return {id,goodId:g.id,nameKey:g.nameKey,tons:Math.max(0,produced-taken),basePrice:g.basePrice,buyPrice,sellPrice,illegal:isIllegal(g,world,state),favorable};
   });
   const freight=[], passengers=[],contracts=[];
   for(const destination of adjacent) {
@@ -101,5 +108,20 @@ export function market(state,hex=state.ship.hex) {
       if(!state.bookedOffers.includes(id))contracts.push(offer);
     }
   }
+  if(rulesAtLeast(state,5)&&hex===state.ship.hex&&['freight','passengers'].includes(state.portActions?.[5]))stewardTraffic(state,hex,adjacent,state.portActions[5],freight,passengers);
   return {goods,freight,passengers,contracts};
 }
+/** Edition 5: a steward who arranges freight or welcomes passengers adds one offer per neighbouring world, this week at this port.
+ * The offers come from their own random stream, so the base market above is unchanged. */
+function stewardTraffic(state,hex,adjacent,order,freight,passengers){
+  const rng=derive(state.meta.seed,'steward-traffic',hex,state.clock.week,order);
+  for(const destination of adjacent){
+    if(order==='freight'){const tons=rng.int(1,6)*5,id=`freight-${hex}-${state.clock.week}-${destination.hex}-steward`;if(!state.bookedOffers.includes(id))freight.push({id,destination:destination.hex,tons,pay:tons*1000,deadline:state.clock.week+4,steward:true});continue;}
+    const className=rng.pick(['High','Middle','Low']),count=rng.int(1,{High:2,Middle:4,Low:8}[className]),quirk=rng.int(1,6)===6?rng.int(1,6):0,id=`pax-${hex}-${state.clock.week}-${destination.hex}-${className}-steward`;
+    if(!state.bookedOffers.includes(id))passengers.push({id,destination:destination.hex,class:className,count,pay:count*{High:8000,Middle:6000,Low:1000}[className],deadline:state.clock.week+4,quirk,steward:true});
+  }
+}
+/** Edition 5: a successful patron or escort order secures the first board contract at this bonus on its pay. */
+export const PATRON_PAY_BONUS=.25;
+/** Edition 5: the improved contract a patron or escort order secured at this port this week, while it is still open. */
+export function activePatronOffer(state){const offer=state.patronOffer;return rulesAtLeast(state,5)&&offer&&offer.hex===state.ship.hex&&offer.week===state.clock.week&&!state.bookedOffers.includes(offer.id)?offer:null;}
