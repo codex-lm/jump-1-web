@@ -24,7 +24,7 @@
       "name": "Claude Opus 5.5",
       "kind": "agent",
       "status": "included",
-      "summary": "Added the first-voyage guide, the crew and port explanations, and the draggable star chart in 0.1.2, under Cédric Bernadac's direction."
+      "summary": "Added the first-voyage guide, the crew and port explanations, and the draggable star chart in 0.1.2, under Cédric Bernadac's direction. Added rules edition 5 in 0.5.0: economy fixes, early loan settlement, a working-capital advance, working port orders, bill, payment and repair previews, selling from the market, a French text pass and accessibility fixes, preserving 0.3 and 0.4 saves."
     }
   ],
   "basedOnReleaseIds": []
