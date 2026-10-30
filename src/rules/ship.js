@@ -1,5 +1,6 @@
 import { derive } from '../core/rng.js';
 import { task, d6 } from '../core/dice.js';
+import { rulesAtLeast } from '../core/state.js';
 
 export const SYSTEMS = Object.freeze(['jump','maneuver','power','turret','sensors','sickbay','cargo','quarters']);
 export const CAPACITY = Object.freeze({cargo:82,fuel:30,cabins:5,low:20,hull:40,structure:40});
@@ -8,7 +9,7 @@ export const SHIP_REFITS = Object.freeze({
   workshop:Object.freeze({id:'workshop',cost:20000,cargo:-8,fuel:0,cabins:0,repair:1}),
   cabins:Object.freeze({id:'cabins',cost:30000,cargo:-12,fuel:0,cabins:2,repair:0}),
 });
-export function installedRefits(state){return state.meta?.config?.rulesEdition===4&&Array.isArray(state.ship.outfits)?state.ship.outfits.filter((id,index,list)=>Object.hasOwn(SHIP_REFITS,id)&&list.indexOf(id)===index):[];}
+export function installedRefits(state){return rulesAtLeast(state,4)&&Array.isArray(state.ship.outfits)?state.ship.outfits.filter((id,index,list)=>Object.hasOwn(SHIP_REFITS,id)&&list.indexOf(id)===index):[];}
 function refitCapacity(state,key,base){return installedRefits(state).reduce((total,id)=>total+SHIP_REFITS[id][key],base);}
 export const fuelCapacity=state=>refitCapacity(state,'fuel',CAPACITY.fuel);
 export const cargoCapacity=state=>refitCapacity(state,'cargo',CAPACITY.cargo);
@@ -18,7 +19,7 @@ export const repairBonus=state=>refitCapacity(state,'repair',0);
 /** Validate completely before changing the private reducer clone. Refits never
  * discard existing fuel, freight, contracts or passengers to make room. */
 export function refitPreview(state,id,remove=false){
-  if(state.meta?.config?.rulesEdition!==4)return {error:'REFIT_UNAVAILABLE'};
+  if(!rulesAtLeast(state,4))return {error:'REFIT_UNAVAILABLE'};
   if(!Object.hasOwn(SHIP_REFITS,id)||typeof remove!=='boolean')return {error:'INVALID_REFIT'};
   if(state.phase!=='port')return {error:'REFIT_NOT_AT_PORT'};
   const world=state.subsector.worlds.find(world=>world.hex===state.ship.hex);

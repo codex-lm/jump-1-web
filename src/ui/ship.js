@@ -1,5 +1,6 @@
 import {t,meter,portrait,esc,icon,money} from './common.js';
 import {getAsset} from './assets.js';
+import {rulesAtLeast} from '../core/state.js';
 import {cargoUsed,cabinsUsed,fuelCapacity,cargoCapacity,cabinCapacity,SHIP_REFITS,installedRefits,refitPreview,SYSTEMS} from '../rules/ship.js';
 
 const slots=[['jump',36,46,43,47,2],['power',82,46,36,47,2],['cargo',121,46,76,47,5],['sickbay',200,46,35,47,4],['quarters',121,96,76,30,5],['maneuver',12,59,21,45,1],['turret',148,22,37,21,3],['sensors',238,52,24,39,1]];
@@ -24,7 +25,7 @@ export async function loadShipGeometry(){
 }
 
 function integrity(value){return value<=0?{fill:'#c8473b35',stroke:'#e5776b'}:value<3?{fill:'#d9a44125',stroke:'#d9a441'}:{fill:'#3f8f8a0a',stroke:'#71b7ac'};}
-function systemCapacity(state,id){return state.meta.config.rulesEdition!==4?'':id==='cargo'?`${cargoCapacity(state)} t`:id==='quarters'?t('shipOutfit.cabinCount',{count:cabinCapacity(state)}):'';}
+function systemCapacity(state,id){return !rulesAtLeast(state,4)?'':id==='cargo'?`${cargoCapacity(state)} t`:id==='quarters'?t('shipOutfit.cabinCount',{count:cabinCapacity(state)}):'';}
 function systemLabel(state,id){const capacity=systemCapacity(state,id);return `${t(`system.${id}`)} ${state.ship.systems[id]} / 3${capacity?` · ${capacity}`:''}`;}
 
 function proceduralCutaway(state){
@@ -73,7 +74,7 @@ export function shipZoom(state){
 }
 
 export function renderRefits(state){
-  if(state.meta.config.rulesEdition!==4)return '';
+  if(!rulesAtLeast(state,4))return '';
   const installed=installedRefits(state);
   return `<section class="ship-refits" aria-labelledby="ship-refits-title"><div class="row between"><h3 id="ship-refits-title">${esc(t('shipOutfit.title'))}</h3><span class="badge">${esc(t('shipOutfit.slots',{count:installed.length}))}</span></div><p class="section-intro">${esc(t('shipOutfit.intro'))}</p>
   <div class="refit-bays">${[0,1].map(index=>`<div class="refit-bay ${installed[index]?'refit-bay-filled':''}"><span class="eyebrow">${esc(t('shipOutfit.bay',{number:index+1}))}</span><strong>${esc(t(installed[index]?`shipOutfit.name.${installed[index]}`:'shipOutfit.empty'))}</strong></div>`).join('')}</div>

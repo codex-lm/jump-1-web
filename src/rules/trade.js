@@ -1,4 +1,5 @@
 import { derive } from '../core/rng.js';
+import { rulesAtLeast } from '../core/state.js';
 import { task, roll } from '../core/dice.js';
 import { GOODS, PURCHASE_MULTIPLIERS, SALE_MULTIPLIERS } from '../data/goods.js';
 import { distance } from './subsector.js';
@@ -9,9 +10,13 @@ export function currentWorld(state,hex=state.ship.hex) { return state.subsector.
 export function isIllegal(goods,world) { if(!goods||!world) return false;if(/luxury/i.test(goods.id))return false;const category=/weapon|military/i.test(goods.id)?'weapons':/drug|pharmaceutical|medical-research/i.test(goods.id)?'drugs':/advanced/i.test(goods.id)?'technology':typeof goods.illegal==='string'?goods.illegal:null;return (category==='weapons' && world.law>=5)||(category==='drugs' && world.law>=3)||(category==='technology' && world.law>=7 && world.tech<10); }
 export function brokerRoll(state,hex=state.ship.hex) { const p=state.crew.find(c=>c.station===5&&c.alive&&c.active!==false&&!c.unconscious); return task({rng:derive(state.meta.seed,'broker',hex,state.clock.week),skill:p?.skills.Broker,characteristic:Math.max(p?.characteristics.INT??7,p?.characteristics.SOC??7),situation:(state.economy.reputation[hex]||0)+(p?.mood<0?-1:0),joat:p?.skills['Jack-of-all-Trades']||0}); }
 export function priceMultiplier(value,kind='buy') { const table=kind==='buy'?PURCHASE_MULTIPLIERS:SALE_MULTIPLIERS; return table[clamp(Math.floor(value),2,16)]; }
+/** Edition 5: a lot resold at its own origin never fetches more than was paid per ton. */
+function originCap(state,lot,price,hex){return rulesAtLeast(state,5)&&lot.origin===hex&&Number.isFinite(lot.buyPrice)?Math.min(price,lot.buyPrice):price;}
+/** The unit price an accepted SELL pays now; quotes and the reducer share it. The payment-phase distress sale pays half the base price. */
+export function saleUnitPrice(state,lot,hex=state.ship.hex){return state.phase==='payment'?originCap(state,lot,Math.round((lot.basePrice||0)*.5),hex):quoteSale(state,lot,hex);}
 export function quoteSale(state,lot,hex=state.ship.hex) {
   const good=GOODS.find(g=>g.id===lot.goodId); if(!good) return lot.basePrice||0;
-  if(lot.origin===hex) return lot.boughtWeek===state.clock.week?0:Math.round(good.basePrice*.5);
+  if(lot.origin===hex) return lot.boughtWeek===state.clock.week?0:originCap(state,lot,Math.round(good.basePrice*.5),hex);
   const world=currentWorld(state,hex); const rng=derive(state.meta.seed,'sale',hex,state.clock.week,lot.goodId);
   const effect=brokerRoll(state,hex).effect;
   // The source SRD uses 2d6 and a 2..16 table, unlike the draft specification's approximate 3d6 example.
@@ -21,7 +26,7 @@ export function quoteSale(state,lot,hex=state.ship.hex) {
 /** Public buying requests last six weeks. Their prices are fixed premiums on
  * imported goods, not predictions of the destination's future market roll. */
 export function activeDemand(state,hex=state.ship.hex){
-  if(state.meta.config.rulesEdition!==4)return null;
+  if(!rulesAtLeast(state,4))return null;
   const world=currentWorld(state,hex);if(!world||world.population<1)return null;
   const suppliers=state.subsector.worlds.filter(w=>distance(hex,w.hex)===1);
   const candidates=GOODS.filter(g=>g.basePrice<=75000&&!isIllegal(g,world)&&!g.illegal&&suppliers.some(w=>!g.available?.length||g.available.some(code=>w.codes.includes(code))));
@@ -49,7 +54,7 @@ export function recordDemandDelivery(state,lot,tons=lot.tons,hex=state.ship.hex)
 }
 
 export function quoteSaleTotal(state,lot,tons=lot.tons,hex=state.ship.hex){
-  const unitPrice=state.phase==='payment'?Math.round((lot.basePrice||0)*.5):quoteSale(state,lot,hex);
+  const unitPrice=saleUnitPrice(state,lot,hex);
   const bonus=unitPrice>0?demandBonus(state,lot,tons,hex):null,base=unitPrice*tons;
   return {unitPrice,base,bonus:bonus?.amount||0,total:base+(bonus?.amount||0),bonusTons:bonus?.tons||0};
 }

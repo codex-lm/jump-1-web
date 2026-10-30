@@ -1,4 +1,5 @@
 import { derive } from '../core/rng.js';
+import { rulesAtLeast } from '../core/state.js';
 import { generateWorld, finalizeWorld } from './worldgen.js';
 import { generateName } from '../data/names.js';
 import { GOODS } from '../data/goods.js';
@@ -92,6 +93,6 @@ export function generateSubsector(seed,config={}) {
   worlds.sort((a,b)=>a.hex.localeCompare(b.hex,'en'));
   const bank=worlds.filter(w=>['A','B'].includes(w.starport)&&w.hex!==start.hex).sort((a,b)=>distance(start,b)-distance(start,a)||a.hex.localeCompare(b.hex,'en'))[0]??worlds.filter(w=>w.hex!==start.hex).sort((a,b)=>distance(start,b)-distance(start,a))[0];
   if(bank&&!['A','B'].includes(bank.starport)){bank.starport='B';bank.tech=Math.max(9,bank.tech);finalizeWorld(bank);}
-  if(config.rulesEdition===4)openingRoutes(seed,worlds,start);
+  if(rulesAtLeast(config,4))openingRoutes(seed,worlds,start);
   return {name:generateName(derive(seed,'subsector','name')),worlds,startHex:start.hex,bankHex:bank?.hex??start.hex};
 }

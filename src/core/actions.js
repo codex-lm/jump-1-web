@@ -1,6 +1,6 @@
 import { CAREER_NAMES } from '../data/careers.js';
 /** The sole public action vocabulary. Payload validation is deliberately independent of UI. */
-export const ACTION_TYPES = Object.freeze(['NEW_RUN','CHARGEN_ROLL','CHARGEN_PICK','CHARGEN_EXPRESS','CHARGEN_DONE','PORT_ACTION','BUY','SELL','BOOK_FREIGHT','BOOK_PASSENGER','ACCEPT_CONTRACT','RECRUIT','REFUEL','REFIT','REPAIR','STAY','DEPART','QUICK_STOP','SCENE_CHOICE','END_WEEK','PAY','SKIP_PAY','OBJECT','MUTINY_VOTE','ABANDON']);
+export const ACTION_TYPES = Object.freeze(['NEW_RUN','CHARGEN_ROLL','CHARGEN_PICK','CHARGEN_EXPRESS','CHARGEN_DONE','PORT_ACTION','BUY','SELL','BOOK_FREIGHT','BOOK_PASSENGER','ACCEPT_CONTRACT','RECRUIT','REFUEL','REFIT','REPAIR','STAY','DEPART','QUICK_STOP','SCENE_CHOICE','END_WEEK','PAY','SKIP_PAY','SETTLE_LOAN','OBJECT','MUTINY_VOTE','ABANDON']);
 export const PORT_CHOICES = Object.freeze({1:['patron','flightplan','rest'],2:['maintenance','parts','refuel'],3:['guard','train','escort'],4:['heal','hospital','supplies'],5:['market','freight','passengers','bank']});
 export const DEFAULT_ROUTINES = Object.freeze({1:'flightplan',2:'maintenance',3:'guard',4:'hospital',5:'market'});
 const finite = value => typeof value === 'number' && Number.isFinite(value);

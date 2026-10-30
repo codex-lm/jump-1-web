@@ -1,6 +1,6 @@
 import {fuelCapacity} from '../rules/ship.js';
 import {distance} from '../rules/subsector.js';
-import {berthingCost,monthlyCosts,COSTS} from '../rules/economy.js';
+import {berthingCost,monthlyCosts,upcomingBill,COSTS} from '../rules/economy.js';
 import {isIllegal,activeDemand} from '../rules/trade.js';
 import {GOODS} from '../data/goods.js';
 import {assetMarkup,worldAsset} from './assets.js';
@@ -47,10 +47,8 @@ export function departurePreview(state,hex,{quick=false}={}){
     return {...l,favorable:!!good&&!!destination&&destination.codes.some(code=>(good.sellDM?.[code]||0)>0),restricted:!!destination&&isIllegal(good,destination)};
   });
   const billingWeeks=Array.from({length:weeks},(_,i)=>state.clock.week+i).filter(w=>w<=52&&w%4===0);
-  const operatingCosts=monthlyCosts(state),operatingTotal=Object.values(operatingCosts).reduce((sum,n)=>sum+n,0);
-  const bills=billingWeeks.map(week=>week===52?
-    {week,type:'final',payment:state.economy.balloon+state.economy.arrears+state.economy.deferredBalance,operating:0}:
-    {week,type:state.economy.deferNext?'deferred':'monthly',payment:state.economy.monthlyPayment,operating:operatingTotal});
+  const operatingCosts=monthlyCosts(state);
+  const bills=billingWeeks.map(week=>upcomingBill(state,week)).map(bill=>({week:bill.week,type:bill.final?'final':bill.deferred?'deferred':'monthly',payment:bill.deferred?state.economy.monthlyPayment:bill.mortgage,operating:bill.operating}));
   return {origin,destination,hex,range,services,quick,blocked,canDepart:!blocked,
     portWeeks,weeks,arrivalWeek,minimumFuel,consumption,remainingFuel,fuelType,automaticRefuel,refuelTons,
     costs:{departureBerthing,refuel:refuelCost,departure:departureBerthing+refuelCost,arrivalBerthing},

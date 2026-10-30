@@ -7,4 +7,10 @@ export function spend(state,amount,category='other',allowDebt=false) { amount=Ma
 export function earn(state,amount,category='trade') { amount=Math.max(0,Math.round(amount)); state.economy.credits+=amount; state.economy.income[category]=(state.economy.income[category]||0)+amount; return amount; }
 export function reputation(state,hex,change=0) { const current=state.economy.reputation[hex]||0; return state.economy.reputation[hex]=Math.max(-3,Math.min(3,current+change)); }
 export function berthingCost(world,days=7) { return ['A','B'].includes(world?.starport)?100*days:['C','D'].includes(world?.starport)?50*days:0; }
+/** Everything still owed to the Trust if the loan were closed now, in port. A pending
+ * bank deferral only moves one instalment into deferredBalance, so it leaves this total unchanged. */
+export function settlementAmount(state) { const e=state.economy; return e.arrears+e.deferredBalance+Math.max(0,12-e.billedMonths)*e.monthlyPayment+e.balloon; }
+export const nextBillWeek=state=>Math.min(52,Math.ceil(state.clock.week/4)*4);
+/** The month-end bill exactly as endOfMonth will charge it, at current crew costs. Display only. */
+export function upcomingBill(state,week=nextBillWeek(state)) { const e=state.economy; if(week>=52){const mortgage=e.balloon+e.arrears+e.deferredBalance;return {week:52,mortgage,operating:0,total:mortgage,final:true,deferred:false};} const operating=Object.values(monthlyCosts(state)).reduce((sum,n)=>sum+n,0),deferred=!!e.deferNext&&week===nextBillWeek(state),mortgage=deferred?0:e.monthlyPayment; return {week,mortgage,operating,total:mortgage+operating,final:false,deferred}; }
 export function monthlyCosts(state) { const npc=state.meta.config.humanStations || [1]; return {maintenance:state.economy.maintenanceWaived?0:COSTS.maintenance,support:state.crew.filter(p=>p.alive&&p.active!==false).length*COSTS.lifeSupport,salaries:state.crew.filter(p=>p.alive&&p.active!==false&&!npc.includes(p.station)).reduce((sum,p)=>sum+COSTS.salaries[p.station-1],0)}; }
