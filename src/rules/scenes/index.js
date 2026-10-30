@@ -1,4 +1,5 @@
 import { derive } from '../../core/rng.js';
+import { rulesAtLeast } from '../../core/state.js';
 import { d6,roll,task } from '../../core/dice.js';
 import { addLog,actor,check } from './shared.js';
 import { damageShip,damagePerson,healCrew,SYSTEMS,systemDM,repairBonus,fuelCapacity } from '../ship.js';
@@ -9,7 +10,7 @@ import { GOODS } from '../../data/goods.js';
 import { distance,neighbors } from '../subsector.js';
 import { TRAVEL_EVENTS } from '../encounters.js';
 
-export const voyageRules=state=>state.meta?.config?.rulesEdition===4;
+export const voyageRules=state=>rulesAtLeast(state,4);
 const SOCIAL_EVENTS=['bond','birthday','homesick','rivalry','shared-past','music','good-meal'];
 const SIGNAL_EVENTS=['bank-letter','rumor','signals'];
 const INCIDENT_EVENTS=['fire','leak','illness'];
@@ -221,7 +222,7 @@ export function resolveScene(state) {
         const bailiffDM=type==='repo'?{courteous:1,zealous:-1,tired:0}[state.collector.bailiff.type]:0;
         const result=opposed(state,station,type==='repo'?'Admin':'Broker',type==='repo'?-2:0,rng,type==='repo'?2:1,(choice==='old-friends'?2:0)+bailiffDM,'negotiate');
         if(type==='repo')state.collector.negotiated=true;
-        if(result.success) { if(type==='repo'){const remaining=12-state.economy.billedMonths;state.economy.monthlyPayment=Math.round(state.economy.monthlyPayment*1.1)+(remaining>0?Math.ceil(state.economy.arrears/remaining):0);state.economy.arrears=0;state.economy.arrearsMonths=0;state.collector.pressure=0;state.collector.mode='docked';state.collector.hex=state.subsector.bankHex;}else spend(state,Math.min(state.economy.credits,5000),'other');done(state,'log.negotiated');return {closed:true,weeksLost:0}; }if(type==='repo')state.collector.pressure++;
+        if(result.success) { if(type==='repo'){const remaining=12-state.economy.billedMonths;state.economy.monthlyPayment=Math.round(state.economy.monthlyPayment*1.1)+(remaining>0?Math.ceil(state.economy.arrears/remaining):0);if(remaining<=0&&rulesAtLeast(state,5))state.economy.deferredBalance+=state.economy.arrears;state.economy.arrears=0;state.economy.arrearsMonths=0;state.collector.pressure=0;state.collector.mode='docked';state.collector.hex=state.subsector.bankHex;}else spend(state,Math.min(state.economy.credits,5000),'other');done(state,'log.negotiated');return {closed:true,weeksLost:0}; }if(type==='repo')state.collector.pressure++;
       }
       if(choice==='bribe'&&type==='repo'){const cost=state.collector.bailiff.type==='tired'?15000:30000;const result=check(state,station,'Streetwise',{difficulty:-4,label:'bribe'});spend(state,cost,'fines');if(result.success){state.collector.hiddenUntil=state.clock.week+8;done(state,'log.bribed',{amount:cost});return {closed:true,weeksLost:0};}scene.enemy.hostile=true;scene.flags.badFaith=true;}
     } else if(type==='patrol'||type==='customs') {

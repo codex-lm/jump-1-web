@@ -2,6 +2,7 @@ import {t,esc,money,number,worldName,badge} from './common.js';
 import {market,quoteSaleTotal,activeDemand} from '../rules/trade.js';
 import {cargoUsed,cabinsUsed,lowUsed,cargoCapacity,cabinCapacity} from '../rules/ship.js';
 import {distance} from '../rules/subsector.js';
+import {rulesAtLeast} from '../core/state.js';
 
 function marketLink(tab,label){
   return `<button class="small" data-action="market" data-tab="${tab}">${esc(t(label))}</button>`;
@@ -59,7 +60,7 @@ function offerRow(state,o,tab){
 }
 
 function renderDemands(state){
-  if(state.meta.config.rulesEdition!==4)return '';
+  if(!rulesAtLeast(state,4))return '';
   const demands=state.subsector.worlds.filter(w=>distance(state.ship.hex,w.hex)<=1).map(w=>activeDemand(state,w.hex)).filter(Boolean);
   if(!demands.length)return '';
   return `<section class="trade-demands"><h3>${esc(t('trade.demands'))}</h3><p>${esc(t('trade.demandImport'))}</p><div class="trade-demand-list">${demands.map(d=>`<article class="trade-demand ${d.remaining?'':'trade-demand-filled'}"><button class="destination-link" data-action="destination" data-hex="${esc(d.hex)}">${esc(worldName(state,d.hex))} ↗</button><strong>${esc(t(d.nameKey))}</strong><span>${esc(t('trade.demandTerms',{remaining:d.remaining,volume:d.volume,bonus:money(d.bonusPerTon),week:d.untilWeek}))}</span></article>`).join('')}</div></section>`;

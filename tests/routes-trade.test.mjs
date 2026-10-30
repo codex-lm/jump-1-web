@@ -30,6 +30,7 @@ test('300 new subsectors offer viable opening branches and onward exits with onl
  for(let i=0;i<300;i++){
   const seed=`routes-${i}`,legacy=generateSubsector(seed),sector=generateSubsector(seed,{rulesEdition:4});
   assert.deepEqual(generateSubsector(seed,{rulesEdition:4}),sector);
+  assert.deepEqual(generateSubsector(seed,{rulesEdition:5}),sector,`${seed}: edition 5 keeps the 0.4 opening routes`);
   assert.equal(sector.startHex,legacy.startHex);assert.equal(sector.bankHex,legacy.bankHex);
   const first=sector.worlds.filter(w=>distance(sector.startHex,w.hex)===1);
   assert.ok(first.filter(viable).length>=2,seed);

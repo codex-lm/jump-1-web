@@ -3,12 +3,15 @@ import {mkdirSync,writeFileSync,readFileSync,readdirSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {join,relative} from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {createInitialState,assertState} from '../src/core/state.js';
+import {createInitialState,assertState,CURRENT_RULES_EDITION} from '../src/core/state.js';
 import {reduce,sceneOptions} from '../src/core/reducer.js';
 import {stateHash} from '../src/net/protocol.js';
 import {currentWorld} from '../src/rules/trade.js';
 import {distance} from '../src/rules/subsector.js';
 import {simulate} from '../tests/sim-economy.mjs';
+
+/** Endings are proved under the rules every new run uses. */
+const CONFIG=Object.freeze({difficulty:'normal',rulesEdition:CURRENT_RULES_EDITION});
 
 const root=new URL('../',import.meta.url),localRoot=new URL('.local/',root),evidence=new URL('endings-evidence.json',localRoot);
 mkdirSync(new URL('endings/',localRoot),{recursive:true});
@@ -19,10 +22,10 @@ const sourceFingerprint=codeFingerprint();
 
 function record(result,strategy){
   const type=result.state.ending?.type;if(!type||found[type])return;
-  let checked=createInitialState(result.seed,result.config??{difficulty:'normal'});
+  let checked=createInitialState(result.seed,result.config??CONFIG);
   result.actions.forEach((action,index)=>{const before=JSON.stringify(checked);const next=reduce(checked,action);assert.equal(next.lastError,null,`${result.seed} action ${index} rejected: ${next.lastError}`);assert.equal(JSON.stringify(checked),before,'reducer mutated previous state');checked=next;});
   assertState(checked);assert.equal(JSON.stringify(checked),JSON.stringify(result.state));
-  const save={version:1,seed:result.seed,config:result.config??{difficulty:'normal'},actions:result.actions};
+  const save={version:1,seed:result.seed,config:result.config??CONFIG,actions:result.actions};
   const file=`endings/${type}-${result.seed}.json`;
   writeFileSync(new URL(file,localRoot),JSON.stringify(save,null,2));
   found[type]={seed:result.seed,strategy,config:save.config,actions:save.actions.length,completedWeeks:checked.clock.completedWeeks,week:checked.clock.week,ending:checked.ending,hull:checked.ship.hull,structure:checked.ship.structure,credits:checked.economy.credits,bankPressure:checked.collector.pressure,hash:stateHash(checked),save:`.local/${file}`,fired:save.actions.filter(a=>a.t==='SCENE_CHOICE'&&a.choice==='fire').length,combatRounds:save.actions.filter(a=>a.t==='SCENE_CHOICE'&&a.station===1&&['flee','evade'].includes(a.choice)).length,route:checked.route};
@@ -30,7 +33,7 @@ function record(result,strategy){
 }
 
 function dangerousCaptain(seed){
-  const config={difficulty:'normal'},actions=[];let state=createInitialState(seed,config),iterations=0;
+  const config={...CONFIG},actions=[];let state=createInitialState(seed,config),iterations=0;
   const act=action=>{const next=reduce(state,action);if(next.lastError)return false;actions.push(action);state=next;return true;};
   act({t:'CHARGEN_EXPRESS'});act({t:'CHARGEN_DONE'});
   while(!state.ending&&iterations++<450){
@@ -66,7 +69,7 @@ function dangerousCaptain(seed){
 
 for(let i=0;i<100;i++){
   const seed=`economy-${i}`;search.seedsAttempted++;
-  if(!found.victory||!found.defeat||!found.repo){const standard=simulate(seed);if(['victory','defeat','repo'].includes(standard.state.ending?.type))record(standard,'Visible-market trading heuristic from tests/sim-economy.mjs; no credit or state injection.');}
+  if(!found.victory||!found.defeat||!found.repo){const standard=simulate(seed,CONFIG);if(['victory','defeat','repo'].includes(standard.state.ending?.type))record(standard,'Visible-market trading heuristic from tests/sim-economy.mjs; no credit or state injection.');}
   if(!found.destroyed||!found.stranded){const danger=dangerousCaptain(seed);const type=danger.state.ending?.type??'unfinished';search.outcomes[type]=(search.outcomes[type]??0)+1;
     const fired=danger.actions.some(a=>a.t==='SCENE_CHOICE'&&a.choice==='fire');
     if(type==='destroyed'||type==='stranded'&&fired)record(danger,fired?'Repeated gas-giant skimming, unpaid bills, then hostile combat: flee once to establish hostility, fire once, hold positions without hull repairs.':'Repeated gas-giant skimming without hull repairs causes natural hull and structure destruction before any combat.');

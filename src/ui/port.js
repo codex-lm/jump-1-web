@@ -4,9 +4,10 @@ import {renderPortObjective} from './feedback.js';
 import {PORT_CHOICES} from '../core/actions.js';
 import {distance} from '../rules/subsector.js';
 import {fuelCapacity} from '../rules/ship.js';
+import {rulesAtLeast} from '../core/state.js';
 
 function voyageReminder(state){
- if(state.meta.config.rulesEdition!==4)return '';
+ if(!rulesAtLeast(state,4))return '';
  const stories=(state.voyage?.stories||[]).filter(story=>story.status==='open'&&(story.type==='merchant'||story.type==='birthday'&&state.crew.some(p=>p.id===story.personId&&p.alive&&p.active!==false)));
  if(!stories.length)return '';
  return `<aside class="voyage-followup" aria-label="${esc(t('openSpace.memories'))}"><strong>${esc(t('openSpace.memories'))}</strong>${stories.map(story=>`<p>${esc(t(story.type==='merchant'?'openSpace.merchantReminder':'openSpace.birthdayReminder',{name:story.type==='birthday'?state.crew.find(p=>p.id===story.personId).name:story.name}))}</p>`).join('')}</aside>`;

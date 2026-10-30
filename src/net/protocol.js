@@ -153,7 +153,7 @@ export function authorizeCommand({stations,auto={},sender,hostId,state,action}) 
     case 'REFUEL':case 'REPAIR':return controls(2);
     case 'OBJECT':return held!==state.captainStation&&Number(action.station??held)===held;
     case 'MUTINY_VOTE':return true;
-    case 'DEPART':case 'QUICK_STOP':case 'STAY':case 'END_WEEK':case 'PAY':case 'SKIP_PAY':case 'RECRUIT':case 'ABANDON':return captain;
+    case 'DEPART':case 'QUICK_STOP':case 'STAY':case 'END_WEEK':case 'PAY':case 'SKIP_PAY':case 'SETTLE_LOAN':case 'RECRUIT':case 'ABANDON':return captain;
     default:return false;
   }
 }
