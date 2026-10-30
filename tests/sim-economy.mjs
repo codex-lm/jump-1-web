@@ -27,10 +27,10 @@ export const DEFAULT_SIM_CONFIG=Object.freeze({difficulty:'normal',rulesEdition:
  * `risk` is the share of working capital above the reserve committed to speculative goods at each port. */
 export function simulate(seed,config=DEFAULT_SIM_CONFIG,{risk=.25}={}) {
   const actions=[];let state=createInitialState(seed,config);
-  const metrics={startCredits:0,firstMissedWeek:null,negativeTreasury:false};
+  const metrics={startCredits:0,crewCredits:0,advance:0,firstMissedWeek:null,negativeTreasury:false};
   const observe=()=>{if(state.economy.credits<0)metrics.negativeTreasury=true;};
   const act=action=>{const next=reduce(state,action);if(!next.lastError)actions.push(action);state=next;observe();return !next.lastError;};
-  act({t:'CHARGEN_EXPRESS'});act({t:'CHARGEN_DONE'});metrics.startCredits=state.economy.credits;
+  act({t:'CHARGEN_EXPRESS'});act({t:'CHARGEN_DONE'});metrics.startCredits=state.economy.credits;metrics.advance=state.economy.advance||0;metrics.crewCredits=metrics.startCredits-metrics.advance;
   let safety=0,usedPortWeek=-1;
   while(!state.ending&&safety++<500) {
     if(state.phase==='payment'){metrics.firstMissedWeek??=state.clock.completedWeeks;act({t:'SKIP_PAY'});continue;}
@@ -70,7 +70,7 @@ const percentile=(sorted,p)=>sorted.length?sorted[Math.min(sorted.length-1,Math.
 export function summary(runs){
   const outcomes={};for(const r of runs)outcomes[ending(r)]=(outcomes[ending(r)]||0)+1;
   const cash=runs.map(r=>r.state.economy.credits).sort((a,b)=>a-b);
-  const startCredits=Object.fromEntries(START_BUCKETS.map(([low,high,label])=>{const bucket=runs.filter(r=>r.metrics&&r.metrics.startCredits>=low&&r.metrics.startCredits<high),counts={};for(const r of bucket)counts[ending(r)]=(counts[ending(r)]||0)+1;return [label,{runs:bucket.length,outcomes:counts,victoryRate:bucket.length?(counts.victory||0)/bucket.length:null}];}));
+  const startCredits=Object.fromEntries(START_BUCKETS.map(([low,high,label])=>{const bucket=runs.filter(r=>r.metrics&&(r.metrics.crewCredits??r.metrics.startCredits)>=low&&(r.metrics.crewCredits??r.metrics.startCredits)<high),counts={};for(const r of bucket)counts[ending(r)]=(counts[ending(r)]||0)+1;return [label,{runs:bucket.length,outcomes:counts,victoryRate:bucket.length?(counts.victory||0)/bucket.length:null}];}));
   const missed=runs.map(r=>r.metrics?.firstMissedWeek).filter(w=>w!=null).sort((a,b)=>a-b),byWeek={};for(const week of missed)byWeek[week]=(byWeek[week]||0)+1;
   const risk=runs[0]?.risk??.25,edition=runs[0]?.config?.rulesEdition??3;
   return {runs:runs.length,edition,risk,outcomes,victoryRate:(outcomes.victory||0)/runs.length,cash:{p10:percentile(cash,.1),median:percentile(cash,.5),p90:percentile(cash,.9)},

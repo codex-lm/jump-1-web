@@ -44,7 +44,7 @@ export function departurePreview(state,hex,{quick=false}={}){
   const contracts=state.contracts.filter(c=>c.destination===hex).map(c=>({...c,late:arrivalWeek>c.deadline}));
   const goods=state.cargo.filter(l=>l.kind==='speculative').map(l=>{
     const good=GOODS.find(g=>g.id===l.goodId);
-    return {...l,favorable:!!good&&!!destination&&destination.codes.some(code=>(good.sellDM?.[code]||0)>0),restricted:!!destination&&isIllegal(good,destination)};
+    return {...l,favorable:!!good&&!!destination&&destination.codes.some(code=>(good.sellDM?.[code]||0)>0),restricted:!!destination&&isIllegal(good,destination,state)};
   });
   const billingWeeks=Array.from({length:weeks},(_,i)=>state.clock.week+i).filter(w=>w<=52&&w%4===0);
   const operatingCosts=monthlyCosts(state);

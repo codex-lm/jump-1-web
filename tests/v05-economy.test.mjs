@@ -45,7 +45,8 @@ test('edition 5 keeps every 0.4.0 voyage, demand, refit and route rule identical
  for(let i=0;i<20;i++){
   const v4=ready(`v05-port-${i}`,4),v5=ready(`v05-port-${i}`,5);
   assert.equal(voyageRules(v5),true);
-  assert.deepEqual(market(v5),market(v4));assert.deepEqual(activeDemand(v5),activeDemand(v4));
+   // Edition 5 reclassifies contraband from the goods data (tests/v05-crew.test.mjs); everything else in the market is unchanged.
+  const legal=m=>({...m,goods:m.goods.map(({illegal,...g})=>g)});assert.deepEqual(legal(market(v5)),legal(market(v4)));assert.deepEqual(activeDemand(v5),activeDemand(v4));
   assert.deepEqual(refitPreview(v5,'reserve'),refitPreview(v4,'reserve'));
   v4.ship.outfits=v5.ship.outfits=['reserve'];assert.deepEqual(installedRefits(v5),['reserve']);
   // The edition-4 automatic refuelling threshold (exact missing fuel cost) also applies to edition 5.

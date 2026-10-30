@@ -44,7 +44,8 @@ test(`edition ${edition} reduced cargo capacity rejects goods, freight and missi
   assert.ok(good);assert.ok(freight);
   rejected(state,{t:'BUY',goodId:good.goodId,tons:1},'CARGO_FULL');
   rejected(state,{t:'BOOK_FREIGHT',id:freight.id},'CARGO_FULL');
-  state.patronOffer={id:'capacity-mission',type:'smuggle',destination:'0101',pay:25000,deadline:4,tons:5};
+  // Edition 5 only honours a patron offer secured at this port this week; the extra fields are ignored by edition 4.
+  state.patronOffer={id:'capacity-mission',type:'smuggle',destination:'0101',pay:25000,deadline:4,tons:5,hex:state.ship.hex,week:state.clock.week};
   rejected(state,{t:'ACCEPT_CONTRACT',id:'capacity-mission'},'CARGO_FULL');
   state.cargo[0].tons=57;state=send(state,{t:'ACCEPT_CONTRACT',id:'capacity-mission'});
   assert.equal(state.cargo.reduce((sum,lot)=>sum+lot.tons,0),62);assert.equal(state.contracts.length,1);
