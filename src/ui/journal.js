@@ -15,13 +15,13 @@ export function paymentOutcomes(state){
 }
 function renderPaymentOutcomes(state){
  const view=paymentOutcomes(state);
- return `<section class="payment-outcomes"><h3>${esc(t('bank.outcomes'))}</h3><p>${esc(t('bank.operating',{amount:money(view.operating)}))}</p><ul>${view.options.map(o=>`<li class="${o.cash<0?'payment-negative':''}">${esc(t(`bank.outcome.${o.choice}`,{cash:money(o.cash),arrears:money(o.arrears||0),pressure:o.pressure}))}</li>`).join('')}</ul>${view.options.some(o=>o.cash<0)?`<p>${esc(t('bank.outcome.negative'))}</p>`:''}${state.cargo.some(l=>l.kind==='speculative')?`<p>${esc(t('bank.forcedSale'))}</p>`:''}</section>`;
+ return `<section class="payment-outcomes"><h3>${esc(t('bank.outcomes'))}</h3><p>${esc(t('bank.operating',{amount:money(view.operating)}))}</p><ul>${view.options.map(o=>`<li class="${o.cash<0?'payment-negative':''}">${esc(t(`bank.outcome.${o.choice}`,{cash:money(o.cash),arrears:money(o.arrears||0),pressure:o.pressure}))}</li>`).join('')}</ul>${state.clock.lostWeeksPending>0?`<p>${esc(t('bank.lostWeeks',{weeks:state.clock.lostWeeksPending}))}</p>`:''}${view.options.some(o=>o.cash<0)?`<p>${esc(t('bank.outcome.negative'))}</p>`:''}${state.cargo.some(l=>l.kind==='speculative')?`<p>${esc(t('bank.forcedSale'))}</p>`:''}</section>`;
 }
 /** Confirmation for SETTLE_LOAN: amount, what it covers and that the voyage ends. */
 export function settlementDialog(state){
  const offer=settlementOffer(state);
  if(!offer)return '';
- return `<p>${esc(t('settle.body',{amount:money(offer.amount),instalments:offer.instalments}))}</p><p class="sum mono brass">${money(offer.amount)} Cr</p><p>${esc(t('settle.end',{weeks:offer.weeks,bonus:money(SETTLEMENT_WEEK_BONUS)}))}</p><p class="navigation-note">${esc(t('settle.after',{cash:money(offer.cashAfter)}))}</p><div class="actions"><button data-action="close">${esc(t('common.cancel'))}</button><button class="primary" data-action="settle" ${offer.available?'':'disabled'}>${esc(t('settle.confirm'))}</button></div>`;
+ return `<p>${esc(t(offer.instalments?'settle.body':'settle.bodyFinal',{amount:money(offer.amount),instalments:offer.instalments}))}</p><p class="sum mono brass">${money(offer.amount)} Cr</p><p>${esc(t('settle.end',{weeks:offer.weeks,bonus:money(SETTLEMENT_WEEK_BONUS)}))}</p><p class="navigation-note">${esc(t('settle.after',{cash:money(offer.cashAfter)}))}</p><div class="actions"><button data-action="close">${esc(t('common.cancel'))}</button><button class="primary" data-action="settle" ${offer.available?'':'disabled'}>${esc(t('settle.confirm'))}</button></div>`;
 }
 function settlementBlock(state){
  const offer=settlementOffer(state);
