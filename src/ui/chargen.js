@@ -1,6 +1,6 @@
 import {t,esc,portrait,money} from './common.js';
 import {CAREER_NAMES} from '../data/careers.js';
-import {upp} from '../rules/characteristics.js';
+import {upp,CHARACTERISTICS} from '../rules/characteristics.js';
 import {rankedSkills,skillList,careerHistory} from './character.js';
 import {rulesAtLeast} from '../core/state.js';
 import {WORKING_CAPITAL_FLOOR} from '../rules/economy.js';
@@ -28,7 +28,7 @@ function characterCard(person,index,state,detailed){
     </div>
     <div class="character-tools"><details class="character-record" ${detailed?'open':''}><summary>${esc(t(detailed?'chargen.detailed':'crew.fullProfile'))}</summary><div class="character-record-body">
       ${detailed?careerEditor(person,index):''}
-      <div class="character-record-columns"><div><h4>${esc(t('crew.careerHistory'))}</h4>${careerHistory(person)}</div><div><h4>${esc(t('crew.skills'))}</h4>${skillList(skills)}<p class="character-upp" title="${esc(t('chargen.upp'))}"><span>STR DEX END INT EDU SOC</span><strong>${esc(upp(person.characteristics))}</strong></p></div></div>
+      <div class="character-record-columns"><div><h4>${esc(t('crew.careerHistory'))}</h4>${careerHistory(person)}</div><div><h4>${esc(t('crew.skills'))}</h4>${skillList(skills)}<p class="character-upp" title="${esc(t('chargen.upp'))}"><span>${esc(CHARACTERISTICS.map(key=>t(`char.${key}`)).join(' '))}</span><strong>${esc(upp(person.characteristics))}</strong></p></div></div>
     </div></details>
     ${!state.meta.rerollUsed&&!state.meta.config.daily?`<button class="quiet small character-reroll" data-action="reroll" data-index="${index}" aria-label="${esc(t('chargen.reroll'))}">↻ ${esc(t('chargen.reroll').split(' · ')[0])}</button>`:''}</div>
   </article>`;
