@@ -13,6 +13,6 @@ export function berthingCost(world,days=7) { return ['A','B'].includes(world?.st
  * bank deferral only moves one instalment into deferredBalance, so it leaves this total unchanged. */
 export function settlementAmount(state) { const e=state.economy; return e.arrears+e.deferredBalance+Math.max(0,12-e.billedMonths)*e.monthlyPayment+e.balloon; }
 export const nextBillWeek=state=>Math.min(52,Math.ceil(state.clock.week/4)*4);
-/** The month-end bill exactly as endOfMonth will charge it, at current crew costs. Display only. */
+/** The month-end bill as endOfMonth will charge it, at current crew costs. Display only. Conservative: a maintenance waiver earned before the bill (see billView) is not anticipated. */
 export function upcomingBill(state,week=nextBillWeek(state)) { const e=state.economy; if(week>=52){const mortgage=e.balloon+e.arrears+e.deferredBalance;return {week:52,mortgage,operating:0,total:mortgage,final:true,deferred:false};} const operating=Object.values(monthlyCosts(state)).reduce((sum,n)=>sum+n,0),deferred=!!e.deferNext&&week===nextBillWeek(state),mortgage=deferred?0:e.monthlyPayment; return {week,mortgage,operating,total:mortgage+operating,final:false,deferred}; }
 export function monthlyCosts(state) { const npc=state.meta.config.humanStations || [1]; return {maintenance:state.economy.maintenanceWaived?0:COSTS.maintenance,support:state.crew.filter(p=>p.alive&&p.active!==false).length*COSTS.lifeSupport,salaries:state.crew.filter(p=>p.alive&&p.active!==false&&!npc.includes(p.station)).reduce((sum,p)=>sum+COSTS.salaries[p.station-1],0)}; }

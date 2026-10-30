@@ -46,8 +46,8 @@ test('turn reports and scene banners expose a focusable heading and a short live
  const before=ready('a11y-report'),after=reduce(before,{t:'END_WEEK',routines:true}),report=actionReport(before,after,'END_WEEK');
  assert.match(renderActionReport(report),/<h3 tabindex="-1">/);
  const summary=reportSummary(report);assert.ok(summary.startsWith(reportTitle(report)),summary);
- if(report.delta.credits)assert.match(summary,/Cash [+−][\d,]+ Cr$/);
- const manual={...report,delta:{credits:-700}};assert.match(reportSummary(manual),/\. Cash −700 Cr$/);
+ if(report.delta.credits)assert.match(summary,/Treasury [+−][\d,]+ Cr$/);
+ const manual={...report,delta:{credits:-700}};assert.match(reportSummary(manual),/\. Treasury −700 Cr$/);
  setLanguage('fr');assert.match(reportSummary(manual),/\. Trésorerie −700 Cr$/);setLanguage('en');
  assert.equal(reportSummary(null),'');
  const state=createInitialState('a11y-scene');state.phase='scene';state.scene=createScene('pirate',state);

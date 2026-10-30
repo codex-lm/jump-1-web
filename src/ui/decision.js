@@ -15,7 +15,8 @@ export function signedMoney(value){return `${value>0?'+':value<0?'−':''}${mone
 export function billView(state){
  const bill=upcomingBill(state),costs=monthlyCosts(state),e=state.economy,weeks=Math.max(0,bill.week-state.clock.week),short=Math.max(0,bill.total-e.credits);
  const breakdown=bill.final?t('hud.billBreakdownFinal',{balloon:money(e.balloon),arrears:money(e.arrears),deferred:money(e.deferredBalance)}):t(bill.deferred?'hud.billBreakdownDeferred':'hud.billBreakdown',{week:bill.week,mortgage:money(bill.mortgage),operating:money(bill.operating),maintenance:money(costs.maintenance),support:money(costs.support),salaries:money(costs.salaries)});
- return {...bill,weeks,short,breakdown};
+ const order=state.portActions?.[2]||state.routines?.[2]||DEFAULT_ROUTINES[2],mayWaive=!bill.final&&costs.maintenance>0&&order==='maintenance'&&!!actor(state,2)&&SYSTEMS.every(id=>state.ship.systems[id]>=3);
+ return {...bill,weeks,short,mayWaive,breakdown:mayWaive?`${breakdown} ${t('hud.maintenanceMayWaive')}`:breakdown};
 }
 
 /** Treasury and next-payment HUD cells. Cash is red whenever it does not cover the full bill. */
