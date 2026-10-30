@@ -90,7 +90,7 @@ function selectedDetails(state,person,option){
   const value=person.characteristics?.[attribute]??7;
   return `<div class="scene-order-detail" id="scene-order-${person.station}">
     <p class="${details.reasonKey?'scene-order-caution':''}">${esc(t(details.reasonKey||details.descriptionKey,{fuel:fuelCapacity(state)}))}</p>
-    ${details.skill?`<details class="scene-roll-detail"><summary>${esc(aptitude(person,details))} · ${esc(t(`difficulty.${details.difficulty}`))}${details.opposed?` · ${esc(t('sceneGuide.opposed'))}`:''}${details.bonus?` · ${esc(t('sceneGuide.situation',{modifier:signed(details.bonus)}))}`:''}</summary><p>${esc(t('sceneGuide.rollDetail',{attribute,value,modifier:signed(characteristicDM(value))}))}</p>${person.wounded?`<p class="red">${esc(t('sceneGuide.wounded'))}</p>`:''}${person.mood<0?`<p class="red">${esc(t('crew.moodbad'))}</p>`:''}</details>`:''}
+    ${details.skill?`<details class="scene-roll-detail"><summary>${esc(aptitude(person,details))} · ${esc(t(`difficulty.${details.difficulty}`))}${details.opposed?` · ${esc(t('sceneGuide.opposed'))}`:''}${details.bonus?` · ${esc(t('sceneGuide.situation',{modifier:signed(details.bonus)}))}`:''}</summary><p>${esc(t('sceneGuide.rollDetail',{attribute:t(`char.${attribute}`),value,modifier:signed(characteristicDM(value))}))}</p>${person.wounded?`<p class="red">${esc(t('sceneGuide.wounded'))}</p>`:''}${person.mood<0?`<p class="red">${esc(t('crew.moodbad'))}</p>`:''}</details>`:''}
   </div>`;
 }
 

@@ -9,7 +9,7 @@ import {upp} from './rules/characteristics.js';
 import {t,getLanguage,setLanguage,hasTranslation,money} from './ui/i18n.js';
 import {esc,icon} from './ui/html.js';
 import {loadAssets,attachAssetFallbacks,getAsset} from './ui/assets.js';
-import {portrait,worldName,badge,logEntry,logText as logEntryText} from './ui/common.js';
+import {portrait,worldName,badge,logEntry,logText as logEntryText,setWorldLookup} from './ui/common.js';
 import {titleScreen} from './ui/title.js';
 import {chargenScreen} from './ui/chargen.js';
 import {characterSheet} from './ui/character.js';
@@ -42,6 +42,7 @@ function screenAudioContext(){if(screen==='title'||!state||state.phase==='charge
 let transport=null,state=null,screen='title',titleForm=false,detailed=false,panel='port',journalTab='log',marketTab='goods',mobile='central',selectedHex=null,sceneKey='',choices={},unmountMap=null,toastTimer=0,saveWarning=false,journalOpen=false;
 let lastReport=null,shownReport=null,renderedState=null,pendingMapMotion=false,pendingStationMotion=null;
 let inspectionDetailed=false;
+setWorldLookup(hex=>state?.subsector?.worlds?.find(w=>w.hex===hex)?.name);
 // Unapplied station orders (UI only). They survive re-renders and are dropped when the week, the hex or the voyage changes.
 let draftOrders={},draftKey='';
 function syncDrafts(){const key=state?`${state.meta.seed}|${state.meta.config.rulesEdition||3}|${state.clock.week}|${state.ship.hex}`:'';if(key!==draftKey){draftKey=key;draftOrders={};}}

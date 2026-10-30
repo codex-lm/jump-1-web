@@ -44,7 +44,7 @@ export function characterSheet(person,config={}){
     <dl class="crew-personal"><div><dt>${esc(t('crew.inventory'))}</dt><dd>${person.inventory.map(item=>esc(t(`item.${item}`))).join(', ')||'—'}</dd></div><div><dt>${esc(t('crew.secret'))}</dt><dd>${esc(secret)}</dd></div></dl>
     <details class="crew-dossier"><summary>${esc(t('crew.fullProfile'))}</summary>
       <div class="crew-dossier-body"><p class="crew-profile-line">${esc(t('crew.rank',{rank:person.rank}))}<span class="mono">${esc(upp(person.characteristics))}</span></p>
-        <dl class="attribute-grid">${CHARACTERISTICS.map(key=>`<div class="attribute"><dt>${key}</dt><dd>${person.characteristics[key]}</dd></div>`).join('')}</dl>
+        <dl class="attribute-grid">${CHARACTERISTICS.map(key=>`<div class="attribute"><dt>${esc(t(`char.${key}`))}</dt><dd>${person.characteristics[key]}</dd></div>`).join('')}</dl>
         ${skills.length>4?`<h3>${esc(t('crew.otherSkills'))}</h3>${skillList(skills.slice(4))}`:''}
         ${person.terms.length?`<h3>${esc(t('crew.careerHistory'))}</h3>${careerHistory(person)}`:''}
       </div>
